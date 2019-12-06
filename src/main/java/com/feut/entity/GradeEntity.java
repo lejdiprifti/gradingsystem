@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,15 +22,15 @@ public class GradeEntity {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name="student_id")
 	private StudentEntity student;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name="teacher_id")
 	private TeacherEntity teacher;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name="course_id")
 	private CourseEntity course;
 	

@@ -1,5 +1,7 @@
 package com.feut.entity;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -45,6 +48,9 @@ public class TeacherEntity {
 	@ManyToOne
 	@JoinColumn(name="department_id")
 	private DepartmentEntity department;
+	
+	@OneToMany(mappedBy= "teacher")
+	private List<LecturesEntity> lectures;
 	
 	@Column(name="active")
 	private boolean active;
@@ -115,6 +121,14 @@ public class TeacherEntity {
 
 	public void setDepartment(DepartmentEntity department) {
 		this.department = department;
+	}
+
+	public List<LecturesEntity> getLectures() {
+		return lectures;
+	}
+
+	public void setLectures(List<LecturesEntity> lectures) {
+		this.lectures = lectures;
 	}
 
 	public boolean isActive() {

@@ -31,6 +31,9 @@ public class GroupEntity {
 	@OneToMany(mappedBy="group")
 	private List<StudentEntity> studentList;
 	
+	@OneToMany(mappedBy="group")
+	private List<GroupEntity> groupList;
+	
 	@Column(name="active")
 	private boolean active;
 	
@@ -68,6 +71,14 @@ public class GroupEntity {
 
 	public void setStudentList(List<StudentEntity> studentList) {
 		this.studentList = studentList;
+	}
+
+	public List<GroupEntity> getGroupList() {
+		return groupList;
+	}
+
+	public void setGroupList(List<GroupEntity> groupList) {
+		this.groupList = groupList;
 	}
 
 	public boolean isActive() {

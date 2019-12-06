@@ -1,11 +1,16 @@
 package com.feut.model;
 
+import java.util.List;
+
 public class CourseModel {
 	
 	private Long id;
 	private DepartmentModel department;
 	private DegreeModel degree;
 	private String syllabus;
+	private List<LecturesModel> lecturesList;
+	private List<GradeModel> gradeList;
+	
 	private boolean active;
 	
 	public CourseModel() {
@@ -44,6 +49,22 @@ public class CourseModel {
 		this.syllabus = syllabus;
 	}
 
+	public List<LecturesModel> getLecturesList() {
+		return lecturesList;
+	}
+
+	public void setLecturesList(List<LecturesModel> lecturesList) {
+		this.lecturesList = lecturesList;
+	}
+
+	public List<GradeModel> getGradeList() {
+		return gradeList;
+	}
+
+	public void setGradeList(List<GradeModel> gradeList) {
+		this.gradeList = gradeList;
+	}
+
 	public boolean isActive() {
 		return active;
 	}
@@ -55,8 +76,7 @@ public class CourseModel {
 	@Override
 	public String toString() {
 		return "CourseModel [id=" + id + ", department=" + department + ", degree=" + degree + ", syllabus=" + syllabus
-				+ ", active=" + active + "]";
+				+ ", lecturesList=" + lecturesList + ", gradeList=" + gradeList + ", active=" + active + "]";
 	}
-	
-	
+
 }

@@ -1,12 +1,16 @@
 package com.feut.entity;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -28,6 +32,9 @@ public class CourseEntity {
 	
 	@Column(name="syllabus", length=2000)
 	private String syllabus;
+	
+	@OneToMany(mappedBy="course", fetch=FetchType.LAZY)
+	private List<LecturesEntity> lectureList;
 	
 	@Column(name="active")
 	private boolean active;

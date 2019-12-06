@@ -1,6 +1,7 @@
 package com.feut.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class StudentModel {
 	
@@ -15,6 +16,7 @@ public class StudentModel {
 	private Date birthdate;
 	private GroupModel gorup;
 	private String email;
+	private List<GradeModel> gradeList;
 	
 	public StudentModel() {
 		
@@ -106,6 +108,14 @@ public class StudentModel {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public List<GradeModel> getGradeList() {
+		return gradeList;
+	}
+
+	public void setGradeList(List<GradeModel> gradeList) {
+		this.gradeList = gradeList;
 	}
 
 	@Override
