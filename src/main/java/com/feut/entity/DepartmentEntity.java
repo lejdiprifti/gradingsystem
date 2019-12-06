@@ -25,6 +25,12 @@ public class DepartmentEntity {
 	@OneToMany(mappedBy="department")
 	private List<CourseEntity> courseList;
 	
+	@OneToMany(mappedBy="department")
+	private List<TeacherEntity> teachers;
+	
+	@Column(name="active")
+	private boolean active;
+	
 	public DepartmentEntity() {
 		
 	}
@@ -51,6 +57,22 @@ public class DepartmentEntity {
 
 	public void setCourseList(List<CourseEntity> courseList) {
 		this.courseList = courseList;
+	}
+
+	public List<TeacherEntity> getTeachers() {
+		return teachers;
+	}
+
+	public void setTeachers(List<TeacherEntity> teachers) {
+		this.teachers = teachers;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 	@Override

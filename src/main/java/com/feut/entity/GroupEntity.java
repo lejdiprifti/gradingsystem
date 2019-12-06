@@ -30,5 +30,60 @@ public class GroupEntity {
 	
 	@OneToMany(mappedBy="group")
 	private List<StudentEntity> studentList;
+	
+	@Column(name="active")
+	private boolean active;
+	
+	public GroupEntity() {
+		
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Long getNumber() {
+		return number;
+	}
+
+	public void setNumber(Long number) {
+		this.number = number;
+	}
+
+	public DegreeEntity getDegree() {
+		return degree;
+	}
+
+	public void setDegree(DegreeEntity degree) {
+		this.degree = degree;
+	}
+
+	public List<StudentEntity> getStudentList() {
+		return studentList;
+	}
+
+	public void setStudentList(List<StudentEntity> studentList) {
+		this.studentList = studentList;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	@Override
+	public String toString() {
+		return "GroupEntity [id=" + id + ", number=" + number + ", degree=" + degree + ", studentList=" + studentList
+				+ ", active=" + active + "]";
+	}
+	
+	
 
 }

@@ -25,6 +25,9 @@ public class DegreeEntity {
 	@OneToMany(mappedBy="degree")
 	private List<GroupEntity> groupList;
 	
+	@OneToMany(mappedBy="degree")
+	private List<CourseEntity> courseList;
+	
 	@Column(name="active")
 	private boolean active;
 	
@@ -56,6 +59,14 @@ public class DegreeEntity {
 		this.groupList = groupList;
 	}
 
+	public List<CourseEntity> getCourseList() {
+		return courseList;
+	}
+
+	public void setCourseList(List<CourseEntity> courseList) {
+		this.courseList = courseList;
+	}
+
 	public boolean isActive() {
 		return active;
 	}
@@ -66,8 +77,8 @@ public class DegreeEntity {
 
 	@Override
 	public String toString() {
-		return "DegreeEntity [id=" + id + ", syllabus=" + syllabus + ", active=" + active + "]";
+		return "DegreeEntity [id=" + id + ", syllabus=" + syllabus + ", groupList=" + groupList + ", courseList="
+				+ courseList + ", active=" + active + "]";
 	}
-	
-	
+
 }
