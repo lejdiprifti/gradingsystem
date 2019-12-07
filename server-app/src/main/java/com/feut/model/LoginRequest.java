@@ -4,6 +4,7 @@ public class LoginRequest {
 
 		private String username;
 		private String password;
+		private RoleModel role;
 		
 		public LoginRequest() {
 			
@@ -24,11 +25,21 @@ public class LoginRequest {
 		public void setPassword(String password) {
 			this.password = password;
 		}
+		
+
+		public RoleModel getRole() {
+			return role;
+		}
+
+		public void setRole(RoleModel role) {
+			this.role = role;
+		}
 
 		@Override
 		public String toString() {
-			return "LoginRequest [username=" + username + ", password=" + password + "]";
+			return "LoginRequest [username=" + username + ", password=" + password + ", role=" + role + "]";
 		}
-		
+
+	
 		
 }
