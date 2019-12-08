@@ -20,7 +20,7 @@ public class StudentResource {
 		
 	}
 	
-	@PostMapping("/register")
+	@PostMapping
 	public void register(@RequestBody StudentModel model) {
 		studentService.register(model);
 	}

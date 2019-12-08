@@ -11,11 +11,17 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="user", schema="feut")
 @Inheritance(strategy = InheritanceType.JOINED)
+@NamedQueries({
+	@NamedQuery(name="User.getByUsername", query="Select s from UserEntity s where s.username = ?1"),
+	@NamedQuery(name="User.getById", query="Select s from UserEntity s where s.id = ?1")
+})
 public class UserEntity {
 	
 	@Id
@@ -52,7 +58,7 @@ public class UserEntity {
 	private Role role;
 	
 	 
-	@Column(name= "birthdate")
+	@Column(name= "birthdate", nullable=true)
 	private Date birthdate;
 	
 	 

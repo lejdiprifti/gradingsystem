@@ -34,7 +34,5 @@ public class StudentRepository {
 	@Transactional
 	public void save(StudentEntity student) {
 		em.persist(student);
-		em.getTransaction().commit();
-		em.clear();
 	}
 }

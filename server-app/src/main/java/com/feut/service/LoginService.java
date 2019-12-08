@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.feut.converter.RoleConverter;
 import com.feut.model.LoginRequest;
 import com.feut.model.LoginResponse;
 import com.feut.model.UserModel;
@@ -30,6 +31,9 @@ public class LoginService implements UserDetailsService{
 	@Autowired 
 	private UserService userService;
 	
+	@Autowired
+	private RoleConverter roleConverter;
+	
 	@Autowired 
 	private AuthenticationManager authenticationManager;
 	
@@ -41,10 +45,11 @@ public class LoginService implements UserDetailsService{
 	public LoginResponse authenticate(LoginRequest loginRequest) throws Exception {
 		authenticate(loginRequest.getUsername(), loginRequest.getPassword());
 		final UserDetails userDetails = loginService.loadUserByUsername(loginRequest.getUsername());
-		final String token = jwtTokenUtil.generateToken(userDetails);
+		final UserModel model = userService.getByUsername(loginRequest.getUsername());
+		final String token = jwtTokenUtil.generateToken(userDetails,roleConverter.toEntity(model.getRole()));
 		LoginResponse loginResponse = new LoginResponse();
 		loginResponse.setJwt(token);
-		loginResponse.setUser(userService.getByUsername(loginRequest.getUsername()));
+		loginResponse.setUser(model);
 		return loginResponse;
 	}
 

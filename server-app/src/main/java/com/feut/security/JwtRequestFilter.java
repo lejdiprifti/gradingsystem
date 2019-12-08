@@ -17,23 +17,15 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.feut.service.LoginAdminService;
-import com.feut.service.LoginStudentService;
-import com.feut.service.LoginTeacherService;
+import com.feut.service.LoginService;
 
 import io.jsonwebtoken.ExpiredJwtException;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 	@Autowired
-	private LoginStudentService loginStudentService;
-	
-	@Autowired
-	private LoginTeacherService loginTeacherService;
-	
-	@Autowired
-	private LoginAdminService loginAdminService;
-	
+	private LoginService loginService;
+		
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 	
@@ -52,8 +44,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			jwtToken = requestTokenHeader.substring(7);
 			try {
 				username = jwtTokenUtil.getUsernameFromToken(jwtToken);
-				role = jwtTokenUtil.getRoleFromToken(jwtToken);
-				logger.error("Role is ",role);
 			} catch (IllegalArgumentException e) {
 				logger.error("Unable to get JWT Token");
 			} catch (ExpiredJwtException e) {
@@ -66,14 +56,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		logger.error(role);
 		// Once we get the token validate it.
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-			UserDetails userDetails = null;
-			if (role == "STUDENT") {
-				logger.info("ENTERING AS A STUDENT WITH THIS ROLE", role);
-				userDetails = loginStudentService.loadUserByUsername(username);
-			} else if (role == "TEACHER") {
-				logger.info("ENTERING AS A TEACHER WITH THIS ROLE", role);
-				userDetails = loginTeacherService.loadUserByUsername(username);
-			}
+			UserDetails userDetails = loginService.loadUserByUsername(username);
 			// if token is valid configure Spring Security to manually set authentication
 			if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
 				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
