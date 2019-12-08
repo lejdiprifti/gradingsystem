@@ -1,5 +1,8 @@
 package com.feut.converter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,6 +26,14 @@ public class StudentConverter  {
 	
 	public StudentModel toModel(StudentEntity entity) {
 		return modelMapper.map(entity, StudentModel.class);
+	}
+	
+	public List<StudentModel> toModel(List<StudentEntity> entityList){
+		List<StudentModel> modelList = new ArrayList<StudentModel>();
+		for (StudentEntity entity: entityList) {
+			modelList.add(toModel(entity));
+		}
+		return modelList;
 	}
 	
 }

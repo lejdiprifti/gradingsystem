@@ -1,26 +1,23 @@
 package com.feut.entity;
 
-import java.util.Date;
+
 import java.util.List;
 
-import javax.persistence.Column;
+
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="student", schema="feut")
 @NamedQueries({
-	@NamedQuery(name="Student.getByUsername", query="Select s from StudentEntity s where s.username = ?1"),
-	@NamedQuery(name="Student.getById", query="Select s from StudentEntity s where s.id = ?1")
+	@NamedQuery(name="Student.getByGroup", query="Select s from StudentEntity s Join GroupEntity g on g.id = s.group where s.group =?1"),
+	@NamedQuery(name="Student.getByUsername", query="Select s from StudentEntity s where s.username = ?1 abd s.active=?2"),
+	@NamedQuery(name="Student.getById", query="Select s from StudentEntity s where s.id = ?1 and s.active=?2")
 })
 public class StudentEntity extends UserEntity {
 	
