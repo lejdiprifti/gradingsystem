@@ -1,7 +1,9 @@
 import { Degree } from './degree';
+import { Student } from './student';
 
 export interface Group {
     id?: number,
     number?: number,
-    degree?: Degree
+    degree?: Degree,
+    studentList?: Array<Student>
 }

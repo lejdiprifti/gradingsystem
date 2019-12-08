@@ -12,6 +12,5 @@ export interface User {
     username?: string,
     password?: string,
     personalNumber?: string,
-    email?: string,
-    group?: Group
+    email?: string
 }
