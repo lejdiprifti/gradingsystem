@@ -1,9 +1,17 @@
-import { Role } from '@ikubinfo/core/models/role.enum';
+import { Role } from '@ikubinfo/core/models/role';
+import { Group } from './group';
 
 
 export interface User {
-    username?: string;
-    email?: string;
-    id?: number;
-    role?: Role
+    id?: number,
+    firstName?: string,
+    fatherName?: string,
+    lastName?: string,
+    birthdate?: Date,
+    role?: Role,
+    username?: string,
+    password?: string,
+    personalNumber?: string,
+    email?: string,
+    group?: Group
 }

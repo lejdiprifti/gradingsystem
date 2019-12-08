@@ -7,20 +7,19 @@ import { Observable, of, throwError, Subject } from 'rxjs';
 import { isNullOrUndefined } from 'util';
 
 import { User } from '@ikubinfo/core/models/user';
-import { Role } from '@ikubinfo/core/models/role.enum';
+import { RoleEnum } from '@ikubinfo/core/models/role.enum';
+import { Role } from '@ikubinfo/core/models/role';
 import { Login } from '@ikubinfo/core/models/login';
 
 const mockUsers: Array<User> = [{
     username: 'rmusaj',
     email: 'romina.musaj@ikubinfo.al',
-    id: 1,
-    role: Role.ADMIN
+    id: 1
 },
 {
     username: 'gcota',
     email: 'guido.cota@ikubinfo.al',
-    id: 1,
-    role: Role.USER
+    id: 1
 }];
 
 @Injectable()

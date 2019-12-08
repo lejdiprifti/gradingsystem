@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AuthService } from '@ikubinfo/core/services/auth.service';
+import { RoleEnum } from '@ikubinfo/core/models/role.enum';
+import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
 
 @Component({
   selector: 'ikubinfo-login',
@@ -15,7 +17,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private logger: LoggerService
   ) { }
 
   ngOnInit() {
@@ -26,9 +29,18 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    this.authService.login(this.loginForm.value).toPromise().then(data => {
-      this.authService.setData(data);
-      this.router.navigate(['/suggestion']);
-    });
-  }
+    this.authService.login(this.loginForm.value).subscribe(
+    (res: any)=>{
+     this.authService.setData(res);
+     if (this.authService.user.role.id === RoleEnum.ADMIN){
+       this.router.navigate(['suggestion/categories']);
+     } else {
+       this.router.navigate(['suggestion/dashboard']);
+     }
+     this.logger.success('Success', 'You logged in successfully!');
+    },
+    err => {
+     this.logger.error('Error', 'Invalid username or password');
+   });
+   }
 }
