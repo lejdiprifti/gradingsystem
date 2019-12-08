@@ -2,10 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AdminGuard } from '@ikubinfo/core/guards/admin-guard';
-import { DashboardComponent } from '@ikubinfo/suggestion/dashboard/dashboard.component';
-import { PostComponent } from '@ikubinfo/suggestion/post/post.component';
-import { PostsComponent } from '@ikubinfo/suggestion/posts/posts.component';
 import { FullComponent } from '@ikubinfo/layout/full/full.component';
+import { DashboardComponent } from './student/dashboard/dashboard.component';
 
 const suggestionRoutes: Routes = [
     {
@@ -13,9 +11,8 @@ const suggestionRoutes: Routes = [
         component: FullComponent,
         children: [
             { path: 'dashboard', component: DashboardComponent },
-            { path: 'posts', component: PostsComponent, canActivate: [AdminGuard] },
-            { path: 'post', component: PostComponent, canActivate: [AdminGuard] },
-            { path: 'post/:id', component: PostComponent, canActivate: [AdminGuard] },
+            { path: 'posts', component: DashboardComponent, canActivate: [AdminGuard] },
+            { path: 'post/:id', component: DashboardComponent, canActivate: [AdminGuard] },
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
         ]
     }
