@@ -18,8 +18,10 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name="teacher", schema="feut")
 @NamedQueries({
-	@NamedQuery(name="Teacher.getByUsername", query ="Select t from TeacherEntity t where t.username = ?1"),
-	@NamedQuery(name="Teacher.getById", query = "Select t from TeacherEntity t where t.id = ?1")
+	@NamedQuery(name="Teacher.getByDepartment", query="Select t from TeacherEntity t JOIN DepartmentEntity d ON t.department = d.id "
+			+ "where d.id = ?1 and t.active = ?2"),
+	@NamedQuery(name="Teacher.getByUsername", query ="Select t from TeacherEntity t where t.username = ?1 and t.active=?2"),
+	@NamedQuery(name="Teacher.getById", query = "Select t from TeacherEntity t where t.id = ?1 and t.active=?2")
 })
 public class TeacherEntity extends UserEntity {
 	
