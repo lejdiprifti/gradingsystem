@@ -19,8 +19,7 @@ import javax.persistence.Table;
 @Table(name="user", schema="feut")
 @Inheritance(strategy = InheritanceType.JOINED)
 @NamedQueries({
-	@NamedQuery(name="User.getByUsername", query="Select s from UserEntity s where s.username = ?1"),
-	@NamedQuery(name="User.getById", query="Select s from UserEntity s where s.id = ?1")
+	@NamedQuery(name="User.getByUsername", query="Select s from UserEntity s where s.username = ?1 and s.active=?2")
 })
 public class UserEntity {
 	

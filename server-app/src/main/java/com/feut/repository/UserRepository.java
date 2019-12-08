@@ -21,6 +21,7 @@ public class UserRepository {
 	public UserEntity getByUsername(String username) {
 		TypedQuery<UserEntity> query = em.createNamedQuery("User.getByUsername",UserEntity.class);
 		query.setParameter(1, username);
+		query.setParameter(2, true);
 		return query.getSingleResult();
 	}
 	

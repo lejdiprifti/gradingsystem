@@ -5,7 +5,7 @@ import { AuthService } from '@ikubinfo/core/services/auth.service';
 import { RoleEnum } from '@ikubinfo/core/models/role.enum';
 
 @Injectable({ providedIn: 'root' })
-export class UserGuard implements CanActivate, CanActivateChild {
+export class StudentGuard implements CanActivate, CanActivateChild {
 
     constructor(private authService: AuthService) { }
 

@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @Table(name="student", schema="feut")
 @NamedQueries({
 	@NamedQuery(name="Student.getByGroup", query="Select s from StudentEntity s Join GroupEntity g on g.id = s.group where s.group =?1"),
-	@NamedQuery(name="Student.getByUsername", query="Select s from StudentEntity s where s.username = ?1 abd s.active=?2"),
+	@NamedQuery(name="Student.getByUsername", query="Select s from StudentEntity s where s.username = ?1 and s.active=?2"),
 	@NamedQuery(name="Student.getById", query="Select s from StudentEntity s where s.id = ?1 and s.active=?2")
 })
 public class StudentEntity extends UserEntity {
