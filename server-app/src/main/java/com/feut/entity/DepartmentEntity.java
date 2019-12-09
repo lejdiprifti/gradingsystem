@@ -7,11 +7,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="department", schema="feut")
+@NamedQueries({
+	@NamedQuery(name="Department.getById", query = "Select d from Department d where d.id = ?1 and d.active = ?2"),
+	@NamedQuery(name="Department.getAll", query = "Select d from Department d where d.active = ?1")
+})
 public class DepartmentEntity {
 	
 	@Id
@@ -21,6 +27,9 @@ public class DepartmentEntity {
 	
 	@Column(name="department_name")
 	private String name;
+	
+	@Column(name="department_description", length = 2000)
+	private String description;
 	
 	@OneToMany(mappedBy="department")
 	private List<CourseEntity> courseList;
@@ -67,6 +76,14 @@ public class DepartmentEntity {
 		this.teachers = teachers;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	public boolean isActive() {
 		return active;
 	}
@@ -77,8 +94,10 @@ public class DepartmentEntity {
 
 	@Override
 	public String toString() {
-		return "DepartmentEntity [id=" + id + ", name=" + name + ", courseList=" + courseList + "]";
+		return "DepartmentEntity [id=" + id + ", name=" + name + ", description=" + description + ", courseList="
+				+ courseList + ", teachers=" + teachers + ", active=" + active + "]";
 	}
-	
+
+		
 	
 }
