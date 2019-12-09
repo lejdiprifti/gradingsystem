@@ -6,6 +6,7 @@ public class DepartmentModel {
 	
 	private Long id;
 	private String name;
+	private String description;
 	private List<CourseModel> courseList;
 	private List<TeacherModel> teacherList;
 	
@@ -28,6 +29,14 @@ public class DepartmentModel {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 	public List<CourseModel> getCourseList() {
 		return courseList;
@@ -47,7 +56,8 @@ public class DepartmentModel {
 
 	@Override
 	public String toString() {
-		return "DepartmentModel [id=" + id + ", name=" + name + "]";
+		return "DepartmentModel [id=" + id + ", name=" + name + ", description=" + description + ", courseList="
+				+ courseList + ", teacherList=" + teacherList + "]";
 	}
 	
 	

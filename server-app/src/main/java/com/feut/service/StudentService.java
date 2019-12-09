@@ -69,7 +69,7 @@ public class StudentService {
 		entity.setGroup(groupConverter.toEntity(model.getGorup()));
 		entity.setPersonalNumber(model.getPersonalNumber());
 		Role studentRole = new Role();
-		studentRole.setId(1);
+		studentRole.setId(2);
 		entity.setRole(studentRole);
 		studentRepository.save(entity);
 	}
@@ -83,13 +83,14 @@ public class StudentService {
 		entity.setGroup(groupConverter.toEntity(model.getGorup()));
 		entity.setPersonalNumber(model.getPersonalNumber());
 		entity.setBirthdate(model.getBirthdate());
+		entity.setPassword(passwordEncoder.encode(model.getPassword()));
 		studentRepository.edit(entity);
 		} catch (NoResultException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Student not found.");
 		}
 	}
 	
-	public void delete(StudentModel model, Long id) {
+	public void delete(Long id) {
 		try {
 			StudentEntity entity = studentRepository.getById(id);
 			studentRepository.edit(entity);

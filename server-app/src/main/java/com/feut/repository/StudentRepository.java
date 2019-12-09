@@ -9,6 +9,8 @@ import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.feut.entity.DegreeEntity;
+import com.feut.entity.GroupEntity;
 import com.feut.entity.StudentEntity;
 
 @Repository
@@ -42,6 +44,21 @@ public class StudentRepository {
 		query.setParameter(1, id);
 		query.setParameter(2, true);
 		return query.getSingleResult();
+	}
+	
+	public List<StudentEntity> getByGroup(GroupEntity group){
+		TypedQuery<StudentEntity> query = em.createQuery("Student.getByGroup", StudentEntity.class);
+		query.setParameter(1, group);
+		query.setParameter(2, true);
+		return query.getResultList();
+	}
+	
+	public List<StudentEntity> getByDegree(DegreeEntity degree){
+		TypedQuery<StudentEntity> query = em.createQuery("Select s from StudentEntity s JOIN GroupEntity g on g.id = s.group "
+				+ "JOIN DegreeEntity d on d.id = g.id where d.id = ?1 and s.active =?2", StudentEntity.class);
+		query.setParameter(1, degree.getId());
+		query.setParameter(2, true);
+		return query.getResultList();
 	}
 	
 	@Transactional
