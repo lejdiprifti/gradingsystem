@@ -90,7 +90,7 @@ public class StudentService {
 		}
 	}
 	
-	public void delete(StudentModel model, Long id) {
+	public void delete(Long id) {
 		try {
 			StudentEntity entity = studentRepository.getById(id);
 			studentRepository.edit(entity);
