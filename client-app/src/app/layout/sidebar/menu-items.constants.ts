@@ -13,6 +13,12 @@ export const menuItems: Array<MenuItem> = [{
     allowedRoles: [RoleEnum.ADMIN]
 },
 {
+    url: '/feut/degrees',
+    icon: 'fa-table',
+    label: 'Degrees',
+    allowedRoles: [RoleEnum.ADMIN]
+},
+{
     url: '/suggestion/posts',
     icon: 'fa-table',
     label: 'Manage posts',

@@ -6,6 +6,7 @@ public class DegreeModel {
 	
 	private Long id;
 	private String syllabus;
+	private String title;
 	private boolean active;
 	private List<GroupModel> groupList;
 	private List<CourseModel> courseList;
@@ -20,6 +21,14 @@ public class DegreeModel {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public String getSyllabus() {

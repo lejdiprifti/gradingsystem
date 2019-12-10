@@ -1,0 +1,31 @@
+<button pButton (click)="addStudent()" class="ui-button-info addpost" label="Add Student" icon="pi pi-plus"></button>
+<div class="row">
+  <div class="col col-xl-12 col-lg-12">
+    <ikubinfo-panel header="Groups">
+      <div panel-content>
+
+        <p-table [columns]="cols" [value]="groups" [paginator]="true" [rows]="3" [(contextMenuSelection)]="selectedStudent"
+          [contextMenu]="cm">
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th *ngFor="let col of columns">
+                {{ col.header }}
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr [pContextMenuRow]="rowData">
+              <td *ngFor="let col of columns">
+               <p> {{ rowData[col.field] }}</p>
+               <ol *ngIf="col.field === 'degree.studentList'">
+                <li *ngFor="let student of rowData[col.field]">{{student.firstName}} {{student.lastName}}</li>
+              </ol>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+        <p-contextMenu #cm [model]="items"></p-contextMenu>
+      </div>
+    </ikubinfo-panel>
+  </div>
+</div>

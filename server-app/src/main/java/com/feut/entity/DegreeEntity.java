@@ -19,6 +19,9 @@ public class DegreeEntity {
 	@Column(name="id")
 	private Long id;
 	
+	@Column(name="title")
+	private String title;
+	
 	@Column(name="syllabus", length = 5000)
 	private String syllabus;
 	
@@ -41,6 +44,14 @@ public class DegreeEntity {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public String getSyllabus() {
@@ -77,8 +88,10 @@ public class DegreeEntity {
 
 	@Override
 	public String toString() {
-		return "DegreeEntity [id=" + id + ", syllabus=" + syllabus + ", groupList=" + groupList + ", courseList="
-				+ courseList + ", active=" + active + "]";
+		return "DegreeEntity [id=" + id + ", title=" + title + ", syllabus=" + syllabus + ", groupList=" + groupList
+				+ ", courseList=" + courseList + ", active=" + active + "]";
 	}
+
+	
 
 }
