@@ -1,4 +1,4 @@
-export const BASE_URL: string = 'https://jsonplaceholder.typicode.com/';
+export const BASE_URL: string = 'http://localhost:8080/';
 
 
 export const environment = {

@@ -61,6 +61,12 @@ public class StudentRepository {
 		return query.getResultList();
 	}
 	
+	public List<StudentEntity> getAll(){
+		TypedQuery<StudentEntity> query = em.createQuery("Select s from StudentEntity s where s.role.id = 2 and s.active = ?1", StudentEntity.class);
+		query.setParameter(1, true);
+		return query.getResultList();
+	}
+	
 	@Transactional
 	public void save(StudentEntity student) {
 		em.persist(student);

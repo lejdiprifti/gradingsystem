@@ -36,6 +36,10 @@ public class StudentService {
 		
 	}
 	
+	public List<StudentModel> getAll(){
+		return studentConverter.toModel(studentRepository.getAll());
+	}
+	
 	public StudentModel getById(Long id) {
 		try {
 			return studentConverter.toModel(studentRepository.getById(id));
