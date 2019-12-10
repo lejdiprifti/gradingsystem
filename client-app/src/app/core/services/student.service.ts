@@ -26,7 +26,7 @@ save(student: Student): Observable<void>{
   return this.apiService.post(this.url, student);
 }
 
-edit(student:Student, id: number): Observable<void>{
+edit(id: number, student: Student): Observable<void>{
   return this.apiService.put(this.url + '/' + id, student);
 }
 
