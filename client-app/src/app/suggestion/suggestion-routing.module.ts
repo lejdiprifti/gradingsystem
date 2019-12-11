@@ -24,7 +24,7 @@ const suggestionRoutes: Routes = [
             {path: 'degrees', component: DegreesComponent, canActivate: [AdminGuard]},
             {path: 'degree/:id', component:DegreeComponent, canActivate: [AdminGuard]},
             {path: 'degree', component: DegreeComponent, canActivate: [AdminGuard]},
-            {path: 'degree/:id/groups', component: GroupsComponent, canActivate: [AdminGuard]},
+            {path: 'degree/:id'  + '/groups', component: GroupsComponent, canActivate: [AdminGuard]},
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
         ]
     }

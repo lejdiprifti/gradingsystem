@@ -31,7 +31,7 @@ export class DegreesComponent implements OnInit {
   }
 
   openGroups(id: number): void {
-    this.router.navigate(['degree/' + id +'/groups']);
+    this.router.navigate(['feut/degree/' + id +'/groups']);
   }
 
   addDegree(): void{

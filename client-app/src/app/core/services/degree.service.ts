@@ -20,7 +20,7 @@ constructor(private apiService: ApiService) { }
   }
 
   public getGroups(id:number): Observable<Array<Group>>{
-    return this.apiService.get(this.url + '/' +id+'/group');
+    return this.apiService.get(this.url + '/' +id+'/groups');
   }
 
   public save(degree: Degree): Observable<void>{
