@@ -27,6 +27,10 @@ constructor(private apiService: ApiService) { }
     return this.apiService.post(this.url, degree);
   }
 
+  public addGroup(group: Group, id:number): Observable<void>{
+    return this.apiService.post(this.url + '/' + id +'/groups', group);
+  }
+
   public edit(id:number, degree:Degree): Observable<void>{
     return this.apiService.put(this.url + '/' + id, degree);
   }

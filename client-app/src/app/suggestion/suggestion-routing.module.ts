@@ -9,6 +9,7 @@ import { StudentComponent } from './admin/student/student.component';
 import { DegreesComponent } from './admin/degrees/degrees.component';
 import { GroupsComponent } from './admin/groups/groups.component';
 import { DegreeComponent } from './admin/degree/degree.component';
+import { GroupComponent } from './admin/group/group.component';
 
 const suggestionRoutes: Routes = [
     {
@@ -25,6 +26,8 @@ const suggestionRoutes: Routes = [
             {path: 'degree/:id', component:DegreeComponent, canActivate: [AdminGuard]},
             {path: 'degree', component: DegreeComponent, canActivate: [AdminGuard]},
             {path: 'degree/:id'  + '/groups', component: GroupsComponent, canActivate: [AdminGuard]},
+            {path: 'degree/:id' + '/group', component: GroupComponent, canActivate: [AdminGuard]},
+            {path: 'degree/:id' + '/group/:groupId', component: GroupComponent, canActivate: [AdminGuard]},
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
         ]
     }

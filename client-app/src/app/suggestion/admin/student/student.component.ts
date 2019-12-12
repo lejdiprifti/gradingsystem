@@ -107,7 +107,7 @@ export class StudentComponent implements OnInit {
     else {
       this.studentService.save(this.getData()).subscribe(res => {
         this.logger.info('Success', 'Student was added successfully.');
-        this.router.navigate(['suggestion/posts']);
+        this.router.navigate(['feut/students']);
       },
       err => {
         this.logger.error('Error', 'Student already exists.');

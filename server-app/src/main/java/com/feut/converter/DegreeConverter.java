@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.feut.entity.DegreeEntity;
+import com.feut.entity.GroupEntity;
 import com.feut.model.DegreeModel;
 
 @Component
@@ -25,6 +26,9 @@ public class DegreeConverter {
 	}
 	
 	public DegreeModel toModel(DegreeEntity entity) {
+		for (GroupEntity group: entity.getGroupList()) {
+			group.setDegree(null);
+		}
 		return modelMapper.map(entity, DegreeModel.class);
 	}
 	

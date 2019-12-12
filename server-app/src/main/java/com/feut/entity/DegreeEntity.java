@@ -1,18 +1,30 @@
 package com.feut.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name="degree", schema="feut")
-public class DegreeEntity {
+@Table(name="degree", schema="feut", uniqueConstraints = {
+		@UniqueConstraint(columnNames = "title")
+})
+public class DegreeEntity implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3029776994623514319L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -25,10 +37,12 @@ public class DegreeEntity {
 	@Column(name="syllabus", length = 5000)
 	private String syllabus;
 	
-	@OneToMany(mappedBy="degree")
+	@JsonIgnore
+	@OneToMany(mappedBy="degree", fetch = FetchType.LAZY)
 	private List<GroupEntity> groupList;
 	
-	@OneToMany(mappedBy="degree")
+	@JsonIgnore
+	@OneToMany(mappedBy="degree", fetch = FetchType.LAZY)
 	private List<CourseEntity> courseList;
 	
 	@Column(name="active")

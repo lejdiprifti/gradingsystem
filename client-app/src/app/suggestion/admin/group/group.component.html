@@ -1,0 +1,14 @@
+<ikubinfo-panel header="Group">
+  <div panel-content>
+    <form role="form" [formGroup]="groupForm">
+      <ikubinfo-input label="Number">
+        <input formControlName="number" type="text" class="form-control" />
+      </ikubinfo-input>
+      <ikubinfo-input label="E-mail">
+        <input formControlName="email" type="email" class="form-control" />
+      </ikubinfo-input>
+    </form>
+    <button pButton type="submit" (click)="submit()" [disabled]="groupForm.invalid" class="ui-button-success" label="Submit" icon="pi pi-file"></button>
+    <button pButton type="button" (click)="reset()" class="ui-button-secondary reset" label="Reset" icon="pi pi-times"></button>
+  </div>
+</ikubinfo-panel>

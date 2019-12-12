@@ -51,6 +51,11 @@ public class DegreeResource {
 		return new ResponseEntity<List<GroupModel>>(groupService.getByDegree(id),HttpStatus.OK);
 	}
 	
+	@PostMapping("/{id}/groups")
+	@ResponseStatus(HttpStatus.CREATED)
+	public void addNewGroup(@RequestBody GroupModel model, @PathVariable("id") Long id) {
+		groupService.save(model,id);
+	}
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public void save(@RequestBody DegreeModel model) {

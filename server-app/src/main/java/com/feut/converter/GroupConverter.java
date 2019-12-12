@@ -21,6 +21,7 @@ public class GroupConverter {
 	}
 	
 	public GroupModel toModel(GroupEntity entity) {
+		entity.getDegree().setGroupList(new ArrayList<GroupEntity>());;
 		return modelMapper.map(entity, GroupModel.class);
 	}
 	

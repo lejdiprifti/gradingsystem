@@ -28,7 +28,7 @@
       <ikubinfo-input label="Group">
         <select class="custom-select"  formControlName="group">
           <option value="" disabled>Choose the group</option>
-          <option *ngFor="let group of groups" [ngValue]="group.id">{{group.degree.name}} {{group.number}}</option>
+          <option *ngFor="let group of groups" [ngValue]="group.id">{{group.degree.title}} {{group.number}}</option>
         </select>
       </ikubinfo-input>
     </form>

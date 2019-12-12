@@ -5,19 +5,19 @@ import java.util.List;
 public class StudentModel extends UserModel {
 	
 	
-	private GroupModel gorup;
+	private GroupModel group;
 	private List<GradeModel> gradeList;
 	
 	public StudentModel() {
 		
 	}
 
-	public GroupModel getGorup() {
-		return gorup;
+	public GroupModel getGroup() {
+		return group;
 	}
 
-	public void setGorup(GroupModel gorup) {
-		this.gorup = gorup;
+	public void setGroup(GroupModel gorup) {
+		this.group = gorup;
 	}
 
 	public List<GradeModel> getGradeList() {
@@ -32,7 +32,7 @@ public class StudentModel extends UserModel {
 
 	@Override
 	public String toString() {
-		return "StudentModel [gorup=" + gorup + ", gradeList=" + gradeList + "]";
+		return "StudentModel [group=" + group + ", gradeList=" + gradeList + "]";
 	}
 
 	

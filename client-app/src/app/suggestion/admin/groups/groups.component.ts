@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { GroupService } from '@ikubinfo/core/services/group.service';
 import { Group } from '@ikubinfo/core/models/group';
 import { DegreeService } from '@ikubinfo/core/services/degree.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
 import { MenuItem } from 'primeng/primeng';
 
@@ -18,7 +18,7 @@ export class GroupsComponent implements OnInit {
   cols: any[];
   selectedGroup: Group;
   constructor(private degreeService: DegreeService, private activated: ActivatedRoute,
-    private logger: LoggerService) { }
+    private logger: LoggerService, private router: Router) { }
 
   ngOnInit() {
     this.loadGroups();
@@ -30,7 +30,8 @@ export class GroupsComponent implements OnInit {
     this.cols = [
       {field: 'id', header: 'ID' },
       {field: 'number', header: 'Number' },
-      {field: 'degree.name', header: 'Degree'},
+      {field: 'email', header: 'E-mail' },
+      {field: 'degree.title', header: 'Degree'},
       {field: 'degree.studentList', header: 'Students'}
     ];
   }
@@ -47,11 +48,17 @@ export class GroupsComponent implements OnInit {
 }
 
   editGroup(group: Group): void{
-
+    const id = this.activated.snapshot.paramMap.get('id');
+    this.router.navigate(['feut/degree/' + id +'/group/' + group.id]);
   }
 
   deleteGroup(group: Group): void{
 
+  }
+
+  addGroup(): void {
+    const id = this.activated.snapshot.paramMap.get('id');
+    this.router.navigate(['feut/degree/' + id +'/group']);
   }
 
 }

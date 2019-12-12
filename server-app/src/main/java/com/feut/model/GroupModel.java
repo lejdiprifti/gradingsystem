@@ -7,6 +7,7 @@ public class GroupModel {
 	private Long id;
 	private DegreeModel degree;
 	private Long number;
+	private String email;
 	private List<StudentModel> studentList;
 	private List<LecturesModel> lecturesList;
 	
@@ -37,6 +38,16 @@ public class GroupModel {
 	public void setNumber(Long number) {
 		this.number = number;
 	}
+	
+	
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	public List<StudentModel> getStudentList() {
 		return studentList;
@@ -57,11 +68,8 @@ public class GroupModel {
 
 	@Override
 	public String toString() {
-		return "GroupModel [id=" + id + ", degree=" + degree + ", number=" + number + ", studentList=" + studentList
-				+ ", lecturesList=" + lecturesList + "]";
+		return "GroupModel [id=" + id + ", degree=" + degree + ", number=" + number + ", email=" + email
+				+ ", studentList=" + studentList + ", lecturesList=" + lecturesList + "]";
 	}
-
-
-	
 	
 }

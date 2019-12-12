@@ -10,11 +10,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.feut.converter.GroupConverter;
 import com.feut.converter.StudentConverter;
 import com.feut.entity.Role;
 import com.feut.entity.StudentEntity;
 import com.feut.model.StudentModel;
+import com.feut.repository.GroupRepository;
 import com.feut.repository.StudentRepository;
 
 @Service
@@ -30,7 +30,7 @@ public class StudentService {
 	private StudentConverter studentConverter;
 	
 	@Autowired
-	private GroupConverter groupConverter;
+	private GroupRepository groupRepository;
 	
 	public StudentService() {
 		
@@ -70,7 +70,7 @@ public class StudentService {
 		entity.setActive(true);
 		entity.setBirthdate(model.getBirthdate());
 		entity.setPassword(passwordEncoder.encode(model.getPassword()));
-		entity.setGroup(groupConverter.toEntity(model.getGorup()));
+		entity.setGroup(groupRepository.getById(model.getGroup().getId()));
 		entity.setPersonalNumber(model.getPersonalNumber());
 		Role studentRole = new Role();
 		studentRole.setId(2);
@@ -84,7 +84,7 @@ public class StudentService {
 		entity.setFirstName(model.getFirstName());
 		entity.setFatherName(model.getFatherName());
 		entity.setLastName(model.getLastName());
-		entity.setGroup(groupConverter.toEntity(model.getGorup()));
+		entity.setGroup(groupRepository.getById(model.getGroup().getId()));
 		entity.setPersonalNumber(model.getPersonalNumber());
 		entity.setBirthdate(model.getBirthdate());
 		entity.setPassword(passwordEncoder.encode(model.getPassword()));

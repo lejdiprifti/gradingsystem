@@ -5,6 +5,7 @@ import java.util.List;
 
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -25,7 +26,7 @@ public class StudentEntity extends UserEntity {
 	@JoinColumn(name="group_id")
 	private GroupEntity group;
 	
-	@OneToMany(mappedBy="student")
+	@OneToMany(mappedBy="student", fetch = FetchType.LAZY)
 	private List<GradeEntity> gradeList;
 	
 	
