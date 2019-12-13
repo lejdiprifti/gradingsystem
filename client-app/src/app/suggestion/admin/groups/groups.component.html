@@ -16,8 +16,9 @@
           <ng-template pTemplate="body" let-rowData let-columns="columns">
             <tr [pContextMenuRow]="rowData">
               <td *ngFor="let col of columns">
-               <p> {{ rowData[col.field] }}</p>
-               <ol *ngIf="col.field === 'degree.studentList'">
+               <p *ngIf="col.field != 'degree' && col.field != 'studentList'"> {{ rowData[col.field] }}</p>
+               <p *ngIf="col.field == 'degree'"> {{rowData[col.field].title}}</p>
+               <ol *ngIf="col.field == 'studentList'">
                 <li *ngFor="let student of rowData[col.field]">{{student.firstName}} {{student.lastName}}</li>
               </ol>
               </td>

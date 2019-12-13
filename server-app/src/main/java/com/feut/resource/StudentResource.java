@@ -20,7 +20,7 @@ import com.feut.model.StudentModel;
 import com.feut.service.StudentService;
 
 @RestController
-@RequestMapping(path="/student", consumes="application/json", produces="application/json")
+@RequestMapping(path="/student", produces="application/json")
 @CrossOrigin(origins = "http://localhost:4200")
 public class StudentResource {
 	
@@ -41,18 +41,18 @@ public class StudentResource {
 		return new ResponseEntity<StudentModel>(studentService.getById(id), HttpStatus.OK);
 	}
 	
-	@GetMapping("/{name}")
+	@GetMapping("/query={name}")
 	public ResponseEntity<List<StudentModel>> getByName(@PathVariable("name") String name){
 		return new ResponseEntity<List<StudentModel>>(studentService.getByName(name), HttpStatus.OK);
 	}
 	
-	@PostMapping
+	@PostMapping(consumes = "application/json")
 	@ResponseStatus(HttpStatus.CREATED)
 	public void register(@RequestBody StudentModel model) {
 		studentService.register(model);
 	}
 	
-	@PutMapping("/{id}")
+	@PutMapping(path="/{id}", consumes ="application/json")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void edit(@RequestBody StudentModel model, @PathVariable("id") Long id) {
 		studentService.edit(model, id);

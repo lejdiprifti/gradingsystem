@@ -70,10 +70,10 @@ public class StudentService {
 		entity.setActive(true);
 		entity.setBirthdate(model.getBirthdate());
 		entity.setPassword(passwordEncoder.encode(model.getPassword()));
-		entity.setGroup(groupRepository.getById(model.getGroup().getId()));
+		entity.setGroup(groupRepository.getById(model.getGroupId()));
 		entity.setPersonalNumber(model.getPersonalNumber());
 		Role studentRole = new Role();
-		studentRole.setId(2);
+		studentRole.setId(3);
 		entity.setRole(studentRole);
 		studentRepository.save(entity);
 	}
@@ -84,7 +84,7 @@ public class StudentService {
 		entity.setFirstName(model.getFirstName());
 		entity.setFatherName(model.getFatherName());
 		entity.setLastName(model.getLastName());
-		entity.setGroup(groupRepository.getById(model.getGroup().getId()));
+		entity.setGroup(groupRepository.getById(model.getGroupId()));
 		entity.setPersonalNumber(model.getPersonalNumber());
 		entity.setBirthdate(model.getBirthdate());
 		entity.setPassword(passwordEncoder.encode(model.getPassword()));

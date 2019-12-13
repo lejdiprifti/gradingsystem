@@ -85,7 +85,7 @@ export class StudentComponent implements OnInit {
       lastName: this.studentForm.get('lastName').value,
       email: this.studentForm.get('email').value,
       personalNumber: this.studentForm.get('personalNumber').value,
-      group: this.studentForm.get('group').value,
+      groupId: this.studentForm.get('group').value,
       username: this.studentForm.get('username').value,
       password: this.studentForm.get('password').value,
       birthdate: this.studentForm.get('birthdate').value,

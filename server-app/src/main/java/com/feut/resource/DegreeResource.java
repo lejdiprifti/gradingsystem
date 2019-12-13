@@ -22,7 +22,7 @@ import com.feut.service.DegreeService;
 import com.feut.service.GroupService;
 
 @RestController
-@RequestMapping(path="/degree", consumes ="application/json", produces ="application/json")
+@RequestMapping(path="/degree", produces ="application/json")
 @CrossOrigin(origins = "http://localhost:4200")
 public class DegreeResource {
 	
@@ -51,18 +51,18 @@ public class DegreeResource {
 		return new ResponseEntity<List<GroupModel>>(groupService.getByDegree(id),HttpStatus.OK);
 	}
 	
-	@PostMapping("/{id}/groups")
+	@PostMapping(path = "/{id}/groups", consumes = "application/json")
 	@ResponseStatus(HttpStatus.CREATED)
 	public void addNewGroup(@RequestBody GroupModel model, @PathVariable("id") Long id) {
 		groupService.save(model,id);
 	}
-	@PostMapping
+	@PostMapping(consumes ="application/json")
 	@ResponseStatus(HttpStatus.CREATED)
 	public void save(@RequestBody DegreeModel model) {
 		degreeService.save(model);
 	}
 	
-	@PutMapping("/{id}")
+	@PutMapping(path = "/{id}", consumes = "application/json")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void edit(@RequestBody DegreeModel model, Long id) {
 		degreeService.edit(model, id);

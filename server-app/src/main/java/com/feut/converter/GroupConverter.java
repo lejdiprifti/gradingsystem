@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.feut.entity.GroupEntity;
+import com.feut.entity.StudentEntity;
 import com.feut.model.GroupModel;
 
 @Component
@@ -21,7 +22,10 @@ public class GroupConverter {
 	}
 	
 	public GroupModel toModel(GroupEntity entity) {
-		entity.getDegree().setGroupList(new ArrayList<GroupEntity>());;
+		for (StudentEntity student : entity.getStudentList()) {
+			student.setGroup(null);
+		}
+		entity.getDegree().setGroupList(null);
 		return modelMapper.map(entity, GroupModel.class);
 	}
 	

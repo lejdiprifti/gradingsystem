@@ -19,7 +19,7 @@ import com.feut.model.GroupModel;
 import com.feut.service.GroupService;
 
 @RestController
-@RequestMapping(path="/group", consumes = "application/json", produces="application/json")
+@RequestMapping(path="/group", produces="application/json")
 @CrossOrigin(origins = "http://localhost:4200")
 public class GroupResource {
 	
@@ -41,7 +41,7 @@ public class GroupResource {
 	}
 	
 	
-	@PutMapping("/{id}")
+	@PutMapping(path = "/{id}", consumes = "application/json")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void edit(@RequestBody GroupModel model, @PathVariable("id") Long id) {
 		groupService.edit(model,id);

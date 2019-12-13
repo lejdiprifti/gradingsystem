@@ -28,6 +28,7 @@ public class DegreeConverter {
 	public DegreeModel toModel(DegreeEntity entity) {
 		for (GroupEntity group: entity.getGroupList()) {
 			group.setDegree(null);
+			group.setStudentList(null);
 		}
 		return modelMapper.map(entity, DegreeModel.class);
 	}

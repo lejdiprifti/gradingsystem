@@ -16,8 +16,8 @@
           <ng-template pTemplate="body" let-rowData let-columns="columns">
             <tr [pContextMenuRow]="rowData">
               <td *ngFor="let col of columns">
-               <p *ngIf="col.field!=='image' && col.field !== 'link'"> {{ rowData[col.field] }}</p>
-               <a *ngIf="col.field==='link'" href="{{ rowData[col.field] }}">{{rowData[col.field]}}</a>
+               <p *ngIf="col.field != 'group'"> {{ rowData[col.field] }}</p>
+               <p *ngIf="col.field == 'group'">{{rowData[col.field].degree.title}} {{ rowData[col.field].number}}</p>
               </td>
             </tr>
           </ng-template>

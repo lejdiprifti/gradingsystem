@@ -6,6 +6,7 @@ public class StudentModel extends UserModel {
 	
 	
 	private GroupModel group;
+	private Long groupId;
 	private List<GradeModel> gradeList;
 	
 	public StudentModel() {
@@ -28,13 +29,16 @@ public class StudentModel extends UserModel {
 		this.gradeList = gradeList;
 	}
 
+	public Long getGroupId() {
+		return groupId;
+	}
 
+	public void setGroupId(Long groupId) {
+		this.groupId = groupId;
+	}
 
 	@Override
 	public String toString() {
-		return "StudentModel [group=" + group + ", gradeList=" + gradeList + "]";
-	}
-
-	
-	
+		return "StudentModel [group=" + group + ", groupId=" + groupId + ", gradeList=" + gradeList + "]";
+	}	
 }

@@ -31,8 +31,8 @@ export class GroupsComponent implements OnInit {
       {field: 'id', header: 'ID' },
       {field: 'number', header: 'Number' },
       {field: 'email', header: 'E-mail' },
-      {field: 'degree.title', header: 'Degree'},
-      {field: 'degree.studentList', header: 'Students'}
+      {field: 'degree', header: 'Degree'},
+      {field: 'studentList', header: 'Students'}
     ];
   }
 

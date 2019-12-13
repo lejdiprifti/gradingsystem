@@ -20,7 +20,6 @@ export class TokenInterceptor implements HttpInterceptor {
         if (!(request.url.endsWith('login'))) {
             request = request.clone({
                 headers: request.headers.set('Authorization', 'Bearer ' + `${sessionStorage.getItem('token')}`)
-                .append('Content-type', 'application/json')
             });
         }
 

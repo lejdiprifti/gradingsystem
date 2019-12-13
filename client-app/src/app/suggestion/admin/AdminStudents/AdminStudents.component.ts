@@ -34,7 +34,7 @@ export class AdminStudentsComponent implements OnInit {
       {field: 'personalNumber', header: 'Personal No.'},
       {field: 'username', header: 'Username'},
       {field: 'password', header: 'Password'},
-      {field: 'group.name', header: 'Group' }
+      {field: 'group', header: 'Group' }
     ];
   }
 
