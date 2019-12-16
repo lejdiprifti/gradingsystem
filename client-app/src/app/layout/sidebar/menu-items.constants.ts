@@ -18,6 +18,11 @@ export const menuItems: Array<MenuItem> = [{
     label: 'Degrees',
     allowedRoles: [RoleEnum.ADMIN]
 },
+{ url: '/feut/teachers',
+icon: 'fa-table',
+label: 'Teachers',
+allowedRoles: [RoleEnum.ADMIN]
+},
 {
     url: '/suggestion/posts',
     icon: 'fa-table',

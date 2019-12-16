@@ -12,12 +12,13 @@ import { DegreesComponent } from './admin/degrees/degrees.component';
 import { GroupsComponent } from './admin/groups/groups.component';
 import { DegreeComponent } from './admin/degree/degree.component';
 import { GroupComponent } from './admin/group/group.component';
+import { TeachersComponent } from './admin/teachers/teachers.component';
 
 @NgModule({
     imports: [CommonsModule, SuggestionRoutingModule, LayoutModule, FormsModule],
     exports: [],
     declarations: [StudentDashboardComponent, AdminStudentsComponent,StudentComponent, 
-        DegreesComponent, GroupsComponent,DegreeComponent, GroupComponent],
+        DegreesComponent, GroupsComponent,DegreeComponent, GroupComponent, TeachersComponent],
     providers: []
 })
 export class SuggestionModule { }

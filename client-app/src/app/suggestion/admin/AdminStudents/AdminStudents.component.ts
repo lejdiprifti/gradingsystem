@@ -47,7 +47,7 @@ export class AdminStudentsComponent implements OnInit {
     })
   }
 
-  deleteStudent(student: Student){
+  deleteStudent(student: Student): void{
     this.confirmationService.confirm({
       message: 'Are you sure that you want to delete this student?',
       header: 'Delete Confirmation',

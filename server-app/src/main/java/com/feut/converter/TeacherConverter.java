@@ -21,6 +21,7 @@ public class TeacherConverter {
 	}
 	
 	public TeacherModel toModel(TeacherEntity entity) {
+		entity.getDepartment().setTeachers(null);
 		return modelMapper.map(entity, TeacherModel.class);
 	}
 	

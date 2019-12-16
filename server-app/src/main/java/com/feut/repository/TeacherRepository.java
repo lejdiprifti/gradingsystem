@@ -21,6 +21,12 @@ public class TeacherRepository {
 		
 	}
 	
+	public List<TeacherEntity> getAll() {
+		TypedQuery<TeacherEntity> query = em.createQuery("Select t from TeacherEntity t where t.active =?1",TeacherEntity.class);
+		query.setParameter(1, true);
+		return query.getResultList();
+	}
+	
 	public TeacherEntity getByUsername(String username) {
 		TypedQuery<TeacherEntity> query = em.createNamedQuery("Teacher.getByUsername", TeacherEntity.class);
 		query.setParameter(1, username);
