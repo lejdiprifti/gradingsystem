@@ -22,6 +22,9 @@ public class CourseEntity {
 	@Column(name="id")
 	private Long id;
 	
+	@Column(name="name")
+	private String name;
+	
 	@ManyToOne
 	@JoinColumn(name="department_id")
 	private DepartmentEntity department;
@@ -49,6 +52,22 @@ public class CourseEntity {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public List<LecturesEntity> getLectureList() {
+		return lectureList;
+	}
+
+	public void setLectureList(List<LecturesEntity> lectureList) {
+		this.lectureList = lectureList;
 	}
 
 	public DepartmentEntity getDepartment() {

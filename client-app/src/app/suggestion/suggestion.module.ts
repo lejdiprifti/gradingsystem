@@ -13,12 +13,17 @@ import { GroupsComponent } from './admin/groups/groups.component';
 import { DegreeComponent } from './admin/degree/degree.component';
 import { GroupComponent } from './admin/group/group.component';
 import { TeachersComponent } from './admin/teachers/teachers.component';
+import { DepartmentService } from '@ikubinfo/core/services/department.service';
+import { DepartmentsComponent } from './admin/departments/departments.component';
+import { DepartmentComponent } from './admin/department/department.component';
+import { TeacherComponent } from './admin/teacher/teacher.component';
 
 @NgModule({
     imports: [CommonsModule, SuggestionRoutingModule, LayoutModule, FormsModule],
     exports: [],
     declarations: [StudentDashboardComponent, AdminStudentsComponent,StudentComponent, 
-        DegreesComponent, GroupsComponent,DegreeComponent, GroupComponent, TeachersComponent],
+        DegreesComponent,DepartmentComponent,TeacherComponent,
+         GroupsComponent,DegreeComponent, GroupComponent, TeachersComponent,DepartmentsComponent],
     providers: []
 })
 export class SuggestionModule { }

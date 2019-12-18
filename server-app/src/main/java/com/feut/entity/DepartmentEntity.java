@@ -32,10 +32,10 @@ public class DepartmentEntity {
 	private String description;
 	
 	@OneToMany(mappedBy="department")
-	private List<CourseEntity> courseList;
+	private List<TeacherEntity> teacherList;
 	
 	@OneToMany(mappedBy="department")
-	private List<TeacherEntity> teachers;
+	private List<CourseEntity> courseList;
 	
 	@Column(name="active")
 	private boolean active;
@@ -68,12 +68,14 @@ public class DepartmentEntity {
 		this.courseList = courseList;
 	}
 
-	public List<TeacherEntity> getTeachers() {
-		return teachers;
+
+
+	public List<TeacherEntity> getTeacherList() {
+		return teacherList;
 	}
 
-	public void setTeachers(List<TeacherEntity> teachers) {
-		this.teachers = teachers;
+	public void setTeacherList(List<TeacherEntity> teacherList) {
+		this.teacherList = teacherList;
 	}
 
 	public String getDescription() {
@@ -94,8 +96,8 @@ public class DepartmentEntity {
 
 	@Override
 	public String toString() {
-		return "DepartmentEntity [id=" + id + ", name=" + name + ", description=" + description + ", courseList="
-				+ courseList + ", teachers=" + teachers + ", active=" + active + "]";
+		return "DepartmentEntity [id=" + id + ", name=" + name + ", description=" + description + ", teacherList="
+				+ teacherList + ", courseList=" + courseList + ", active=" + active + "]";
 	}
 
 		

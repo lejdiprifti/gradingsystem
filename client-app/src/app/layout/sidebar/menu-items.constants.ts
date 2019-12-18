@@ -24,9 +24,8 @@ label: 'Teachers',
 allowedRoles: [RoleEnum.ADMIN]
 },
 {
-    url: '/suggestion/posts',
+    url: '/feut/departments',
     icon: 'fa-table',
-    label: 'Manage posts',
+    label: 'Departments',
     allowedRoles: [RoleEnum.ADMIN]
-
 }]

@@ -4,6 +4,7 @@ import { Lectures } from './lectures';
 
 export interface Course {
     id?: number,
+    name?: string,
     department?: Department,
     degree?: Degree,
     syllabus?: string,

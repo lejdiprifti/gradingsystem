@@ -5,6 +5,7 @@ import java.util.List;
 public class CourseModel {
 	
 	private Long id;
+	private String name;
 	private DepartmentModel department;
 	private DegreeModel degree;
 	private String syllabus;
@@ -23,6 +24,14 @@ public class CourseModel {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public DepartmentModel getDepartment() {

@@ -6,6 +6,7 @@ import { Department } from '@ikubinfo/core/models/department';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
 import { ConfirmationService } from 'primeng/primeng';
+import { DepartmentService } from '@ikubinfo/core/services/department.service';
 
 @Component({
   selector: 'ikubinfo-teacher',
@@ -20,9 +21,11 @@ export class TeacherComponent implements OnInit {
   constructor(private teacherService: TeacherService, private fb: FormBuilder,
     private active: ActivatedRoute, private logger: LoggerService, 
     private confirmationService: ConfirmationService,
-    private router: Router) { }
+    private router: Router, private departmentService: DepartmentService) { }
 
   ngOnInit() {
+    this.loadData();
+    this.initializeForm();
   }
 
   loadData(): void {
@@ -119,5 +122,13 @@ export class TeacherComponent implements OnInit {
       }
     });
   }
+}
+
+getDepartments(): void {
+  this.departmentService.getAll().subscribe(res => {
+    this.departments = res;
+  }, err=>{
+    this.logger.error('Error', 'Something bad happened.');
+  })
 }
 }

@@ -28,11 +28,11 @@
       <ikubinfo-input label="Department">
         <select class="custom-select"  formControlName="department">
           <option value="" disabled>Choose the Department</option>
-          <option *ngFor="let dep of department" [ngValue]="dep.id">{{dep.name}}</option>
+          <option *ngFor="let dep of departments" [ngValue]="dep.id">{{dep.name}}</option>
         </select>
       </ikubinfo-input>
     </form>
-    <button pButton type="submit" (click)="submit()" [disabled]="studentForm.invalid" class="ui-button-success" label="Submit" icon="pi pi-file"></button>
+    <button pButton type="submit" (click)="submit()" [disabled]="teacherForm.invalid" class="ui-button-success" label="Submit" icon="pi pi-file"></button>
     <button pButton type="button" (click)="reset()" class="ui-button-secondary reset" label="Reset" icon="pi pi-times"></button>
   </div>
 </ikubinfo-panel>

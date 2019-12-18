@@ -11,6 +11,9 @@ import { GroupsComponent } from './admin/groups/groups.component';
 import { DegreeComponent } from './admin/degree/degree.component';
 import { GroupComponent } from './admin/group/group.component';
 import { TeachersComponent } from './admin/teachers/teachers.component';
+import { DepartmentsComponent } from './admin/departments/departments.component';
+import { DepartmentComponent } from './admin/department/department.component';
+import { TeacherComponent } from './admin/teacher/teacher.component';
 
 const suggestionRoutes: Routes = [
     {
@@ -18,8 +21,10 @@ const suggestionRoutes: Routes = [
         component: FullComponent,
         children: [
             { path: 'dashboard', component: StudentDashboardComponent },
-            { path: 'posts', component: StudentDashboardComponent, canActivate: [AdminGuard] },
-            { path: 'post/:id', component: StudentDashboardComponent, canActivate: [AdminGuard] },
+            {path: 'departments', component: DepartmentsComponent, canActivate:[AdminGuard]},
+            {path: 'departments/:id' + '/teachers', component: TeachersComponent, canActivate:[AdminGuard]},
+            {path: 'department/:id', component: DepartmentComponent, canActivate: [AdminGuard]},
+            {path: 'department', component: DepartmentComponent, canActivate: [AdminGuard]},
             {path: 'students', component: AdminStudentsComponent, canActivate: [AdminGuard]},
             {path: 'student/:id', component: StudentComponent, canActivate: [AdminGuard]},
             {path: 'student', component: StudentComponent, canActivate: [AdminGuard]},
@@ -30,6 +35,8 @@ const suggestionRoutes: Routes = [
             {path: 'degree/:id' + '/group', component: GroupComponent, canActivate: [AdminGuard]},
             {path: 'degree/:id' + '/group/:groupId', component: GroupComponent, canActivate: [AdminGuard]},
             {path: 'teachers', component: TeachersComponent, canActivate:[AdminGuard]},
+            {path: 'teacher', component: TeacherComponent, canActivate: [AdminGuard]},
+            
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
         ]
     }

@@ -7,6 +7,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.feut.entity.DepartmentEntity;
 
@@ -34,10 +35,12 @@ public class DepartmentRepository {
 		return query.getSingleResult();
 	}
 	
+	@Transactional
 	public void save(DepartmentEntity department) {
 		em.persist(department);
 	}
 	
+	@Transactional
 	public void edit(DepartmentEntity department) {
 		em.merge(department);
 	}

@@ -64,7 +64,7 @@ export class DegreeComponent implements OnInit {
   submit(): void {
     if (this.degree) {
       this.degreeService.edit(Number(this.degree.id), this.getData()).subscribe(res => {
-        this.logger.info('Success', 'Degree was successfully added.');
+        this.logger.success('Success', 'Degree was successfully added.');
         this.router.navigate(['feut/degrees']);
 
       },

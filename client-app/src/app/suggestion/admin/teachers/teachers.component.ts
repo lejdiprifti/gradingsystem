@@ -3,7 +3,8 @@ import { TeacherService } from '@ikubinfo/core/services/teacher.service';
 import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
 import { ConfirmationService, MenuItem } from 'primeng/primeng';
 import { Teacher } from '@ikubinfo/core/models/teacher';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { DepartmentService } from '@ikubinfo/core/services/department.service';
 
 @Component({
   selector: 'ikubinfo-teachers',
@@ -16,10 +17,11 @@ export class TeachersComponent implements OnInit {
   items: MenuItem[];
   cols: any[];
   constructor(private teacherService: TeacherService, private logger: LoggerService,
-    private confirmationService: ConfirmationService,
-    private router: Router) { }
+    private confirmationService: ConfirmationService,private active: ActivatedRoute,
+    private router: Router, private departmentService: DepartmentService) { }
 
   ngOnInit() {
+    this.loadData();
     this.items = [
       { label: 'Edit', icon: 'pi pi-pencil', command: (event) =>  this.editTeacher(this.selectedTeacher)},
       { label: 'Delete', icon: 'pi pi-times', command: (event) =>  this.deleteTeacher(this.selectedTeacher)}
@@ -38,12 +40,21 @@ export class TeachersComponent implements OnInit {
   }
 
   loadData(): void{
+    const id = this.active.snapshot.paramMap.get('id');
+    if (id){
+      this.departmentService.getTeachersByDepartment(Number(id)).subscribe(res => {
+        this.teachers = res;
+      }, err=>{
+        this.logger.error('Error', 'Something bad happened.');
+      })
+    } else {
     this.teacherService.getAll().subscribe(res=>{
       this.teachers = res;
     },
     err=>{
       this.logger.error('Error', 'Something bad happened.');
     })
+  }
   }
 
   deleteTeacher(teacher: Teacher): void{

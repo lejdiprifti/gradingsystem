@@ -7,7 +7,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.feut.entity.CourseEntity;
 import com.feut.entity.DepartmentEntity;
+import com.feut.entity.TeacherEntity;
 import com.feut.model.DepartmentModel;
 
 @Component
@@ -25,6 +27,12 @@ public class DepartmentConverter {
 	}
 	
 	public DepartmentModel toModel(DepartmentEntity entity) {
+		for (TeacherEntity teacher: entity.getTeacherList()) {
+			teacher.getDepartment().setTeacherList(null);
+		}
+		for (CourseEntity course: entity.getCourseList()) {
+			course.getDepartment().setCourseList(null);
+		}
 		return modelMapper.map(entity, DepartmentModel.class);
 	}
 	
