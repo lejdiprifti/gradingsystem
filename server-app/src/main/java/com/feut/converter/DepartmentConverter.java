@@ -28,10 +28,10 @@ public class DepartmentConverter {
 	
 	public DepartmentModel toModel(DepartmentEntity entity) {
 		for (TeacherEntity teacher: entity.getTeacherList()) {
-			teacher.getDepartment().setTeacherList(null);
+			teacher.setDepartment(null);
 		}
 		for (CourseEntity course: entity.getCourseList()) {
-			course.getDepartment().setCourseList(null);
+			course.setDepartment(null);
 		}
 		return modelMapper.map(entity, DepartmentModel.class);
 	}
