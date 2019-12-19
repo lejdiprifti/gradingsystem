@@ -16,6 +16,7 @@ import { DepartmentComponent } from './admin/department/department.component';
 import { TeacherComponent } from './admin/teacher/teacher.component';
 import { CoursesComponent } from './admin/courses/courses.component';
 import { CourseComponent } from './admin/course/course.component';
+import { LecturesComponent } from './admin/lectures/lectures.component';
 
 const suggestionRoutes: Routes = [
     {
@@ -39,6 +40,7 @@ const suggestionRoutes: Routes = [
             {path: 'degree/:id', component:DegreeComponent, canActivate: [AdminGuard]},
             {path: 'degree', component: DegreeComponent, canActivate: [AdminGuard]},
             {path: 'degree/:id'  + '/groups', component: GroupsComponent, canActivate: [AdminGuard]},
+            {path: 'degree/:degreeId' + '/group/:groupId'+'/lectures', component: LecturesComponent, canActivate:[AdminGuard]},
             {path: 'degree/:id' + '/group', component: GroupComponent, canActivate: [AdminGuard]},
             {path: 'degree/:id' + '/group/:groupId', component: GroupComponent, canActivate: [AdminGuard]},
             {path: 'teachers', component: TeachersComponent, canActivate:[AdminGuard]},

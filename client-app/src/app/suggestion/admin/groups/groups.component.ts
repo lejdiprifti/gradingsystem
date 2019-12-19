@@ -24,6 +24,7 @@ export class GroupsComponent implements OnInit {
   ngOnInit() {
     this.loadGroups();
     this.items = [
+      {label: 'Lectures', icon: 'pi pi-pencil', command: (event) => this.openLectures(this.selectedGroup)},
       { label: 'Edit', icon: 'pi pi-pencil', command: (event) =>  this.editGroup(this.selectedGroup)},
       { label: 'Delete', icon: 'pi pi-times', command: (event) =>  this.deleteGroup(this.selectedGroup)}
     ];
@@ -74,4 +75,8 @@ export class GroupsComponent implements OnInit {
     this.router.navigate(['feut/degree/' + id +'/group']);
   }
 
+  openLectures(group: Group):void{
+    const degreeId = this.activated.snapshot.paramMap.get('id');
+    this.router.navigate(['feut/degree/'+ degreeId+'/group/'+group.id+'/lectures']);
+  }
 }

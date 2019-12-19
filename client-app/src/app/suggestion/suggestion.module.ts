@@ -19,11 +19,12 @@ import { DepartmentComponent } from './admin/department/department.component';
 import { TeacherComponent } from './admin/teacher/teacher.component';
 import { CoursesComponent } from './admin/courses/courses.component';
 import { CourseComponent } from './admin/course/course.component';
+import { LecturesComponent } from './admin/lectures/lectures.component';
 
 @NgModule({
     imports: [CommonsModule, SuggestionRoutingModule, LayoutModule, FormsModule],
     exports: [],
-    declarations: [StudentDashboardComponent, AdminStudentsComponent,StudentComponent, 
+    declarations: [StudentDashboardComponent, AdminStudentsComponent,StudentComponent,LecturesComponent, 
         DegreesComponent,DepartmentComponent,TeacherComponent,CoursesComponent, CourseComponent,
          GroupsComponent,DegreeComponent, GroupComponent, TeachersComponent,DepartmentsComponent],
     providers: []

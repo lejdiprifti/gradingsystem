@@ -34,9 +34,6 @@ public class CourseRepository {
 		query.setParameter(1, id);
 		query.setParameter(2, true);
 		List<CourseEntity> list = query.getResultList();
-		for (CourseEntity entity: list) {
-		System.out.println(entity.getName());
-		}
 		return list;
 	}
 	

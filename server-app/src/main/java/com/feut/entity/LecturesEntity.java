@@ -7,10 +7,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="lectures",schema="feut")
+@NamedQueries({
+	@NamedQuery(name="Lectures.getByGroup", query = "Select l from LecturesEntity l Join GroupEntity g on l.group = g.id "
+			+ "where g.id = ?1 and l.active = ?2"),
+	@NamedQuery(name="Lectures.getById", query = "Select l from LecturesEntity l where l.id = ?1 and l.active =?2"),
+	@NamedQuery(name="Lectures.getByTeacher", query = "Select l from LecturesEntity l Join TeacherEntity t on t.id = l.teacher"
+			+ " where t.id = ?1 and l.active = ?2")
+})
 public class LecturesEntity {
 	
 	@Id
