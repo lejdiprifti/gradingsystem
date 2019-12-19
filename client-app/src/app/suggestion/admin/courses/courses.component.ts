@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Course } from '@ikubinfo/core/models/course';
 import { DepartmentService } from '@ikubinfo/core/services/department.service';
 import { DegreeService } from '@ikubinfo/core/services/degree.service';
+import { ConfirmationService } from 'primeng/components/common/confirmationservice';
 
 @Component({
   selector: 'ikubinfo-courses',
@@ -17,7 +18,8 @@ export class CoursesComponent implements OnInit {
   check: boolean;
   constructor(private courseService: CourseService, private logger: LoggerService,
     private active: ActivatedRoute, private departmentService: DepartmentService,
-    private degreeService: DegreeService, private router: Router) { }
+    private degreeService: DegreeService, private router: Router, 
+    private confirmationService: ConfirmationService) { }
 
   ngOnInit() {
     this.loadCourses();
@@ -52,6 +54,21 @@ export class CoursesComponent implements OnInit {
     this.router.navigate(['feut/courses/'+ id])
   }
 
+  deleteCourse(id: number): void {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete this course?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.courseService.delete(id).subscribe(res => {
+          this.loadCourses();
+          this.logger.info('Info', 'Course was deleted successfully!');
+        }, err=>{
+          this.logger.error('Error', 'Something bad happened.');
+        })
+      }
+    })
+  }
   addCourse(): void {
     const id = this.active.snapshot.paramMap.get('degreeId');
     this.router.navigate(['feut/degree/'+id+'/course']);

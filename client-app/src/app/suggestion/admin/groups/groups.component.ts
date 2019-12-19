@@ -4,7 +4,7 @@ import { Group } from '@ikubinfo/core/models/group';
 import { DegreeService } from '@ikubinfo/core/services/degree.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
-import { MenuItem } from 'primeng/primeng';
+import { MenuItem, ConfirmationService } from 'primeng/primeng';
 
 @Component({
   selector: 'ikubinfo-groups',
@@ -18,7 +18,8 @@ export class GroupsComponent implements OnInit {
   cols: any[];
   selectedGroup: Group;
   constructor(private degreeService: DegreeService, private activated: ActivatedRoute,
-    private logger: LoggerService, private router: Router) { }
+    private groupService: GroupService,
+    private logger: LoggerService, private router: Router, private confirmationService: ConfirmationService) { }
 
   ngOnInit() {
     this.loadGroups();
@@ -53,7 +54,19 @@ export class GroupsComponent implements OnInit {
   }
 
   deleteGroup(group: Group): void{
-
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete this group?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.groupService.delete(group.id).subscribe(res => {
+          this.loadGroups();
+          this.logger.info('Info', 'Group was deleted successfully.');
+        }, err => {
+          this.logger.error('Error', 'Something bad happened.');
+        })
+      }
+    })
   }
 
   addGroup(): void {
