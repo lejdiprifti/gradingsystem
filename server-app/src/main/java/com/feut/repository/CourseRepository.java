@@ -29,11 +29,15 @@ public class CourseRepository {
 		return query.getResultList();
 	}
 	
-	public List<CourseEntity> getByDegree(DegreeEntity degree) {
+	public List<CourseEntity> getByDegree(Long id) {
 		TypedQuery<CourseEntity> query = em.createNamedQuery("Course.getByDegree", CourseEntity.class);
-		query.setParameter(1, degree);
+		query.setParameter(1, id);
 		query.setParameter(2, true);
-		return query.getResultList();
+		List<CourseEntity> list = query.getResultList();
+		for (CourseEntity entity: list) {
+		System.out.println(entity.getName());
+		}
+		return list;
 	}
 	
 	public List<CourseEntity> getByDepartment(DepartmentEntity department){

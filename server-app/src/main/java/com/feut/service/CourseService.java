@@ -37,8 +37,7 @@ public class CourseService {
 	}
 	
 	public List<CourseModel> getByDegree(Long degreeId){
-		DegreeEntity degree = degreeRepository.getById(degreeId);
-		return courseConverter.toModel(courseRepository.getByDegree(degree));
+		return courseConverter.toModel(courseRepository.getByDegree(degreeId));
 	}
 	
 	public CourseModel getById(Long id) {
@@ -60,7 +59,7 @@ public class CourseService {
 	}
 	
 	public void edit(CourseModel model, Long id) {
-		CourseEntity entity = new CourseEntity();
+		CourseEntity entity = courseRepository.getById(id);
 		entity.setName(model.getName());
 		entity.setSyllabus(model.getSyllabus());
 		entity.setDepartment(departmentRepository.getById(model.getDepartmentId()));

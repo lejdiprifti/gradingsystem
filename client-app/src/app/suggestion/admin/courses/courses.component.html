@@ -1,4 +1,4 @@
-<button pButton (click)="addCourse()" class="ui-button-info" label="Add Course" icon="pi pi-plus"></button>
+<button pButton *ngIf="check" (click)="addCourse()" class="ui-button-info" label="Add Course" icon="pi pi-plus"></button>
 <div class="row">           
   <div class="col col-xl-6 col-lg-12" *ngFor="let course of courses">
     <div class="panel">
@@ -7,7 +7,7 @@
         <h1>{{ course.name }}</h1>
         <p> {{course.syllabus}}</p>
         <p>Department: {{course.department.name}}</p>
-        <p> Degree: {{course.degree.name}}</p>
+        <p> Degree: {{course.degree.title}}</p>
         <button pButton icon="pi pi-check" class="ui-button-info button" (click)="editCourse(course.id)" label="Edit Course"></button>
         <button pButton icon="pi pi-times" class="ui-button-danger button" (click)="deleteCourse(course.id)" label="Delete"></button>
       </div>

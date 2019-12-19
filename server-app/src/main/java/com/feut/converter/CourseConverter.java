@@ -25,6 +25,8 @@ public class CourseConverter {
 	}
 	
 	public CourseModel toModel(CourseEntity entity) {
+		entity.getDegree().setGroupList(null);
+		entity.getDepartment().setTeacherList(null);
 		entity.getDegree().setCourseList(null);
 		entity.getDepartment().setCourseList(null);
 		return modelMapper.map(entity, CourseModel.class);
@@ -33,7 +35,7 @@ public class CourseConverter {
 	public List<CourseModel> toModel(List<CourseEntity> entityList){
 		List<CourseModel> modelList = new ArrayList<CourseModel>();
 		for (CourseEntity course: entityList) {
-			toModel(course);
+			modelList.add(toModel(course));
 		}
 		return modelList;
 	}

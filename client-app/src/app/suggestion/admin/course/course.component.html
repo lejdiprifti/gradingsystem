@@ -9,7 +9,7 @@
       </ikubinfo-input>
       <ikubinfo-input label="Degree">
         <select class="custom-select"  formControlName="degree">
-          <option value="" disabled>{{degree.title}}</option>
+          <option [ngValue]="degree.id" disabled>{{degree.title}}</option>
           </select>
       </ikubinfo-input>
       <ikubinfo-input label="Department">

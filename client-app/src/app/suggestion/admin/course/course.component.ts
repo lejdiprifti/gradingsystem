@@ -36,6 +36,7 @@ export class CourseComponent implements OnInit {
     if (courseId) {
       this.courseService.getById(Number(courseId)).subscribe(data => {
           this.course = data;
+          this.degree = this.course.degree;
           this.courseForm.get('name').setValue(this.course.name);
           this.courseForm.get('syllabus').setValue(this.course.syllabus);
           this.courseForm.get('degree').setValue(this.course.degree.id);
@@ -47,6 +48,7 @@ export class CourseComponent implements OnInit {
     } else {
       this.degreeService.getById(Number(degreeId)).subscribe(res => {
         this.degree = res;
+        this.courseForm.get('degree').setValue(this.degree.id);
       },err=>{
         this.logger.error('Error', 'Something bad happened.');
       })
@@ -67,9 +69,9 @@ export class CourseComponent implements OnInit {
   }
 
   fillForm(data: Course = {}): void {
-    this.courseForm.get('title').setValue(data.name);
+    this.courseForm.get('name').setValue(data.name);
     this.courseForm.get('syllabus').setValue(data.syllabus);
-    this.courseForm.get('degree').setValue(data.degree.id);
+    this.courseForm.get('degree').setValue(this.degree.id);
     this.courseForm.get('department').setValue(data.department.id);
   }
 
@@ -77,7 +79,7 @@ export class CourseComponent implements OnInit {
     return {
       name: this.courseForm.get('name').value,
       syllabus: this.courseForm.get('syllabus').value,
-      degreeId: Number(this.active.snapshot.paramMap.get('degreeId')),
+      degreeId: Number(this.active.snapshot.paramMap.get('degreeId')) || this.degree.id,
       departmentId: this.courseForm.get('department').value
     }
 
@@ -88,7 +90,6 @@ export class CourseComponent implements OnInit {
       this.courseService.edit(Number(this.course.id), this.getData()).subscribe(res => {
         this.logger.success('Success', 'Degree was successfully added.');
         this.router.navigate(['feut/degrees']);
-
       },
       err => {
         this.logger.error('Error', 'Student already exists.');

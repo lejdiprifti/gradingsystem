@@ -28,7 +28,7 @@ const suggestionRoutes: Routes = [
             {path: 'department/:id', component: DepartmentComponent, canActivate: [AdminGuard]},
             {path: 'department', component: DepartmentComponent, canActivate: [AdminGuard]},
             {path: 'courses', component: CoursesComponent, canActivate: [AdminGuard]},
-            {path: 'course/:id', component: CourseComponent, canActivate: [AdminGuard]},
+            {path: 'courses/:courseId', component: CourseComponent, canActivate: [AdminGuard]},
             {path: 'degree/:degreeId' + '/course', component: CourseComponent, canActivate: [AdminGuard]},
             {path: 'departments/:departmentId' + '/courses', component:CoursesComponent, canActivate: [AdminGuard]},
             {path: 'degree/:degreeId' + '/courses', component: CoursesComponent, canActivate: [AdminGuard]},

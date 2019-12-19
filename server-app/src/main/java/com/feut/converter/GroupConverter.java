@@ -25,6 +25,7 @@ public class GroupConverter {
 		for (StudentEntity student : entity.getStudentList()) {
 			student.setGroup(null);
 		}
+		entity.getDegree().setCourseList(null);
 		entity.getDegree().setGroupList(null);
 		return modelMapper.map(entity, GroupModel.class);
 	}

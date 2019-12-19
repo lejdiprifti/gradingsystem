@@ -14,6 +14,7 @@ import { DegreeService } from '@ikubinfo/core/services/degree.service';
 export class CoursesComponent implements OnInit {
 
   courses: Array<Course>;
+  check: boolean;
   constructor(private courseService: CourseService, private logger: LoggerService,
     private active: ActivatedRoute, private departmentService: DepartmentService,
     private degreeService: DegreeService, private router: Router) { }
@@ -25,6 +26,7 @@ export class CoursesComponent implements OnInit {
   loadCourses(): void {
     const degreeId = this.active.snapshot.paramMap.get('degreeId');
     const departmentId = this.active.snapshot.paramMap.get('departmentId');
+    this.check = (departmentId==null);
     if (departmentId) {
       this.departmentService.getCoursesByDepartment(Number(departmentId)).subscribe(res => {
         this.courses = res;

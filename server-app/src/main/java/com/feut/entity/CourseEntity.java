@@ -20,7 +20,8 @@ import javax.persistence.Table;
 @NamedQueries({
 	@NamedQuery(name="Course.getAll", query="Select c From CourseEntity c where c.active = ?1"),
 	@NamedQuery(name="Course.getById", query="Select c From CourseEntity c where c.id = ?1 and c.active =?2"),
-	@NamedQuery(name="Course.getByDegree", query = "Select c From CourseEntity c where c.degree = ?1 and c.active = ?2"),
+	@NamedQuery(name="Course.getByDegree", query = "Select c From CourseEntity c  JOIN DegreeEntity d ON c.degree = d.id "
+			+ "WHERE d.id = ?1 and c.active = ?2"),
 	@NamedQuery(name="Course.getByDepartment", query = "Select c from CourseEntity c where c.department = ?1 and c.active =?2")
 	})
 public class CourseEntity {

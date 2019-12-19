@@ -26,7 +26,8 @@ public class StudentConverter  {
 	
 	public StudentModel toModel(StudentEntity entity) {
 		entity.getGroup().setStudentList(null);
-		entity.getGroup().getDegree().setGroupList(null);;
+		entity.getGroup().getDegree().setGroupList(null);
+		entity.getGroup().getDegree().setCourseList(null);
 		return modelMapper.map(entity, StudentModel.class);
 	}
 	
