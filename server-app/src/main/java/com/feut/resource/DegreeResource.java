@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.feut.model.CourseModel;
 import com.feut.model.DegreeModel;
 import com.feut.model.GroupModel;
+import com.feut.service.CourseService;
 import com.feut.service.DegreeService;
 import com.feut.service.GroupService;
 
@@ -31,6 +33,9 @@ public class DegreeResource {
 	
 	@Autowired
 	private GroupService groupService;
+	
+	@Autowired
+	private CourseService courseService;
 	
 	public DegreeResource() {
 		
@@ -51,6 +56,10 @@ public class DegreeResource {
 		return new ResponseEntity<List<GroupModel>>(groupService.getByDegree(id),HttpStatus.OK);
 	}
 	
+	@GetMapping("/{id}/courses")
+	public ResponseEntity<List<CourseModel>> getCoursesByDegree(@PathVariable("id") Long id){
+		return new ResponseEntity<List<CourseModel>>(courseService.getByDegree(id), HttpStatus.OK);
+	}
 	@PostMapping(path = "/{id}/groups", consumes = "application/json")
 	@ResponseStatus(HttpStatus.CREATED)
 	public void addNewGroup(@RequestBody GroupModel model, @PathVariable("id") Long id) {

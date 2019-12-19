@@ -37,11 +37,10 @@ public class DegreeEntity implements Serializable{
 	@Column(name="syllabus", length = 5000)
 	private String syllabus;
 	
-	@JsonIgnore
+	
 	@OneToMany(mappedBy="degree", fetch = FetchType.LAZY)
 	private List<GroupEntity> groupList;
-	
-	@JsonIgnore
+
 	@OneToMany(mappedBy="degree", fetch = FetchType.LAZY)
 	private List<CourseEntity> courseList;
 	

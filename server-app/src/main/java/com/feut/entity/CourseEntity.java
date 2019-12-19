@@ -10,11 +10,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="course", schema="feut")
+@NamedQueries({
+	@NamedQuery(name="Course.getAll", query="Select c From CourseEntity c where c.active = ?1"),
+	@NamedQuery(name="Course.getById", query="Select c From CourseEntity c where c.id = ?1 and c.active =?2"),
+	@NamedQuery(name="Course.getByDegree", query = "Select c From CourseEntity c where c.degree = ?1 and c.active = ?2"),
+	@NamedQuery(name="Course.getByDepartment", query = "Select c from CourseEntity c where c.department = ?1 and c.active =?2")
+	})
 public class CourseEntity {
 	
 	@Id

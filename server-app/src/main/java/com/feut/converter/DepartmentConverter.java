@@ -32,6 +32,7 @@ public class DepartmentConverter {
 		}
 		for (CourseEntity course: entity.getCourseList()) {
 			course.setDepartment(null);
+			course.setDegree(null);
 		}
 		return modelMapper.map(entity, DepartmentModel.class);
 	}

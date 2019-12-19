@@ -14,6 +14,8 @@ import { TeachersComponent } from './admin/teachers/teachers.component';
 import { DepartmentsComponent } from './admin/departments/departments.component';
 import { DepartmentComponent } from './admin/department/department.component';
 import { TeacherComponent } from './admin/teacher/teacher.component';
+import { CoursesComponent } from './admin/courses/courses.component';
+import { CourseComponent } from './admin/course/course.component';
 
 const suggestionRoutes: Routes = [
     {
@@ -25,6 +27,11 @@ const suggestionRoutes: Routes = [
             {path: 'departments/:id' + '/teachers', component: TeachersComponent, canActivate:[AdminGuard]},
             {path: 'department/:id', component: DepartmentComponent, canActivate: [AdminGuard]},
             {path: 'department', component: DepartmentComponent, canActivate: [AdminGuard]},
+            {path: 'courses', component: CoursesComponent, canActivate: [AdminGuard]},
+            {path: 'course/:id', component: CourseComponent, canActivate: [AdminGuard]},
+            {path: 'degree/:degreeId' + '/course', component: CourseComponent, canActivate: [AdminGuard]},
+            {path: 'departments/:departmentId' + '/courses', component:CoursesComponent, canActivate: [AdminGuard]},
+            {path: 'degree/:degreeId' + '/courses', component: CoursesComponent, canActivate: [AdminGuard]},
             {path: 'students', component: AdminStudentsComponent, canActivate: [AdminGuard]},
             {path: 'student/:id', component: StudentComponent, canActivate: [AdminGuard]},
             {path: 'student', component: StudentComponent, canActivate: [AdminGuard]},

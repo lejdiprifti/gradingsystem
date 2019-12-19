@@ -8,6 +8,8 @@ public class CourseModel {
 	private String name;
 	private DepartmentModel department;
 	private DegreeModel degree;
+	private Long degreeId;
+	private Long departmentId;
 	private String syllabus;
 	private List<LecturesModel> lecturesList;
 	private List<GradeModel> gradeList;
@@ -78,8 +80,24 @@ public class CourseModel {
 		return active;
 	}
 
+	public Long getDegreeId() {
+		return degreeId;
+	}
+
+	public void setDegreeId(Long degreeId) {
+		this.degreeId = degreeId;
+	}
+
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+
+	public Long getDepartmentId() {
+		return departmentId;
+	}
+
+	public void setDepartmentId(Long departmentId) {
+		this.departmentId = departmentId;
 	}
 
 	@Override

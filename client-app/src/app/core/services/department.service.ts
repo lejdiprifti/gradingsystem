@@ -3,6 +3,7 @@ import { ApiService } from '../utilities/api.service';
 import { Observable } from 'rxjs';
 import { Department } from '../models/department';
 import { Teacher } from '../models/teacher';
+import { Course } from '../models/course';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,11 @@ constructor(private apiService: ApiService) { }
   public getTeachersByDepartment(id: number): Observable<Array<Teacher>>{
     return this.apiService.get(this.url + '/' +id+'/teachers');
   }
+
+  public getCoursesByDepartment(id: number): Observable<Array<Course>>{
+    return this.apiService.get(this.url + '/' +id+'/courses');
+  }
+  
   public add(department: Department): Observable<void>{
     return this.apiService.post(this.url, department);
   }

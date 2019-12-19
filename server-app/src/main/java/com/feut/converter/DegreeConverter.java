@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.feut.entity.CourseEntity;
 import com.feut.entity.DegreeEntity;
 import com.feut.entity.GroupEntity;
 import com.feut.model.DegreeModel;
@@ -30,6 +31,11 @@ public class DegreeConverter {
 			group.setDegree(null);
 			group.setStudentList(null);
 		}
+	for (CourseEntity course: entity.getCourseList()) {
+		course.setDegree(null);
+		course.getDepartment().setCourseList(null);
+		course.getDepartment().setTeacherList(null);
+	}
 		return modelMapper.map(entity, DegreeModel.class);
 	}
 	

@@ -37,4 +37,8 @@ export class DegreesComponent implements OnInit {
   addDegree(): void{
     this.router.navigate(['feut/degree']);
   }
+
+  openCourses(id: number): void {
+    this.router.navigate(['feut/degree/'+id+'/courses']);
+  }
 }

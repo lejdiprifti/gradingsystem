@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.feut.model.CourseModel;
 import com.feut.model.DepartmentModel;
 import com.feut.model.TeacherModel;
+import com.feut.service.CourseService;
 import com.feut.service.DepartmentService;
 import com.feut.service.TeacherService;
 
@@ -31,6 +33,9 @@ public class DepartmentResource {
 	
 	@Autowired
 	private TeacherService teacherService;
+	
+	@Autowired
+	private CourseService courseService;
 	
 	public DepartmentResource() {
 		
@@ -49,6 +54,11 @@ public class DepartmentResource {
 	@GetMapping("/{id}/teachers")
 	public ResponseEntity<List<TeacherModel>> getTeachersByDepartment(@PathVariable("id") Long id){
 		return new ResponseEntity<List<TeacherModel>>(teacherService.getByDepartment(id), HttpStatus.OK);
+	}
+	
+	@GetMapping("/{id}/courses")
+	public ResponseEntity<List<CourseModel>> getCoursesByDepartment(@PathVariable("id") Long id){
+		return new ResponseEntity<List<CourseModel>>(courseService.getByDepartment(id), HttpStatus.OK);
 	}
 	
 	@PostMapping(consumes ="application/json")
