@@ -1,3 +1,14 @@
-<p>
-  lecture works!
-</p>
+<ikubinfo-panel header="{{lecture.course.name}}">
+  <div panel-content>
+    <form role="form" [formGroup]="lectureForm">
+      <ikubinfo-input label="Teacher">
+        <select class="custom-select"  formControlName="teacher">
+          <option value="" disabled>Choose the teacher</option>
+          <option *ngFor="let teacher of teachers" [ngValue]="teacher.id">{{teacher.firstName}} {{teacher.lastName}}</option>
+        </select>
+      </ikubinfo-input>
+    </form>
+    <button pButton type="submit" (click)="submit()" [disabled]="lectureForm.invalid" class="ui-button-success" label="Submit" icon="pi pi-file"></button>
+    <button pButton type="button" (click)="reset()" class="ui-button-secondary reset" label="Reset" icon="pi pi-times"></button>
+  </div>
+</ikubinfo-panel>

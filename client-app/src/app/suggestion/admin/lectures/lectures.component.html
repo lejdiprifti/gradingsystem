@@ -16,7 +16,7 @@
             <tr [pContextMenuRow]="rowData">
               <td *ngFor="let col of columns">
                <p *ngIf="col.field != 'teacher'"> {{ rowData[col.field].name }}</p>
-               <p>{{ rowData[col.field].firstName }}</p>
+               <p *ngIf="rowData[col.field] != null">{{ rowData[col.field].firstName }}</p>
               </td>
             </tr>
           </ng-template>

@@ -7,11 +7,14 @@ import org.springframework.stereotype.Service;
 
 import com.feut.converter.CourseConverter;
 import com.feut.entity.CourseEntity;
-import com.feut.entity.DegreeEntity;
+import com.feut.entity.GroupEntity;
+import com.feut.entity.LecturesEntity;
 import com.feut.model.CourseModel;
 import com.feut.repository.CourseRepository;
 import com.feut.repository.DegreeRepository;
 import com.feut.repository.DepartmentRepository;
+import com.feut.repository.GroupRepository;
+import com.feut.repository.LecturesRepository;
 
 @Service
 public class CourseService {
@@ -27,6 +30,12 @@ public class CourseService {
 	
 	@Autowired
 	private DepartmentRepository departmentRepository;
+	
+	@Autowired
+	private LecturesRepository lecturesRepository;
+	
+	@Autowired
+	private GroupRepository groupRepository;
 	
 	public CourseService() {
 		
@@ -56,7 +65,15 @@ public class CourseService {
 		entity.setDepartment(departmentRepository.getById(model.getDepartmentId()));
 		entity.setActive(true);
 		courseRepository.save(entity);
-	}
+		LecturesEntity lecture = new LecturesEntity();
+		lecture.setCourse(entity);
+		lecture.setTeacher(null);
+		lecture.setActive(true);
+		for (GroupEntity group : groupRepository.getByDegree(model.getDegreeId())) {
+			lecture.setGroup(group);
+			lecturesRepository.save(lecture);
+		}
+		}
 	
 	public void edit(CourseModel model, Long id) {
 		CourseEntity entity = courseRepository.getById(id);

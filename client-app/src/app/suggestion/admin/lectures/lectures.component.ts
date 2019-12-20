@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Lectures } from '@ikubinfo/core/models/lectures';
 import { Course } from '@ikubinfo/core/models/course';
 import { Teacher } from '@ikubinfo/core/models/teacher';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '@ikubinfo/core/services/course.service';
 import { TeacherService } from '@ikubinfo/core/services/teacher.service';
 import { DegreeService } from '@ikubinfo/core/services/degree.service';
@@ -12,8 +12,8 @@ import { Group } from '@ikubinfo/core/models/group';
 import { GroupService } from '@ikubinfo/core/services/group.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LecturesService } from '@ikubinfo/core/services/lectures.service';
-import { ConfirmationService } from 'primeng/primeng';
-import { MenuItem } from '@ikubinfo/layout/sidebar/menu-item';
+import { ConfirmationService, MenuItem } from 'primeng/primeng';
+
 
 @Component({
   selector: 'ikubinfo-lectures',
@@ -33,17 +33,17 @@ export class LecturesComponent implements OnInit {
   constructor(private active: ActivatedRoute, private courseService: CourseService
     ,private teacherService: TeacherService, private degreeService: DegreeService,
     private logger: LoggerService,private lecturesService: LecturesService,
-    private confirmationService: ConfirmationService,
+    private confirmationService: ConfirmationService,private router: Router,
     private groupService: GroupService,private fb:FormBuilder) { }
 
   ngOnInit() {
+    this.lectures=[];
+    this.lecture = {};
     this.loadGroup();
     this.loadCourses();
     this.loadTeacher();
-    this.lectures=[];
     this.items = [
-      { label: 'Edit', icon: 'pi pi-pencil'},
-      { label: 'Delete', icon: 'pi pi-times'}
+      { label: 'Edit', icon: 'pi pi-pencil', command: (event) => this.editLecture(this.selectedLecture)}
     ];
 
     this.cols = [
@@ -56,9 +56,9 @@ export class LecturesComponent implements OnInit {
       this.lecturesService.getByGroupAndCourse(this.group.id, course.id).subscribe(res => {
         this.lecture = res;
         this.lectures.push(this.lecture);
-      }, err=>{
+      }, err=> {
         this.logger.error('Error', 'Something bad happened.');
-      })
+            })
   }
 
   loadGroup(): void {
@@ -89,5 +89,9 @@ export class LecturesComponent implements OnInit {
       }, err=>{
         this.logger.error('Error', 'Something bad happened.');
       })
+  }
+
+  editLecture(lecture: Lectures): void {
+    this.router.navigate(['feut/degree/'+this.active.snapshot.paramMap.get('degreeId')+'/group/'+this.active.snapshot.paramMap.get('groupId')+'/lecture/'+lecture.id]);
   }
 }

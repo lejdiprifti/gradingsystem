@@ -16,6 +16,10 @@ constructor(private apiService: ApiService) { }
     return this.apiService.get(this.url + '/group/'+groupId+'/course/'+courseId);
   }
 
+  public getById(id: number): Observable<Lectures>{
+    return this.apiService.get(this.url + '/'+id);
+  }
+
   public save(lecture: Lectures): Observable<void>{
     return this.apiService.post(this.url, lecture);
   }
