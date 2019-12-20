@@ -13,6 +13,7 @@ import { GroupService } from '@ikubinfo/core/services/group.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LecturesService } from '@ikubinfo/core/services/lectures.service';
 import { ConfirmationService } from 'primeng/primeng';
+import { MenuItem } from '@ikubinfo/layout/sidebar/menu-item';
 
 @Component({
   selector: 'ikubinfo-lectures',
@@ -26,7 +27,9 @@ export class LecturesComponent implements OnInit {
   teachers: Array<Teacher>;
   lecture: Lectures;
   group: Group;
-  lecturesForm: FormGroup;
+  selectedLecture:  Lectures;
+  items: MenuItem[];
+  cols: any[];
   constructor(private active: ActivatedRoute, private courseService: CourseService
     ,private teacherService: TeacherService, private degreeService: DegreeService,
     private logger: LoggerService,private lecturesService: LecturesService,
@@ -34,18 +37,27 @@ export class LecturesComponent implements OnInit {
     private groupService: GroupService,private fb:FormBuilder) { }
 
   ngOnInit() {
-    this.initializeForm();
     this.loadGroup();
     this.loadCourses();
     this.loadTeacher();
+    this.lectures=[];
+    this.items = [
+      { label: 'Edit', icon: 'pi pi-pencil'},
+      { label: 'Delete', icon: 'pi pi-times'}
+    ];
+
+    this.cols = [
+      { field: 'course', header: 'Course' },
+      { field: 'teacher', header: 'Teacher' }
+    ];
   }
 
   loadData(course: Course): void {
       this.lecturesService.getByGroupAndCourse(this.group.id, course.id).subscribe(res => {
         this.lecture = res;
-        if (this.lecture){
-        this.lecturesForm.get('teacher').setValue(this.lecture.teacher.id);
-        }
+        this.lectures.push(this.lecture);
+      }, err=>{
+        this.logger.error('Error', 'Something bad happened.');
       })
   }
 
@@ -58,27 +70,6 @@ export class LecturesComponent implements OnInit {
     })
   }
 
-  initializeForm(): void {
-      this.lecturesForm = this.fb.group({
-        teacher: ['', Validators.required]
-      });
-  }
-
-  reset(): void {
-
-  }
-
-  fillForm(data: Lectures = {}): void {
-    this.lecturesForm.get('teacher').setValue(data.teacher.id);
-  }
-
-  getData(course: Course): Lectures {
-    return {
-      courseId: course.id,
-      groupId: this.group.id,
-      teacherId: this.lecturesForm.get('teacher').value
-    }
-  }
 
   loadCourses(): void {
     const degreeId = this.active.snapshot.paramMap.get('degreeId');
@@ -98,20 +89,5 @@ export class LecturesComponent implements OnInit {
       }, err=>{
         this.logger.error('Error', 'Something bad happened.');
       })
-  }
-
-  submit(course: Course): void{
-    this.confirmationService.confirm({
-      message: 'Are you sure you want to save this record?',
-      header: 'Save Confirmation',
-      icon: 'pi pi-info-circle',
-      accept: () =>{
-        return this.lecturesService.save(this.getData(course)).subscribe(res => {
-          this.logger.success('Success', 'Record was saved successfully.');
-        }, err =>{
-          this.logger.error('Error', 'Something bad happened.');
-        })
-      }
-    })
   }
 }

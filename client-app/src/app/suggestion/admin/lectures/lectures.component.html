@@ -1,16 +1,28 @@
-<ikubinfo-panel header="{{group.degree.title}} {{group.number}}">
-  <div panel-content *ngFor="let course of courses">
-    <form role="form" [formGroup]="lecturesForm">
-      <div (onload) = "loadData(course)">
-      <ikubinfo-input label="{{course.name}}">
-        <select class="custom-select"  formControlName="teacher" >
-          <option value="" disabled>Choose the Teacher</option>
-          <option *ngFor="let teacher of teachers" [ngValue]="teacher.id">{{teacher.firstName}} {{teacher.lastName}}</option>
-        </select>
-      </ikubinfo-input>
-    </div>
-    </form>
-    <button pButton type="submit" (click)="submit(course)" class="ui-button-success" label="Submit" icon="pi pi-file"></button>
-    <button pButton type="button" (click)="reset()" class="ui-button-secondary reset" label="Reset" icon="pi pi-times"></button>
+<div class="row">
+  <div class="col col-xl-12 col-lg-12">
+    <ikubinfo-panel header="{{group.degree.title}} {{group.number}}">
+      <div panel-content>
+
+        <p-table [columns]="cols" [value]="lectures" [paginator]="true" [rows]="10" [(contextMenuSelection)]="selectedLecture"
+          [contextMenu]="cm">
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th *ngFor="let col of columns">
+                {{ col.header }}
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr [pContextMenuRow]="rowData">
+              <td *ngFor="let col of columns">
+               <p *ngIf="col.field != 'teacher'"> {{ rowData[col.field].name }}</p>
+               <p>{{ rowData[col.field].firstName }}</p>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+        <p-contextMenu #cm [model]="items"></p-contextMenu>
+      </div>
+    </ikubinfo-panel>
   </div>
-</ikubinfo-panel>
+</div>
