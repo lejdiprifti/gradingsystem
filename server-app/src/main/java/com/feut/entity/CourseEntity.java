@@ -1,5 +1,6 @@
 package com.feut.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -15,6 +16,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="course", schema="feut")
 @NamedQueries({
@@ -24,8 +27,13 @@ import javax.persistence.Table;
 			+ "WHERE d.id = ?1 and c.active = ?2"),
 	@NamedQuery(name="Course.getByDepartment", query = "Select c from CourseEntity c where c.department = ?1 and c.active =?2")
 	})
-public class CourseEntity {
+public class CourseEntity implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -272395124946946499L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name="id")
@@ -33,21 +41,20 @@ public class CourseEntity {
 	
 	@Column(name="name")
 	private String name;
-	
+
+
 	@ManyToOne
 	@JoinColumn(name="department_id")
 	private DepartmentEntity department;
 	
+
 	@ManyToOne
 	@JoinColumn(name="degree_id")
 	private DegreeEntity degree;
 	
 	@Column(name="syllabus", length=2000)
 	private String syllabus;
-	
-	@OneToMany(mappedBy="course", fetch=FetchType.LAZY)
-	private List<LecturesEntity> lectureList;
-	
+
 	@Column(name="active")
 	private boolean active;
 
@@ -70,15 +77,8 @@ public class CourseEntity {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public List<LecturesEntity> getLectureList() {
-		return lectureList;
-	}
-
-	public void setLectureList(List<LecturesEntity> lectureList) {
-		this.lectureList = lectureList;
-	}
-
+	
+	
 	public DepartmentEntity getDepartment() {
 		return department;
 	}
@@ -87,6 +87,7 @@ public class CourseEntity {
 		this.department = department;
 	}
 
+	@JsonIgnore
 	public DegreeEntity getDegree() {
 		return degree;
 	}

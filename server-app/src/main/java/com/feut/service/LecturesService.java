@@ -7,6 +7,7 @@ import javax.persistence.NoResultException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException.NotFound;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.feut.converter.LecturesConverter;
@@ -73,13 +74,19 @@ public class LecturesService {
 	
 	public void save(LecturesModel model) {
 		try {
+			LecturesEntity entity = lecturesRepository.getByGroupAndCourse(model.getGroupId(),model.getCourseId());
+			entity.setGroup(groupRepository.getById(model.getGroupId()));
+			entity.setTeacher(teacherRepository.getById(model.getTeacherId()));
+			entity.setCourse(courseRepository.getById(model.getCourseId()));
+			entity.setActive(true);
+			lecturesRepository.edit(entity);
+		} catch (NoResultException e) {
 			LecturesEntity entity = new LecturesEntity();
 			entity.setGroup(groupRepository.getById(model.getGroupId()));
 			entity.setTeacher(teacherRepository.getById(model.getTeacherId()));
 			entity.setCourse(courseRepository.getById(model.getCourseId()));
+			entity.setActive(true);
 			lecturesRepository.save(entity);
-		} catch (NoResultException e) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Group/Teacher/Course not found.");
 		}
 	}
 	

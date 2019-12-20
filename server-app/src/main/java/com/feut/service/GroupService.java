@@ -27,6 +27,9 @@ public class GroupService {
 	@Autowired
 	private DegreeRepository degreeRepository;
 
+	@Autowired
+	private StudentService studentService;
+	
 	public GroupService() {
 
 	}
@@ -45,7 +48,11 @@ public class GroupService {
 
 	public List<GroupModel> getByDegree(Long id) {
 		try {
-			return groupConverter.toModel(groupRepository.getByDegree(id));
+			List<GroupModel> list =groupConverter.toModel(groupRepository.getByDegree(id));
+			for (GroupModel model:list) {
+				model.setStudentList(studentService.getByGroup(model.getId()));
+			}
+			return list;
 		} catch (NoResultException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Degree not found.");
 		}

@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="group", schema="feut", uniqueConstraints = {
 	@UniqueConstraint(columnNames="group_number"),
@@ -41,9 +43,6 @@ public class GroupEntity implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="degree_id")
 	private DegreeEntity degree;
-	
-	@OneToMany(mappedBy="group", fetch = FetchType.LAZY)
-	private List<StudentEntity> studentList;
 	
 	@Column(name="active")
 	private boolean active;
@@ -75,7 +74,8 @@ public class GroupEntity implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
+	
+	@JsonIgnore
 	public DegreeEntity getDegree() {
 		return degree;
 	}
@@ -83,14 +83,7 @@ public class GroupEntity implements Serializable {
 	public void setDegree(DegreeEntity degree) {
 		this.degree = degree;
 	}
-
-	public List<StudentEntity> getStudentList() {
-		return studentList;
-	}
-
-	public void setStudentList(List<StudentEntity> studentList) {
-		this.studentList = studentList;
-	}
+	
 
 	public boolean isActive() {
 		return active;
@@ -102,8 +95,8 @@ public class GroupEntity implements Serializable {
 
 	@Override
 	public String toString() {
-		return "GroupEntity [id=" + id + ", number=" + number + ", email=" + email + ", degree=" + degree
-				+ ", studentList=" + studentList + ", active=" + active + "]";
+		return "GroupEntity [id=" + id + ", number=" + number + ", email=" + email
+				+ ", active=" + active + "]";
 	}
 
 

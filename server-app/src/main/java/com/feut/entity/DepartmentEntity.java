@@ -1,9 +1,11 @@
 package com.feut.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,14 +14,22 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name="department", schema="feut")
 @NamedQueries({
 	@NamedQuery(name="Department.getById", query = "Select d from DepartmentEntity d where d.id = ?1 and d.active = ?2"),
 	@NamedQuery(name="Department.getAll", query = "Select d from DepartmentEntity d where d.active = ?1")
 })
-public class DepartmentEntity {
+public class DepartmentEntity implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8986422020350397439L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name="department_id")
@@ -30,12 +40,7 @@ public class DepartmentEntity {
 	
 	@Column(name="department_description", length = 2000)
 	private String description;
-	
-	@OneToMany(mappedBy="department")
-	private List<TeacherEntity> teacherList;
-	
-	@OneToMany(mappedBy="department")
-	private List<CourseEntity> courseList;
+
 	
 	@Column(name="active")
 	private boolean active;
@@ -60,24 +65,6 @@ public class DepartmentEntity {
 		this.name = name;
 	}
 
-	public List<CourseEntity> getCourseList() {
-		return courseList;
-	}
-
-	public void setCourseList(List<CourseEntity> courseList) {
-		this.courseList = courseList;
-	}
-
-
-
-	public List<TeacherEntity> getTeacherList() {
-		return teacherList;
-	}
-
-	public void setTeacherList(List<TeacherEntity> teacherList) {
-		this.teacherList = teacherList;
-	}
-
 	public String getDescription() {
 		return description;
 	}
@@ -96,10 +83,10 @@ public class DepartmentEntity {
 
 	@Override
 	public String toString() {
-		return "DepartmentEntity [id=" + id + ", name=" + name + ", description=" + description + ", teacherList="
-				+ teacherList + ", courseList=" + courseList + ", active=" + active + "]";
+		return "DepartmentEntity [id=" + id + ", name=" + name + ", description=" + description + ", active=" + active
+				+ "]";
 	}
 
-		
+
 	
 }

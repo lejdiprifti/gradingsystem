@@ -16,11 +16,27 @@ public class LecturesConverter {
 	@Autowired
 	private ModelMapper modelMapper;
 
+	@Autowired
+	private CourseConverter courseConverter;
+	
+	@Autowired
+	private TeacherConverter teacherConverter;
+	
+	@Autowired
+	private GroupConverter groupConverter;
+	
 	public LecturesConverter() {
 
 	}
 
 	public LecturesModel toModel(LecturesEntity entity) {
+		/*
+		 * LecturesModel model = new LecturesModel(); model.setId(entity.getId());
+		 * model.setCourseId(entity.getCourse().getId());
+		 * model.setGroupId(entity.getGroup().getId());
+		 * model.setTeacherId(entity.getTeacher().getId()); return model;
+		 */
+		
 		return modelMapper.map(entity, LecturesModel.class);
 	}
 

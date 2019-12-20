@@ -23,12 +23,23 @@ public class DegreeService {
 	@Autowired
 	private DegreeConverter degreeConverter;
 	
+	@Autowired
+	private GroupService groupService;
+	
+	@Autowired
+	private CourseService courseService;
+	
 	public DegreeService() {
 		
 	}
 	
 	public List<DegreeModel> getAll() {
-		return degreeConverter.toModel(degreeRepository.getAll());
+		List<DegreeModel> list =degreeConverter.toModel(degreeRepository.getAll());
+		for (DegreeModel model : list) {
+			model.setGroupList(groupService.getByDegree(model.getId()));
+			model.setCourseList(courseService.getByDegree(model.getId()));
+		}
+		return list;
 	}
 	
 	public DegreeModel getById(Long id) {

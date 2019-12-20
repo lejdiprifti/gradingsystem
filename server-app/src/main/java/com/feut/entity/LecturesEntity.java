@@ -1,5 +1,7 @@
 package com.feut.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +13,10 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name="lectures",schema="feut")
 @NamedQueries({
@@ -20,20 +26,28 @@ import javax.persistence.Table;
 	@NamedQuery(name="Lectures.getByTeacher", query = "Select l from LecturesEntity l Join TeacherEntity t on t.id = l.teacher"
 			+ " where t.id = ?1 and l.active = ?2")
 })
-public class LecturesEntity {
+public class LecturesEntity implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1093784310153204027L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	
+
 	@ManyToOne
 	@JoinColumn(name="group_id")
 	private GroupEntity group;
 	
+
 	@ManyToOne
 	@JoinColumn(name="teacher_id")
 	private TeacherEntity teacher;
 	
+
 	@ManyToOne
 	@JoinColumn(name="course_id")
 	private CourseEntity course;
@@ -53,6 +67,7 @@ public class LecturesEntity {
 		this.id = id;
 	}
 
+	@JsonIgnore
 	public GroupEntity getGroup() {
 		return group;
 	}
@@ -61,6 +76,7 @@ public class LecturesEntity {
 		this.group = group;
 	}
 
+	@JsonIgnore
 	public TeacherEntity getTeacher() {
 		return teacher;
 	}
@@ -69,6 +85,7 @@ public class LecturesEntity {
 		this.teacher = teacher;
 	}
 
+	@JsonIgnore
 	public CourseEntity getCourse() {
 		return course;
 	}

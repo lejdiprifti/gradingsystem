@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.feut.entity.CourseEntity;
 import com.feut.entity.DepartmentEntity;
-import com.feut.entity.TeacherEntity;
+import com.feut.entity.LecturesEntity;
 import com.feut.model.DepartmentModel;
 
 @Component
@@ -17,6 +17,12 @@ public class DepartmentConverter {
 	
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	@Autowired
+	private CourseConverter courseConverter;
+	
+	@Autowired
+	private TeacherConverter teacherConverter;
 	
 	public DepartmentConverter() {
 		
@@ -27,13 +33,14 @@ public class DepartmentConverter {
 	}
 	
 	public DepartmentModel toModel(DepartmentEntity entity) {
-		for (TeacherEntity teacher: entity.getTeacherList()) {
-			teacher.setDepartment(null);
-		}
-		for (CourseEntity course: entity.getCourseList()) {
-			course.setDepartment(null);
-			course.setDegree(null);
-		}
+		/*
+		 * DepartmentModel model = new DepartmentModel(); model.setId(entity.getId());
+		 * model.setName(entity.getName());
+		 * model.setDescription(entity.getDescription());
+		 * model.setTeacherList(teacherConverter.toModel(entity.getTeacherList()));
+		 * model.setCourseList(courseConverter.toModel(entity.getCourseList())); return
+		 * model;
+		 */
 		return modelMapper.map(entity, DepartmentModel.class);
 	}
 	

@@ -23,13 +23,23 @@ public class DepartmentService {
 	@Autowired
 	private DepartmentConverter depConverter;
 	
+	@Autowired
+	private CourseService courseService;
+	
+	@Autowired
+	private TeacherService teacherService;
 	
 	public DepartmentService() {
 		
 	}
 	
 	public List<DepartmentModel> getAll()	{
-		return depConverter.toModel(depRepository.getAll());
+		List<DepartmentModel> list = depConverter.toModel(depRepository.getAll());
+		for (DepartmentModel model : list) {
+			model.setCourseList(courseService.getByDepartment(model.getId()));
+			model.setTeacherList(teacherService.getByDepartment(model.getId()));
+		}
+		return list;
 	}
 	
 	public DepartmentModel getById(Long id) {

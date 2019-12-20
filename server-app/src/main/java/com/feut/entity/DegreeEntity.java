@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="degree", schema="feut", uniqueConstraints = {
@@ -37,12 +38,6 @@ public class DegreeEntity implements Serializable{
 	@Column(name="syllabus", length = 5000)
 	private String syllabus;
 	
-	
-	@OneToMany(mappedBy="degree", fetch = FetchType.LAZY)
-	private List<GroupEntity> groupList;
-
-	@OneToMany(mappedBy="degree", fetch = FetchType.LAZY)
-	private List<CourseEntity> courseList;
 	
 	@Column(name="active")
 	private boolean active;
@@ -75,22 +70,6 @@ public class DegreeEntity implements Serializable{
 		this.syllabus = syllabus;
 	}
 
-	public List<GroupEntity> getGroupList() {
-		return groupList;
-	}
-
-	public void setGroupList(List<GroupEntity> groupList) {
-		this.groupList = groupList;
-	}
-
-	public List<CourseEntity> getCourseList() {
-		return courseList;
-	}
-
-	public void setCourseList(List<CourseEntity> courseList) {
-		this.courseList = courseList;
-	}
-
 	public boolean isActive() {
 		return active;
 	}
@@ -101,10 +80,8 @@ public class DegreeEntity implements Serializable{
 
 	@Override
 	public String toString() {
-		return "DegreeEntity [id=" + id + ", title=" + title + ", syllabus=" + syllabus + ", groupList=" + groupList
-				+ ", courseList=" + courseList + ", active=" + active + "]";
+		return "DegreeEntity [id=" + id + ", title=" + title + ", syllabus=" + syllabus + ", active=" + active + "]";
 	}
-
 	
 
 }

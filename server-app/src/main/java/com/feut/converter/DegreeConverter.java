@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 import com.feut.entity.CourseEntity;
 import com.feut.entity.DegreeEntity;
 import com.feut.entity.GroupEntity;
+import com.feut.entity.LecturesEntity;
+import com.feut.entity.StudentEntity;
 import com.feut.model.DegreeModel;
 
 @Component
@@ -17,6 +19,12 @@ public class DegreeConverter {
 	
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	@Autowired
+	private CourseConverter courseConverter;
+	
+	@Autowired
+	private GroupConverter groupConverter;
 	
 	public DegreeConverter() {
 		
@@ -27,15 +35,12 @@ public class DegreeConverter {
 	}
 	
 	public DegreeModel toModel(DegreeEntity entity) {
-		for (GroupEntity group: entity.getGroupList()) {
-			group.setDegree(null);
-			group.setStudentList(null);
-		}
-	for (CourseEntity course: entity.getCourseList()) {
-		course.setDegree(null);
-		course.getDepartment().setCourseList(null);
-		course.getDepartment().setTeacherList(null);
-	}
+		/*
+		 * DegreeModel model = new DegreeModel(); model.setId(entity.getId());
+		 * model.setSyllabus(entity.getSyllabus()); model.setTitle(entity.getTitle());
+		 * return model;
+		 */
+		
 		return modelMapper.map(entity, DegreeModel.class);
 	}
 	

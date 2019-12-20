@@ -28,7 +28,7 @@ export class LecturesComponent implements OnInit {
   group: Group;
   lecturesForm: FormGroup;
   constructor(private active: ActivatedRoute, private courseService: CourseService
-    ,private departmentService: DepartmentService, private degreeService: DegreeService,
+    ,private teacherService: TeacherService, private degreeService: DegreeService,
     private logger: LoggerService,private lecturesService: LecturesService,
     private confirmationService: ConfirmationService,
     private groupService: GroupService,private fb:FormBuilder) { }
@@ -37,17 +37,16 @@ export class LecturesComponent implements OnInit {
     this.initializeForm();
     this.loadGroup();
     this.loadCourses();
+    this.loadTeacher();
   }
 
-  loadData(): void {
-    this.courses.forEach(element => {
-      this.lecturesService.getByGroupAndCourse(this.group.id, element.id).subscribe(res => {
+  loadData(course: Course): void {
+      this.lecturesService.getByGroupAndCourse(this.group.id, course.id).subscribe(res => {
         this.lecture = res;
         if (this.lecture){
         this.lecturesForm.get('teacher').setValue(this.lecture.teacher.id);
         }
       })
-    })
   }
 
   loadGroup(): void {
@@ -65,6 +64,9 @@ export class LecturesComponent implements OnInit {
       });
   }
 
+  reset(): void {
+
+  }
 
   fillForm(data: Lectures = {}): void {
     this.lecturesForm.get('teacher').setValue(data.teacher.id);
@@ -82,13 +84,16 @@ export class LecturesComponent implements OnInit {
     const degreeId = this.active.snapshot.paramMap.get('degreeId');
     this.degreeService.getCoursesByDegree(Number(degreeId)).subscribe(res => {
       this.courses = res;
+      this.courses.forEach(element => {
+        this.loadData(element);
+      })
     }, err => {
       this.logger.error('Error', 'Something bad happened.');
     });
   }
 
-  loadTeachers(departmentId: number): void {
-      this.departmentService.getTeachersByDepartment(departmentId).subscribe(res => {
+  loadTeacher(): void {
+      this.teacherService.getAll().subscribe(res => {
         this.teachers = res;
       }, err=>{
         this.logger.error('Error', 'Something bad happened.');

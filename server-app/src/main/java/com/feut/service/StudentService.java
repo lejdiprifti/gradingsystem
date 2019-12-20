@@ -94,6 +94,13 @@ public class StudentService {
 		}
 	}
 	
+	public List<StudentModel> getByGroup(Long id){
+		try {
+			return studentConverter.toModel(studentRepository.getByGroup(id));
+		} catch(NoResultException e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Group not found.");
+		}
+	}
 	public void delete(Long id) {
 		try {
 			StudentEntity entity = studentRepository.getById(id);

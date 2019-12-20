@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.feut.entity.CourseEntity;
+import com.feut.entity.GroupEntity;
 import com.feut.model.CourseModel;
 
 @Component
@@ -15,6 +16,9 @@ public class CourseConverter {
 	
 	@Autowired
 	private ModelMapper modelMapper;
+		
+	@Autowired
+	private LecturesConverter lecturesConverter;
 	
 	public CourseConverter() {
 		
@@ -25,10 +29,16 @@ public class CourseConverter {
 	}
 	
 	public CourseModel toModel(CourseEntity entity) {
-		entity.getDegree().setGroupList(null);
-		entity.getDepartment().setTeacherList(null);
-		entity.getDegree().setCourseList(null);
-		entity.getDepartment().setCourseList(null);
+		/*
+		 * CourseModel model = new CourseModel();
+		 * model.setDegreeId(entity.getDegree().getId());
+		 * model.setDepartmentId(entity.getDepartment().getId());
+		 * model.setId(entity.getId()); model.setName(entity.getName());
+		 * model.setSyllabus(entity.getSyllabus());
+		 * model.setLecturesList(lecturesConverter.toModel(entity.getLectureList()));
+		 * return model;
+		 */
+		
 		return modelMapper.map(entity, CourseModel.class);
 	}
 	

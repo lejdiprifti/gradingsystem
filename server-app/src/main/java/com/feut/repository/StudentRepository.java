@@ -46,9 +46,9 @@ public class StudentRepository {
 		return query.getSingleResult();
 	}
 	
-	public List<StudentEntity> getByGroup(GroupEntity group){
+	public List<StudentEntity> getByGroup(Long id){
 		TypedQuery<StudentEntity> query = em.createNamedQuery("Student.getByGroup", StudentEntity.class);
-		query.setParameter(1, group);
+		query.setParameter(1, id);
 		query.setParameter(2, true);
 		return query.getResultList();
 	}
