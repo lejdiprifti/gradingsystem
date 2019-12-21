@@ -2,8 +2,12 @@ package com.feut.service;
 
 import java.util.List;
 
+import javax.persistence.NoResultException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.feut.converter.CourseConverter;
 import com.feut.entity.CourseEntity;
@@ -57,6 +61,13 @@ public class CourseService {
 		return courseConverter.toModel(courseRepository.getByDepartment(departmentRepository.getById(id)));
 	}
 	
+	public List<CourseModel> getByTeacherAndDegree(Long teacherId, Long degreeId){
+		try {
+			return courseConverter.toModel(courseRepository.getByTeacherAndDegree(teacherId, degreeId));
+		} catch (NoResultException e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Courses not found.");
+		}
+	}
 	public void save(CourseModel model) {
 		CourseEntity entity = new CourseEntity();
 		entity.setName(model.getName());

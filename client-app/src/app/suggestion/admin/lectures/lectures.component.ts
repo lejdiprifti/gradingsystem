@@ -30,10 +30,9 @@ export class LecturesComponent implements OnInit {
   selectedLecture:  Lectures;
   items: MenuItem[];
   cols: any[];
-  constructor(private active: ActivatedRoute, private courseService: CourseService
-    ,private teacherService: TeacherService, private degreeService: DegreeService,
-    private logger: LoggerService,private lecturesService: LecturesService,
-    private confirmationService: ConfirmationService,private router: Router,
+  constructor(private active: ActivatedRoute,
+    private teacherService: TeacherService, private degreeService: DegreeService,
+    private logger: LoggerService,private lecturesService: LecturesService,private router: Router,
     private groupService: GroupService,private fb:FormBuilder) { }
 
   ngOnInit() {

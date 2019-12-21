@@ -1,3 +1,14 @@
-<p>
-  teacherCourses works!
-</p>
+<div class="row">           
+  <div class="col col-xl-6 col-lg-12" *ngFor="let course of courses">
+    <div class="panel">
+    <ikubinfo-panel header="{{ course.name }}">
+      <div panel-content>
+        <h1>{{ course.name }}</h1>
+        <p> {{course.syllabus}}</p>
+        <p>Department: {{course.department.name}}</p>
+        <p> Degree: {{course.degree.title}}</p>
+      </div>
+    </ikubinfo-panel>
+    </div>
+  </div>
+</div>

@@ -22,6 +22,7 @@ import { AdminDashboardComponent } from './admin/adminDashboard/adminDashboard.c
 import { DashboardComponent } from './teacher/dashboard/dashboard.component';
 import { TeacherGuard } from '@ikubinfo/core/guards/teacher-guard';
 import { TeacherDegreesComponent } from './teacher/dashboard/teacherDegrees/teacherDegrees.component';
+import { TeacherCoursesComponent } from './teacher/dashboard/teacherCourses/teacherCourses.component';
 
 const suggestionRoutes: Routes = [
     {
@@ -31,6 +32,7 @@ const suggestionRoutes: Routes = [
             { path: 'dashboard', component: AdminDashboardComponent, canActivate: [AdminGuard] },
             {path: 'teacher/dashboard', component: DashboardComponent, canActivate: [TeacherGuard]},
             {path: 'teacher/degrees', component: TeacherDegreesComponent, canActivate: [TeacherGuard]},
+            {path: 'teacher/degrees/:degreeId/courses', component: TeacherCoursesComponent, canActivate: [TeacherGuard]},
             {path: 'departments', component: DepartmentsComponent, canActivate:[AdminGuard]},
             {path: 'departments/:id' + '/teachers', component: TeachersComponent, canActivate:[AdminGuard]},
             {path: 'department/:id', component: DepartmentComponent, canActivate: [AdminGuard]},
