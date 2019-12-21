@@ -28,4 +28,9 @@ export class TeacherCoursesComponent implements OnInit {
       this.logger.error('Error', 'Something bad happened.');
     })
   }
+
+  openGroups(id: number){
+    const degreeId = this.active.snapshot.paramMap.get('degreeId');
+    this.router.navigate(['feut/teacher/degrees/'+degreeId+'/courses/'+id+'/groups']);
+  }
 }

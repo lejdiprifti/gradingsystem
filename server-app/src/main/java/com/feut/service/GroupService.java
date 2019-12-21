@@ -57,6 +57,18 @@ public class GroupService {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Degree not found.");
 		}
 	}
+	
+	public List<GroupModel> getByTeacherAndDegree(Long teacherId, Long degreeId) {
+		try {
+			List<GroupModel> list = groupConverter.toModel(groupRepository.getByTeacherAndDegree(teacherId, degreeId));
+			for (GroupModel model: list) {
+				model.setStudentList(studentService.getByGroup(model.getId()));
+			}
+			return list;
+		}catch (NoResultException e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Groups not found.");
+		}
+	}
 
 	public void save(GroupModel model, Long id) {
 		try {

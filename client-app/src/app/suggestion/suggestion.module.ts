@@ -25,12 +25,13 @@ import { AdminDashboardComponent } from './admin/adminDashboard/adminDashboard.c
 import { DashboardComponent } from './teacher/dashboard/dashboard.component';
 import { TeacherDegreesComponent } from './teacher/dashboard/teacherDegrees/teacherDegrees.component';
 import { TeacherCoursesComponent } from './teacher/dashboard/teacherCourses/teacherCourses.component';
+import { TeacherGroupsComponent } from './teacher/dashboard/teacherGroups/teacherGroups.component';
 
 @NgModule({
     imports: [CommonsModule, SuggestionRoutingModule, LayoutModule, FormsModule, ChartModule],
     exports: [],
     declarations: [AdminDashboardComponent,DashboardComponent,TeacherDegreesComponent,TeacherCoursesComponent,
-        StudentDashboardComponent, AdminStudentsComponent,StudentComponent,LecturesComponent, 
+        StudentDashboardComponent, AdminStudentsComponent,StudentComponent,LecturesComponent, TeacherGroupsComponent,
         DegreesComponent,DepartmentComponent,LectureComponent,TeacherComponent,CoursesComponent, CourseComponent,
          GroupsComponent,DegreeComponent, GroupComponent, TeachersComponent,DepartmentsComponent],
     providers: []

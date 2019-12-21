@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.feut.model.CourseModel;
 import com.feut.model.DegreeModel;
+import com.feut.model.GroupModel;
 import com.feut.model.TeacherModel;
 import com.feut.service.CourseService;
 import com.feut.service.DegreeService;
+import com.feut.service.GroupService;
 import com.feut.service.TeacherService;
 
 @RestController
@@ -36,6 +38,9 @@ public class TeacherResource {
 	
 	@Autowired
 	private CourseService courseService;
+	
+	@Autowired
+	private GroupService groupService;
 	
 	public TeacherResource() {
 		
@@ -57,8 +62,13 @@ public class TeacherResource {
 	}
 	
 	@GetMapping("/{id}/degrees/{degreeId}/courses")
-	public ResponseEntity<List<CourseModel>> getByTeacherAndDegree(@PathVariable("id") Long teacherId, @PathVariable("degreeId") Long degreeId){
+	public ResponseEntity<List<CourseModel>> getCoursesByTeacherAndDegree(@PathVariable("id") Long teacherId, @PathVariable("degreeId") Long degreeId){
 		return new ResponseEntity<List<CourseModel>>(courseService.getByTeacherAndDegree(teacherId, degreeId), HttpStatus.OK);
+	}
+	
+	@GetMapping("/{id}/degrees/{degreeId}/groups")
+	public ResponseEntity<List<GroupModel>> getGroupsByTeacherAndDegree(@PathVariable("id") Long teacherId, @PathVariable("degreeId") Long degreeId){
+		return new ResponseEntity<List<GroupModel>>(groupService.getByTeacherAndDegree(teacherId, degreeId), HttpStatus.OK);
 	}
 	
 	@PostMapping(consumes="application/json")

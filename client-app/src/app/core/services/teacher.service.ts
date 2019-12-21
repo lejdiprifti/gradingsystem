@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Teacher } from '../models/teacher';
 import { Degree } from '../models/degree';
 import { Course } from '../models/course';
+import { Group } from '../models/group';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,10 @@ constructor(private apiService: ApiService) { }
 
   public getCoursesByTeacherAndDegree(teacherId: number, degreeId: number): Observable<Array<Course>>{
     return this.apiService.get(this.url+'/'+teacherId+'/degrees/'+degreeId+'/courses');
+  }
+
+  public getGroupsByTeacherAndDegree(teacherId: number, degreeId: number): Observable<Array<Group>>{
+    return this.apiService.get(this.url+'/'+teacherId+'/degrees/'+degreeId+'/groups');
   }
   public add(teacher: Teacher): Observable<void>{
     return this.apiService.post(this.url, teacher);
