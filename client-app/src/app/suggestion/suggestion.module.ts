@@ -22,11 +22,13 @@ import { LecturesComponent } from './admin/lectures/lectures.component';
 import { LectureComponent } from './admin/lecture/lecture.component';
 import { ChartModule } from 'primeng/components/chart/chart';
 import { AdminDashboardComponent } from './admin/adminDashboard/adminDashboard.component';
+import { DashboardComponent } from './teacher/dashboard/dashboard.component';
+import { TeacherDegreesComponent } from './teacher/dashboard/teacherDegrees/teacherDegrees.component';
 
 @NgModule({
     imports: [CommonsModule, SuggestionRoutingModule, LayoutModule, FormsModule, ChartModule],
     exports: [],
-    declarations: [AdminDashboardComponent,
+    declarations: [AdminDashboardComponent,DashboardComponent,TeacherDegreesComponent,
         StudentDashboardComponent, AdminStudentsComponent,StudentComponent,LecturesComponent, 
         DegreesComponent,DepartmentComponent,LectureComponent,TeacherComponent,CoursesComponent, CourseComponent,
          GroupsComponent,DegreeComponent, GroupComponent, TeachersComponent,DepartmentsComponent],

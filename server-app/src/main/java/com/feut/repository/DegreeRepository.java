@@ -44,6 +44,15 @@ public class DegreeRepository {
 		return (Long) query.getSingleResult();
 	}
 	
+	public List<DegreeEntity> getByTeacher(Long id){
+		TypedQuery<DegreeEntity> query = em.createQuery("Select Distinct d from DegreeEntity d Join GroupEntity g on g.degree = d.id "
+				+ "Join LecturesEntity l on g.id = l.group"
+				+ " where l.teacher.id = ?1 and l.active = ?2", DegreeEntity.class);
+		query.setParameter(1, id);
+		query.setParameter(2, true);
+		return query.getResultList();
+	}
+	
 	@Transactional
 	public void save(DegreeEntity entity) {
 		em.persist(entity);

@@ -59,6 +59,14 @@ public class DegreeService {
 		}
 	}
 	
+	public List<DegreeModel> getDegreesByTeacher(Long id){
+		try {
+			return degreeConverter.toModel(degreeRepository.getByTeacher(id));
+		} catch (NoResultException e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Degrees not found.");
+		}
+	}
+	
 	public void save(DegreeModel model) {
 		DegreeEntity entity =new DegreeEntity();
 		entity.setSyllabus(model.getSyllabus());

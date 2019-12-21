@@ -1,0 +1,13 @@
+<div class="row">           
+  <div class="col col-xl-6 col-lg-12" *ngFor="let degree of degrees">
+    <div class="panel">
+    <ikubinfo-panel header="{{ degree.title }}">
+      <div panel-content>
+        <h1>{{ degree.title }}</h1>
+        <p>{{ degree.syllabus }}</p>
+        <button pButton icon = "pi pi-check" class="ui-button-info button" (click)="openCourses(degree.id)" label="Open Courses"></button>
+      </div>
+    </ikubinfo-panel>
+    </div>
+  </div>
+</div>

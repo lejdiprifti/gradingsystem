@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '../utilities/api.service';
 import { Observable } from 'rxjs';
 import { Teacher } from '../models/teacher';
+import { Degree } from '../models/degree';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,9 @@ constructor(private apiService: ApiService) { }
     return this.apiService.get(this.url + '/' + id);
   }
 
+  public getDegreesByTeacher(id: number): Observable<Array<Degree>>{
+    return this.apiService.get(this.url+'/'+id+'/degrees');
+  }
   public add(teacher: Teacher): Observable<void>{
     return this.apiService.post(this.url, teacher);
   }

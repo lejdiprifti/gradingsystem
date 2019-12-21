@@ -6,7 +6,18 @@ export const menuItems: Array<MenuItem> = [{
     icon: 'fa-dashboard',
     label: 'Dashboard',
     allowedRoles: [RoleEnum.ADMIN]
-}, {
+},{
+    url: '/feut/teacher/dashboard',
+    icon: 'fa-dashboard',
+    label: 'Dashboard',
+    allowedRoles: [RoleEnum.TEACHER]
+},{
+    url: '/feut/teacher/degrees',
+    icon: 'fa-dashboard',
+    label: 'My degrees',
+    allowedRoles: [RoleEnum.TEACHER]
+},
+{
     url: '/feut/students',
     icon: 'fa-dashboard',
     label: 'Students',
