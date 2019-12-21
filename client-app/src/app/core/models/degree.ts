@@ -6,5 +6,6 @@ export interface Degree {
     title?: string,
     syllabus?: string,
     groupList?: Array<Group>,
-    courseList?: Array<Course>
+    courseList?: Array<Course>,
+    numberOfGroups?: number
 }

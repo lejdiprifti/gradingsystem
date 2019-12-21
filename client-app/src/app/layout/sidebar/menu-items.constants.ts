@@ -2,10 +2,10 @@ import { RoleEnum } from './../../core/models/role.enum';
 import { MenuItem } from './menu-item'
 
 export const menuItems: Array<MenuItem> = [{
-    url: '/suggestion/dashboard',
+    url: '/feut/dashboard',
     icon: 'fa-dashboard',
     label: 'Dashboard',
-    allowedRoles: [RoleEnum.ADMIN, RoleEnum.STUDENT]
+    allowedRoles: [RoleEnum.ADMIN]
 }, {
     url: '/feut/students',
     icon: 'fa-dashboard',

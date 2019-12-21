@@ -18,13 +18,14 @@ import { CoursesComponent } from './admin/courses/courses.component';
 import { CourseComponent } from './admin/course/course.component';
 import { LecturesComponent } from './admin/lectures/lectures.component';
 import { LectureComponent } from './admin/lecture/lecture.component';
+import { AdminDashboardComponent } from './admin/adminDashboard/adminDashboard.component';
 
 const suggestionRoutes: Routes = [
     {
         path: '',
         component: FullComponent,
         children: [
-            { path: 'dashboard', component: StudentDashboardComponent },
+            { path: 'dashboard', component: AdminDashboardComponent, canActivate: [AdminGuard] },
             {path: 'departments', component: DepartmentsComponent, canActivate:[AdminGuard]},
             {path: 'departments/:id' + '/teachers', component: TeachersComponent, canActivate:[AdminGuard]},
             {path: 'department/:id', component: DepartmentComponent, canActivate: [AdminGuard]},

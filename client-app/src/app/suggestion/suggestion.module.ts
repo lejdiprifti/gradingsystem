@@ -13,7 +13,6 @@ import { GroupsComponent } from './admin/groups/groups.component';
 import { DegreeComponent } from './admin/degree/degree.component';
 import { GroupComponent } from './admin/group/group.component';
 import { TeachersComponent } from './admin/teachers/teachers.component';
-import { DepartmentService } from '@ikubinfo/core/services/department.service';
 import { DepartmentsComponent } from './admin/departments/departments.component';
 import { DepartmentComponent } from './admin/department/department.component';
 import { TeacherComponent } from './admin/teacher/teacher.component';
@@ -21,11 +20,14 @@ import { CoursesComponent } from './admin/courses/courses.component';
 import { CourseComponent } from './admin/course/course.component';
 import { LecturesComponent } from './admin/lectures/lectures.component';
 import { LectureComponent } from './admin/lecture/lecture.component';
+import { ChartModule } from 'primeng/components/chart/chart';
+import { AdminDashboardComponent } from './admin/adminDashboard/adminDashboard.component';
 
 @NgModule({
-    imports: [CommonsModule, SuggestionRoutingModule, LayoutModule, FormsModule],
+    imports: [CommonsModule, SuggestionRoutingModule, LayoutModule, FormsModule, ChartModule],
     exports: [],
-    declarations: [StudentDashboardComponent, AdminStudentsComponent,StudentComponent,LecturesComponent, 
+    declarations: [AdminDashboardComponent,
+        StudentDashboardComponent, AdminStudentsComponent,StudentComponent,LecturesComponent, 
         DegreesComponent,DepartmentComponent,LectureComponent,TeacherComponent,CoursesComponent, CourseComponent,
          GroupsComponent,DegreeComponent, GroupComponent, TeachersComponent,DepartmentsComponent],
     providers: []

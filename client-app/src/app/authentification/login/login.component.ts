@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
     (res: any)=>{
      this.authService.setData(res);
      if (this.authService.user.role.id === RoleEnum.ADMIN){
-       this.router.navigate(['feut/students']);
+       this.router.navigate(['feut/dashboard']);
      } else {
        this.router.navigate(['suggestion/dashboard']);
      }

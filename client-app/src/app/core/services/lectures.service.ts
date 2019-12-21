@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '../utilities/api.service';
 import { Observable } from 'rxjs';
 import { Lectures } from '../models/lectures';
-import { group } from '@angular/animations';
 
 @Injectable({
   providedIn: 'root'

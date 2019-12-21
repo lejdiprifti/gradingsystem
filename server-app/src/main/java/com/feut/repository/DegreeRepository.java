@@ -4,12 +4,14 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.feut.entity.DegreeEntity;
+import com.feut.entity.GroupEntity;
 
 @Repository
 public class DegreeRepository {
@@ -32,6 +34,14 @@ public class DegreeRepository {
 		query.setParameter(1, id);
 		query.setParameter(2, true);
 		return query.getSingleResult();
+	}
+	
+	public Long countGroupsOfDegree(Long id) {
+		Query query = em.createQuery("Select Count(g.id) from GroupEntity g Join DegreeEntity d on d.id = g.degree where "
+				+ "d.id = ?1 and d.active = ?2 and g.active = ?2", Long.class);
+		query.setParameter(1, id);
+		query.setParameter(2, true);
+		return (Long) query.getSingleResult();
 	}
 	
 	@Transactional

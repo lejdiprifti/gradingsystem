@@ -38,6 +38,7 @@ public class DegreeService {
 		for (DegreeModel model : list) {
 			model.setGroupList(groupService.getByDegree(model.getId()));
 			model.setCourseList(courseService.getByDegree(model.getId()));
+			model.setNumberOfGroups(countGroupsOfDegree(model.getId()));
 		}
 		return list;
 	}
@@ -45,6 +46,14 @@ public class DegreeService {
 	public DegreeModel getById(Long id) {
 		try {
 			return degreeConverter.toModel(degreeRepository.getById(id));
+		} catch (NoResultException e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Degree not found.");
+		}
+	}
+	
+	public Long countGroupsOfDegree(Long id) {
+		try {
+			return degreeRepository.countGroupsOfDegree(id);
 		} catch (NoResultException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Degree not found.");
 		}

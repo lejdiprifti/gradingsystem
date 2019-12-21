@@ -9,6 +9,7 @@ import { AppRoutingModule } from '@ikubinfo/app-routing.module';
 import { AppComponent } from '@ikubinfo/app.component';
 import { AuthentificationModule } from '@ikubinfo/authentification/authentification.module';
 import { HttpClientModule } from '@angular/common/http';
+import { ChartModule } from 'primeng/components/chart/chart';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { HttpClientModule } from '@angular/common/http';
     CoreModule,
     AuthentificationModule,
     CommonsModule,
-    HttpClientModule
+    HttpClientModule,
+    ChartModule
   ],
   providers: [],
   bootstrap: [AppComponent]

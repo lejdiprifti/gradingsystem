@@ -10,6 +10,7 @@ public class DegreeModel {
 	private boolean active;
 	private List<GroupModel> groupList;
 	private List<CourseModel> courseList;
+	private Long numberOfGroups;
 	
 	public DegreeModel() {
 		
@@ -63,10 +64,20 @@ public class DegreeModel {
 		this.courseList = courseList;
 	}
 
+	public Long getNumberOfGroups() {
+		return numberOfGroups;
+	}
+
+	public void setNumberOfGroups(Long numberOfGroups) {
+		this.numberOfGroups = numberOfGroups;
+	}
+
 	@Override
 	public String toString() {
-		return "DegreeModel [id=" + id + ", syllabus=" + syllabus + ", active=" + active + ", groupList=" + groupList
-				+ ", courseList=" + courseList + "]";
+		return "DegreeModel [id=" + id + ", syllabus=" + syllabus + ", title=" + title + ", active=" + active
+				+ ", groupList=" + groupList + ", courseList=" + courseList + ", numberOfGroups=" + numberOfGroups
+				+ "]";
 	}
+
 	
 }
