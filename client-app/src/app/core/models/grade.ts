@@ -9,5 +9,6 @@ export interface Grade {
     course?: Course,
     comment?: string,
     code?: string,
+    grade?: number,
     createdTime?: Date
 }

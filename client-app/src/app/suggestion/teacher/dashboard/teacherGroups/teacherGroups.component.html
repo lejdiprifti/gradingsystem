@@ -9,7 +9,7 @@
         <ul *ngFor="let student of group.studentList">
           <li>{{student.firstName}} {{student.lastName}}</li>
         </ul>
-        <button pButton icon = "pi pi-check" class="ui-button-info button" (click)="openGroup(student.id)" label="Open Courses"></button>
+        <button pButton icon = "pi pi-check" class="ui-button-info button" (click)="openGrades(group.id)" label="Open Grades"></button>
       </div>
     </ikubinfo-panel>
     </div>

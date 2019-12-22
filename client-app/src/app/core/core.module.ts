@@ -14,6 +14,7 @@ import { GroupService } from './services/group.service';
 import { DegreeService } from './services/degree.service';
 import { TeacherService } from './services/teacher.service';
 import { CourseService } from './services/course.service';
+import { GradeService } from './services/grade.service';
 
 
 @NgModule({
@@ -21,7 +22,7 @@ import { CourseService } from './services/course.service';
     HttpClientModule
   ],
   declarations: [],
-  providers: [AuthService, LoggerService, ApiService, CourseService,
+  providers: [AuthService, LoggerService, ApiService, CourseService,GradeService,
     AuthGuard,StudentService,GroupService,DegreeService,TeacherService,
     {
       provide: HTTP_INTERCEPTORS,

@@ -42,6 +42,9 @@ public class GradeEntity {
 	@Column(name="code")
 	private String code;
 	
+	@Column(name="grade")
+	private Long grade;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="created_time")
 	private Date createdTime;
@@ -117,13 +120,19 @@ public class GradeEntity {
 		this.active = active;
 	}
 
+	public Long getGrade() {
+		return grade;
+	}
+
+	public void setGrade(Long grade) {
+		this.grade = grade;
+	}
+
 	@Override
 	public String toString() {
 		return "GradeEntity [id=" + id + ", student=" + student + ", teacher=" + teacher + ", course=" + course
-				+ ", comment=" + comment + ", code=" + code + ", createdTime=" + createdTime + ", active=" + active
-				+ "]";
+				+ ", comment=" + comment + ", code=" + code + ", grade=" + grade + ", createdTime=" + createdTime
+				+ ", active=" + active + "]";
 	}
 
-		
-	
 }
