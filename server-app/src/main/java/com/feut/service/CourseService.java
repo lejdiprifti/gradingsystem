@@ -1,5 +1,6 @@
 package com.feut.service;
 
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.persistence.NoResultException;
@@ -11,14 +12,19 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.feut.converter.CourseConverter;
 import com.feut.entity.CourseEntity;
+import com.feut.entity.DegreeEntity;
+import com.feut.entity.GradeEntity;
 import com.feut.entity.GroupEntity;
 import com.feut.entity.LecturesEntity;
+import com.feut.entity.StudentEntity;
 import com.feut.model.CourseModel;
 import com.feut.repository.CourseRepository;
 import com.feut.repository.DegreeRepository;
 import com.feut.repository.DepartmentRepository;
+import com.feut.repository.GradeRepository;
 import com.feut.repository.GroupRepository;
 import com.feut.repository.LecturesRepository;
+import com.feut.repository.StudentRepository;
 
 @Service
 public class CourseService {
@@ -41,6 +47,11 @@ public class CourseService {
 	@Autowired
 	private GroupRepository groupRepository;
 	
+	@Autowired
+	private GradeRepository gradeRepository;
+	
+	@Autowired
+	private StudentRepository studentRepository;
 	public CourseService() {
 		
 	}
@@ -72,7 +83,8 @@ public class CourseService {
 		CourseEntity entity = new CourseEntity();
 		entity.setName(model.getName());
 		entity.setSyllabus(model.getSyllabus());
-		entity.setDegree(degreeRepository.getById(model.getDegreeId()));
+		DegreeEntity degree = degreeRepository.getById(model.getDegreeId());
+		entity.setDegree(degree);
 		entity.setDepartment(departmentRepository.getById(model.getDepartmentId()));
 		entity.setActive(true);
 		courseRepository.save(entity);
@@ -83,6 +95,13 @@ public class CourseService {
 		for (GroupEntity group : groupRepository.getByDegree(model.getDegreeId())) {
 			lecture.setGroup(group);
 			lecturesRepository.save(lecture);
+		}
+		for (StudentEntity student : studentRepository.getByDegree(degree)) {
+			GradeEntity grade = new GradeEntity();
+			grade.setCourse(entity);
+			grade.setStudent(student);
+			grade.setCreatedTime(new GregorianCalendar().getTime());
+			gradeRepository.save(grade);
 		}
 		}
 	

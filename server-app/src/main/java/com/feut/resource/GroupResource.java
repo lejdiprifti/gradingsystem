@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.feut.model.GradeModel;
 import com.feut.model.GroupModel;
+import com.feut.service.GradeService;
 import com.feut.service.GroupService;
 
 @RestController
@@ -25,6 +27,9 @@ public class GroupResource {
 	
 	@Autowired
 	private GroupService groupService;
+	
+	@Autowired
+	private GradeService gradeService;
 	
 	public GroupResource() {
 		
@@ -38,6 +43,11 @@ public class GroupResource {
 	@GetMapping("/{id}")
 	public ResponseEntity<GroupModel> getById(@PathVariable("id") Long id){
 		return new ResponseEntity<GroupModel>(groupService.getById(id), HttpStatus.OK);
+	}
+	
+	@GetMapping("/{id}/courses/{courseId}/grades")
+	public ResponseEntity<List<GradeModel>> getGradesByGroupAndCourse(@PathVariable("id") Long groupId, @PathVariable("courseId") Long courseId){
+		return new ResponseEntity<List<GradeModel>>(gradeService.getByGroupAndCourse(groupId, courseId), HttpStatus.OK);
 	}
 	
 	

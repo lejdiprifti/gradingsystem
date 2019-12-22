@@ -32,4 +32,9 @@ export class TeacherGroupsComponent implements OnInit {
     })
   }
 
+
+  openGrades(groupId: number): void {
+    const courseId = this.active.snapshot.paramMap.get('courseId');
+    this.router.navigate(['feut/teacher/groups/'+groupId+'/courses/'+Number(courseId)+'/grades']);
+  }
 }

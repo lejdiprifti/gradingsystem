@@ -1,5 +1,6 @@
 package com.feut.service;
 
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.persistence.NoResultException;
@@ -11,9 +12,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.feut.converter.StudentConverter;
+import com.feut.entity.CourseEntity;
+import com.feut.entity.GradeEntity;
+import com.feut.entity.GroupEntity;
 import com.feut.entity.Role;
 import com.feut.entity.StudentEntity;
 import com.feut.model.StudentModel;
+import com.feut.repository.CourseRepository;
+import com.feut.repository.GradeRepository;
 import com.feut.repository.GroupRepository;
 import com.feut.repository.StudentRepository;
 
@@ -31,6 +37,12 @@ public class StudentService {
 	
 	@Autowired
 	private GroupRepository groupRepository;
+	
+	@Autowired
+	private GradeRepository gradeRepository;
+	
+	@Autowired
+	private CourseRepository courseRepository;
 	
 	public StudentService() {
 		
@@ -70,12 +82,23 @@ public class StudentService {
 		entity.setActive(true);
 		entity.setBirthdate(model.getBirthdate());
 		entity.setPassword(passwordEncoder.encode(model.getPassword()));
-		entity.setGroup(groupRepository.getById(model.getGroupId()));
+		GroupEntity group = groupRepository.getById(model.getGroupId());
+		entity.setGroup(group);
 		entity.setPersonalNumber(model.getPersonalNumber());
 		Role studentRole = new Role();
 		studentRole.setId(3);
 		entity.setRole(studentRole);
 		studentRepository.save(entity);
+		for (CourseEntity course : courseRepository.getByDegree(group.getDegree().getId())) {
+			GradeEntity grade = new GradeEntity();
+			grade.setCourse(course);
+			grade.setStudent(entity);
+			grade.setComment("");
+			grade.setCode("");
+			grade.setActive(true);
+			grade.setCreatedTime(new GregorianCalendar().getTime());
+			gradeRepository.save(grade);
+		}
 	}
 	
 	public void edit(StudentModel model, Long id) {

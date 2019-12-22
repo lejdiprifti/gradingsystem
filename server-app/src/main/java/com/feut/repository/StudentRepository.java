@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.feut.entity.DegreeEntity;
-import com.feut.entity.GroupEntity;
 import com.feut.entity.StudentEntity;
 
 @Repository
