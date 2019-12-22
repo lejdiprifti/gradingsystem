@@ -72,3 +72,4 @@ public class GradeService {
 		gradeRepository.edit(entity);
 	}
 }
+
