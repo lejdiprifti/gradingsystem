@@ -8,7 +8,16 @@ public class StudentModel extends UserModel {
 	private GroupModel group;
 	private Long groupId;
 	private List<GradeModel> gradeList;
+	private Double gpa;
 	
+	public Double getGpa() {
+		return gpa;
+	}
+
+	public void setGpa(Double gpa) {
+		this.gpa = gpa;
+	}
+
 	public StudentModel() {
 		
 	}
@@ -39,6 +48,9 @@ public class StudentModel extends UserModel {
 
 	@Override
 	public String toString() {
-		return "StudentModel [group=" + group + ", groupId=" + groupId + ", gradeList=" + gradeList + "]";
-	}	
+		return "StudentModel [group=" + group + ", groupId=" + groupId + ", gradeList=" + gradeList + ", gpa=" + gpa
+				+ "]";
+	}
+
+
 }

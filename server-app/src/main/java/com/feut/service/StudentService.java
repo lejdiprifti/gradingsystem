@@ -43,18 +43,24 @@ public class StudentService {
 	
 	@Autowired
 	private CourseRepository courseRepository;
-	
+
 	public StudentService() {
 		
 	}
 	
 	public List<StudentModel> getAll(){
-		return studentConverter.toModel(studentRepository.getAll());
+		List<StudentModel> list =studentConverter.toModel(studentRepository.getAll());
+		for (StudentModel model : list) {
+			model.setGpa(gradeRepository.getAverageByStudent(model.getId()));
+		}
+		return list;
 	}
 	
 	public StudentModel getById(Long id) {
 		try {
-			return studentConverter.toModel(studentRepository.getById(id));
+			StudentModel model = studentConverter.toModel(studentRepository.getById(id));
+			model.setGpa(gradeRepository.getAverageByStudent(model.getId()));
+			return model;
 		} catch (NoResultException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Student not found.");
 		}
@@ -86,7 +92,7 @@ public class StudentService {
 		entity.setGroup(group);
 		entity.setPersonalNumber(model.getPersonalNumber());
 		Role studentRole = new Role();
-		studentRole.setId(3);
+		studentRole.setId(2);
 		entity.setRole(studentRole);
 		studentRepository.save(entity);
 		for (CourseEntity course : courseRepository.getByDegree(group.getDegree().getId())) {
@@ -124,6 +130,7 @@ public class StudentService {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Group not found.");
 		}
 	}
+	
 	public void delete(Long id) {
 		try {
 			StudentEntity entity = studentRepository.getById(id);

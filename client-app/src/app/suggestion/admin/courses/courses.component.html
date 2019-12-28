@@ -8,8 +8,8 @@
         <p> {{course.syllabus}}</p>
         <p>Department: {{course.department.name}}</p>
         <p> Degree: {{course.degree.title}}</p>
-        <button pButton icon="pi pi-check" class="ui-button-info button" (click)="editCourse(course.id)" label="Edit Course"></button>
-        <button pButton icon="pi pi-times" class="ui-button-danger button" (click)="deleteCourse(course.id)" label="Delete"></button>
+        <button *ngIf="role === 1" pButton icon="pi pi-check" class="ui-button-info button" (click)="editCourse(course.id)" label="Edit Course"></button>
+        <button *ngIf="role === 1" pButton icon="pi pi-times" class="ui-button-danger button" (click)="deleteCourse(course.id)" label="Delete"></button>
       </div>
     </ikubinfo-panel>
     </div>

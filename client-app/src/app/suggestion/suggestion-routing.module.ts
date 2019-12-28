@@ -26,6 +26,8 @@ import { TeacherCoursesComponent } from './teacher/dashboard/teacherCourses/teac
 import { TeacherGroupsComponent } from './teacher/dashboard/teacherGroups/teacherGroups.component';
 import { TeacherGradesComponent } from './teacher/dashboard/teacherGrades/teacherGrades.component';
 import { TeacherGradeComponent } from './teacher/dashboard/teacherGrade/teacherGrade.component';
+import { StudentGuard } from '@ikubinfo/core/guards/student-guard';
+import { StudentGradesComponent } from './student/dashboard/studentGrades/studentGrades.component';
 
 const suggestionRoutes: Routes = [
     {
@@ -33,6 +35,9 @@ const suggestionRoutes: Routes = [
         component: FullComponent,
         children: [
             { path: 'dashboard', component: AdminDashboardComponent, canActivate: [AdminGuard] },
+            {path: 'student/dashboard', component: StudentDashboardComponent, canActivate: [StudentGuard]},
+            {path: 'student/grades', component: StudentGradesComponent, canActivate: [StudentGuard]},
+            {path: 'student/courses', component: CoursesComponent, canActivate: [StudentGuard]},
             {path: 'teacher/dashboard', component: DashboardComponent, canActivate: [TeacherGuard]},
             {path: 'teacher/degrees', component: TeacherDegreesComponent, canActivate: [TeacherGuard]},
             {path: 'teacher/degrees/:degreeId/courses', component: TeacherCoursesComponent, canActivate: [TeacherGuard]},

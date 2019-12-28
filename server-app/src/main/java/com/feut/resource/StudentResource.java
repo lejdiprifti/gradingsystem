@@ -16,7 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.feut.model.CourseModel;
+import com.feut.model.GradeModel;
 import com.feut.model.StudentModel;
+import com.feut.service.CourseService;
+import com.feut.service.GradeService;
 import com.feut.service.StudentService;
 
 @RestController
@@ -26,6 +30,12 @@ public class StudentResource {
 	
 	@Autowired
 	private StudentService studentService;
+	
+	@Autowired
+	private GradeService gradeService;
+	
+	@Autowired
+	private CourseService courseService;
 	
 	public StudentResource() {
 		
@@ -41,9 +51,19 @@ public class StudentResource {
 		return new ResponseEntity<StudentModel>(studentService.getById(id), HttpStatus.OK);
 	}
 	
+	@GetMapping("/{id}/grades")
+	public ResponseEntity<List<GradeModel>> getGradesByStudent(@PathVariable("id") Long studentId){
+		return new ResponseEntity<List<GradeModel>>(gradeService.getGradesByStudent(studentId), HttpStatus.OK);
+	}
+	
 	@GetMapping("/query={name}")
 	public ResponseEntity<List<StudentModel>> getByName(@PathVariable("name") String name){
 		return new ResponseEntity<List<StudentModel>>(studentService.getByName(name), HttpStatus.OK);
+	}
+	
+	@GetMapping("/{id}/courses")
+	public ResponseEntity<List<CourseModel>> getByStudent(@PathVariable("id") Long studentId){
+		return new ResponseEntity<List<CourseModel>>(courseService.getByStudent(studentId), HttpStatus.OK);
 	}
 	
 	@PostMapping(consumes = "application/json")
@@ -64,3 +84,4 @@ public class StudentResource {
 		studentService.delete(id);
 	}
 }
+

@@ -4,6 +4,8 @@ import { FormBuilder } from '@angular/forms';
 import { getAllLifecycleHooks } from '@angular/compiler/src/lifecycle_reflector';
 import { Student } from '../models/student';
 import { Observable } from 'rxjs';
+import { Grade } from '../models/grade';
+import { Course } from '../models/course';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +34,14 @@ edit(id: number, student: Student): Observable<void>{
 
 delete(id: number): Observable<void>{
   return this.apiService.delete(this.url + '/' + id);
+}
+
+getGrades(id: number): Observable<Array<Grade>>{
+  return this.apiService.get(this.url+'/'+id+'/grades');
+}
+
+getCourses(id: number): Observable<Array<Course>>{
+  return this.apiService.get(this.url+'/'+id+'/courses');
 }
 }
 

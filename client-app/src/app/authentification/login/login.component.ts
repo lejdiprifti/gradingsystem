@@ -36,6 +36,8 @@ export class LoginComponent implements OnInit {
        this.router.navigate(['feut/dashboard']);
      } else if (this.authService.user.role.id === RoleEnum.TEACHER) {
        this.router.navigate(['feut/teacher/dashboard']);
+     } else {
+       this.router.navigate(['feut/student/dashboard'])
      }
      this.logger.success('Success', 'You logged in successfully!');
     },

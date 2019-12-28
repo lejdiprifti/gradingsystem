@@ -6,6 +6,9 @@ import { Course } from '@ikubinfo/core/models/course';
 import { DepartmentService } from '@ikubinfo/core/services/department.service';
 import { DegreeService } from '@ikubinfo/core/services/degree.service';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
+import { AuthService } from '@ikubinfo/core/services/auth.service';
+import { RoleEnum } from '@ikubinfo/core/models/role.enum';
+import { StudentService } from '@ikubinfo/core/services/student.service';
 
 @Component({
   selector: 'ikubinfo-courses',
@@ -16,16 +19,20 @@ export class CoursesComponent implements OnInit {
 
   courses: Array<Course>;
   check: boolean;
+  role: number;
   constructor(private courseService: CourseService, private logger: LoggerService,
     private active: ActivatedRoute, private departmentService: DepartmentService,
     private degreeService: DegreeService, private router: Router, 
-    private confirmationService: ConfirmationService) { }
+    private confirmationService: ConfirmationService,
+    private authService: AuthService, private studentService: StudentService) { }
 
   ngOnInit() {
     this.loadCourses();
   }
 
   loadCourses(): void {
+    this.role = this.authService.user.role.id
+    if (this.authService.user.role == RoleEnum.ADMIN){
     const degreeId = this.active.snapshot.paramMap.get('degreeId');
     const departmentId = this.active.snapshot.paramMap.get('departmentId');
     this.check = (departmentId==null);
@@ -45,6 +52,13 @@ export class CoursesComponent implements OnInit {
       this.courseService.getAll().subscribe(res => {
         this.courses = res;
       }, err => {
+        this.logger.error('Error', 'Something bad happened.');
+      })
+    } }
+    else {
+      this.studentService.getCourses(this.authService.user.id).subscribe(res =>{
+        this.courses = res;
+      }, err=>{
         this.logger.error('Error', 'Something bad happened.');
       })
     }

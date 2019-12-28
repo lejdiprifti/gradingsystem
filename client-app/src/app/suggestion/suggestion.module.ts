@@ -28,6 +28,7 @@ import { TeacherCoursesComponent } from './teacher/dashboard/teacherCourses/teac
 import { TeacherGroupsComponent } from './teacher/dashboard/teacherGroups/teacherGroups.component';
 import { TeacherGradesComponent } from './teacher/dashboard/teacherGrades/teacherGrades.component';
 import { TeacherGradeComponent } from './teacher/dashboard/teacherGrade/teacherGrade.component';
+import { StudentGradesComponent } from './student/dashboard/studentGrades/studentGrades.component';
 
 @NgModule({
     imports: [CommonsModule, SuggestionRoutingModule, LayoutModule, FormsModule, ChartModule],
@@ -35,7 +36,7 @@ import { TeacherGradeComponent } from './teacher/dashboard/teacherGrade/teacherG
     declarations: [AdminDashboardComponent,DashboardComponent,TeacherDegreesComponent,TeacherCoursesComponent,
         StudentDashboardComponent, AdminStudentsComponent,StudentComponent,LecturesComponent, TeacherGroupsComponent,
         DegreesComponent,DepartmentComponent,LectureComponent,TeacherComponent,CoursesComponent, CourseComponent,
-         GroupsComponent,TeacherGradeComponent,
+         GroupsComponent,TeacherGradeComponent,StudentGradesComponent,
          DegreeComponent, GroupComponent, TeachersComponent,DepartmentsComponent, TeacherGradesComponent],
     providers: []
 })

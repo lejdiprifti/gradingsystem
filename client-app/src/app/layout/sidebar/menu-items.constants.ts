@@ -18,10 +18,28 @@ export const menuItems: Array<MenuItem> = [{
     allowedRoles: [RoleEnum.TEACHER]
 },
 {
+    url: '/feut/student/dashboard',
+    icon: 'fa-dashboard',
+    label: 'Dashboard',
+    allowedRoles: [RoleEnum.STUDENT]
+},
+{
+    url: '/feut/student/grades',
+    icon: 'fa-dashboard',
+    label: 'My Grades',
+    allowedRoles: [RoleEnum.STUDENT]
+},
+{
     url: '/feut/students',
     icon: 'fa-dashboard',
     label: 'Students',
     allowedRoles: [RoleEnum.ADMIN]
+},
+{
+    url: '/feut/student/courses',
+    icon: 'fa-table',
+    label: 'My Courses',
+    allowedRoles: [RoleEnum.STUDENT]
 },
 {
     url: '/feut/degrees',

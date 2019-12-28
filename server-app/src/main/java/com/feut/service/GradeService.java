@@ -70,5 +70,13 @@ public class GradeService {
 		entity.setTeacher(teacherRepository.getById(model.getTeacherId()));
 		gradeRepository.edit(entity);
 	}
+	
+	public List<GradeModel> getGradesByStudent(Long studentId){
+		try {
+			return gradeConverter.toModel(gradeRepository.getGradesByStudent(studentId));
+		} catch (NoResultException e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Grades not found.");
+		}
+	}
 }
 

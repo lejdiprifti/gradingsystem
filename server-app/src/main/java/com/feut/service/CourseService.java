@@ -79,6 +79,15 @@ public class CourseService {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Courses not found.");
 		}
 	}
+	
+	public List<CourseModel> getByStudent(Long studentId){
+		try {
+			return courseConverter.toModel(courseRepository.getByStudent(studentId));
+		} catch (NoResultException e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Courses not found.");
+		}
+	}
+	
 	public void save(CourseModel model) {
 		CourseEntity entity = new CourseEntity();
 		entity.setName(model.getName());

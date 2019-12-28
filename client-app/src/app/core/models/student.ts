@@ -6,4 +6,5 @@ export interface Student extends User {
     group?: Group;
     gradeList?: Array<Grade>;
     groupId?: number;
+    gpa?: number;
 }

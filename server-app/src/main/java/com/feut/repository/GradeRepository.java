@@ -39,6 +39,21 @@ public class GradeRepository {
 		query.setParameter(2, true);
 		return query.getSingleResult();
 	}
+	
+	public List<GradeEntity> getGradesByStudent(Long studentId){
+		TypedQuery<GradeEntity> query = em.createQuery("Select gd from GradeEntity gd JOIN StudentEntity s on gd.student = s.id"
+				+ " where s.id = ?1 and gd.active = ?2", GradeEntity.class);
+		query.setParameter(1, studentId);
+		query.setParameter(2, true);
+		return query.getResultList();
+	}
+	
+	public Double getAverageByStudent(Long studentId) {
+		TypedQuery<Double> query = em.createQuery("Select AVG(gd.grade) from GradeEntity gd GROUP BY (gd.student) HAVING gd.student.id = ?1",Double.class); 
+		query.setParameter(1, studentId);
+		return query.getSingleResult();
+	}
+	
 	@Transactional
 	public void save(GradeEntity entity) {
 		em.persist(entity);
