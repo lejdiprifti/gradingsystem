@@ -30,7 +30,7 @@ export class StudentDashboardComponent implements OnInit {
       labels: this.labels,
       datasets: [
         {
-            label: 'My Progress',
+            label: 'Points',
             backgroundColor: 'rgba(255,99,132,0.2)',
             borderColor: 'rgba(255,99,132,1)',
             pointBackgroundColor: 'rgba(255,99,132,1)',
