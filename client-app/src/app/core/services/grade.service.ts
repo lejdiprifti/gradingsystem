@@ -14,4 +14,12 @@ constructor(private apiService: ApiService) { }
   public getGradesByGroupAndCourse(groupId: number, courseId: number): Observable<Array<Grade>>{
     return this.apiService.get('group/'+groupId+'/courses/'+courseId+'/grades');
   }
+
+  public getById(gradeId: number): Observable<Grade>{
+    return this.apiService.get(this.url + '/'+gradeId);
+  }
+
+  public edit(grade: Grade, id: number): Observable<void> {
+    return this.apiService.put(this.url + '/' + id, grade);
+  }
 }

@@ -66,7 +66,6 @@ public class GradeService {
 		entity.setGrade(model.getGrade());
 		entity.setCreatedTime(new GregorianCalendar().getTime());
 		entity.setActive(true);
-		entity.setStudent(studentRepository.getById(model.getStudentId()));
 		entity.setCourse(courseRepository.getById(model.getCourseId()));
 		entity.setTeacher(teacherRepository.getById(model.getTeacherId()));
 		gradeRepository.edit(entity);

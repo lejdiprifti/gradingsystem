@@ -15,13 +15,14 @@ export class TeacherGradesComponent implements OnInit {
   grades: Array<Grade>;
   items: MenuItem[];
   cols: any;
+  selectedGrade: Grade;
   constructor(private gradeService: GradeService, private logger: LoggerService,
     private active: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     this.getGrades();
     this.items = [
-      { label: 'Edit', icon: 'pi pi-pencil'}
+      { label: 'Edit', icon: 'pi pi-pencil', command: (event) => this.editGrade(this.selectedGrade)}
     ];
 
     this.cols = [
@@ -40,5 +41,11 @@ export class TeacherGradesComponent implements OnInit {
     }, err=>{
       this.logger.error('Error', 'Something bad happened.');
     })
+  }
+
+  editGrade(grade: Grade): void {
+    const groupId = this.active.snapshot.paramMap.get('groupId');
+    const courseId = this.active.snapshot.paramMap.get('courseId');
+    this.router.navigate(['feut/teacher/groups/'+groupId+'/courses/'+courseId+'/grades/'+grade.id]);
   }
 }

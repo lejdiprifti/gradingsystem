@@ -1,0 +1,26 @@
+<ikubinfo-panel header="{{grade.course.name}} - {{grade.student.firstName}} {{grade.student.lastName}}">
+  <div panel-content>
+    <form role="form" [formGroup]="gradeForm">
+      <ikubinfo-input label = "Student">
+        <input type="text" value="{{grade.student.firstName}} {{grade.student.lastName}}" disabled  class="form-control"/>
+      </ikubinfo-input>
+      <ikubinfo-input label = "Course">
+        <input type="text" value = "{{grade.course.name}}" disabled class="form-control" />
+      </ikubinfo-input>
+      <ikubinfo-input label = "Code">
+        <input type="text" formControlName="code" class="form-control" />
+      </ikubinfo-input>
+      <ikubinfo-input label = "Comment">
+        <input formControlName="comment" type="text" class="form-control" />
+      </ikubinfo-input>
+      <ikubinfo-input label = "Grade">
+        <select class="custom-select" formControlName="grade">
+          <option value="" disabled>Pick the grade</option>
+          <option *ngFor="let grade of grades"  [ngValue]="grade">{{grade}}</option>
+        </select>
+      </ikubinfo-input>
+    </form>
+    <button pButton type="submit" (click)="submit()" [disabled]="gradeForm.invalid" class="ui-button-success" label="Submit" icon="pi pi-file"></button>
+    <button pButton type="button" (click)="reset()" class="ui-button-secondary reset" label="Reset" icon="pi pi-times"></button>
+  </div>
+</ikubinfo-panel>

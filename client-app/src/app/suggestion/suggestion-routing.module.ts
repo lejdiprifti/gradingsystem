@@ -25,6 +25,7 @@ import { TeacherDegreesComponent } from './teacher/dashboard/teacherDegrees/teac
 import { TeacherCoursesComponent } from './teacher/dashboard/teacherCourses/teacherCourses.component';
 import { TeacherGroupsComponent } from './teacher/dashboard/teacherGroups/teacherGroups.component';
 import { TeacherGradesComponent } from './teacher/dashboard/teacherGrades/teacherGrades.component';
+import { TeacherGradeComponent } from './teacher/dashboard/teacherGrade/teacherGrade.component';
 
 const suggestionRoutes: Routes = [
     {
@@ -37,6 +38,7 @@ const suggestionRoutes: Routes = [
             {path: 'teacher/degrees/:degreeId/courses', component: TeacherCoursesComponent, canActivate: [TeacherGuard]},
             {path: 'teacher/degrees/:degreeId/courses/:courseId/groups', component: TeacherGroupsComponent, canActivate: [TeacherGuard]},
             {path: 'teacher/groups/:groupId/courses/:courseId/grades', component: TeacherGradesComponent, canActivate: [TeacherGuard]},
+            {path: 'teacher/groups/:groupId/courses/:courseId/grades/:gradeId', component: TeacherGradeComponent, canActivate: [TeacherGuard]},
             {path: 'departments', component: DepartmentsComponent, canActivate:[AdminGuard]},
             {path: 'departments/:id' + '/teachers', component: TeachersComponent, canActivate:[AdminGuard]},
             {path: 'department/:id', component: DepartmentComponent, canActivate: [AdminGuard]},
