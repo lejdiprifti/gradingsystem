@@ -12,10 +12,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="grade", schema="feut")
+@Table(name="grade", schema="feut", uniqueConstraints = {
+		@UniqueConstraint(columnNames = {"student_id", "course_id", "code"})
+})
 public class GradeEntity {
 
 	@Id

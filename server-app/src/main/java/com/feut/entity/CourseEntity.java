@@ -1,11 +1,9 @@
 package com.feut.entity;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,13 +11,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name="course", schema="feut")
+@Table(name="course", schema="feut", uniqueConstraints = {
+		@UniqueConstraint(columnNames = {"name", "degree_id"}),
+		@UniqueConstraint(columnNames = {"name", "department_id"})
+})
 @NamedQueries({
 	@NamedQuery(name="Course.getAll", query="Select c From CourseEntity c where c.active = ?1"),
 	@NamedQuery(name="Course.getById", query="Select c From CourseEntity c where c.id = ?1 and c.active =?2"),

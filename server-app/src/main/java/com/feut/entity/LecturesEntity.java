@@ -12,13 +12,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@Table(name="lectures",schema="feut")
+@Table(name="lectures",schema="feut", uniqueConstraints = {
+		@UniqueConstraint(columnNames = {"group_id", "course_id"})
+})
 @NamedQueries({
 	@NamedQuery(name="Lectures.getByGroup", query = "Select l from LecturesEntity l Join GroupEntity g on l.group = g.id "
 			+ "where g.id = ?1 and l.active = ?2"),

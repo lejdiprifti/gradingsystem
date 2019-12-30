@@ -1,24 +1,21 @@
 package com.feut.entity;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name="department", schema="feut")
+@Table(name="department", schema="feut", uniqueConstraints = {
+		@UniqueConstraint(columnNames="department_name")
+})
 @NamedQueries({
 	@NamedQuery(name="Department.getById", query = "Select d from DepartmentEntity d where d.id = ?1 and d.active = ?2"),
 	@NamedQuery(name="Department.getAll", query = "Select d from DepartmentEntity d where d.active = ?1")
