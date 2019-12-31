@@ -1,11 +1,12 @@
 
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AuthService } from '@ikubinfo/core/services/auth.service';
 import { RoleEnum } from '@ikubinfo/core/models/role.enum';
 import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
+import { SlackService } from '@ikubinfo/core/services/slack.service';
 
 @Component({
   selector: 'ikubinfo-login',
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private authService: AuthService,
-    private logger: LoggerService
+    private logger: LoggerService,
+    private slackService: SlackService
   ) { }
 
   ngOnInit() {
@@ -26,6 +28,7 @@ export class LoginComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
+    this.checkCode();
   }
 
   login(): void {
@@ -44,5 +47,12 @@ export class LoginComponent implements OnInit {
     err => {
      this.logger.error('Error', 'Invalid username or password');
    });
+   }
+
+   checkCode(): void {
+     if (this.router.url.includes('code')){
+       console.log(this.router.url.slice(12,102));
+       this.slackService.getAccessToken(this.router.url.slice(12,102));
+     }
    }
 }

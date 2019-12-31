@@ -9,7 +9,6 @@ import { BASE_URL } from '@env/environment';
 export class ApiService {
 
   private options = { headers: new HttpHeaders().set('Content-Type', 'application/json') };
-
   constructor(private httpClient: HttpClient) {
 
   }
@@ -31,7 +30,6 @@ export class ApiService {
   public delete(path: string): Observable<void> {
     return this.httpClient.delete<void>(BASE_URL + path);
   }
-
 
 
 }

@@ -40,20 +40,18 @@ public class CourseEntity implements Serializable{
 	@Column(name="id")
 	private Long id;
 	
-	@Column(name="name")
+	@Column(name="name", nullable = false)
 	private String name;
-
 
 	@ManyToOne
 	@JoinColumn(name="department_id")
 	private DepartmentEntity department;
-	
 
 	@ManyToOne
 	@JoinColumn(name="degree_id")
 	private DegreeEntity degree;
 	
-	@Column(name="syllabus", length=2000)
+	@Column(name="syllabus", length=2000, nullable = false)
 	private String syllabus;
 
 	@Column(name="active")

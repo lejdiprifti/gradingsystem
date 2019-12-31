@@ -1,6 +1,7 @@
 package com.feut.service;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.NoResultException;
 
@@ -11,9 +12,11 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.feut.converter.GroupConverter;
 import com.feut.entity.GroupEntity;
+import com.feut.entity.StudentEntity;
 import com.feut.model.GroupModel;
 import com.feut.repository.DegreeRepository;
 import com.feut.repository.GroupRepository;
+import com.feut.repository.StudentRepository;
 
 @Service
 public class GroupService {
@@ -29,6 +32,9 @@ public class GroupService {
 
 	@Autowired
 	private StudentService studentService;
+	
+	@Autowired
+	private StudentRepository studentRepository;
 	
 	public GroupService() {
 
@@ -98,6 +104,11 @@ public class GroupService {
 		try {
 			GroupEntity entity = groupRepository.getById(id);
 			entity.setActive(false);
+			List<StudentEntity> list = studentRepository.getByGroup(id);
+			for (StudentEntity student : list) {
+				student.setGroup(null);
+				studentRepository.edit(student);
+			}
 			groupRepository.edit(entity);
 		} catch (NoResultException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Group not found.");

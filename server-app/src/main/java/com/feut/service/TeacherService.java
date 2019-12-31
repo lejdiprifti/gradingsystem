@@ -11,10 +11,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.feut.converter.TeacherConverter;
+import com.feut.entity.LecturesEntity;
 import com.feut.entity.Role;
 import com.feut.entity.TeacherEntity;
 import com.feut.model.TeacherModel;
 import com.feut.repository.DepartmentRepository;
+import com.feut.repository.LecturesRepository;
 import com.feut.repository.TeacherRepository;
 
 @Service
@@ -28,7 +30,10 @@ public class TeacherService {
 
 	@Autowired
 	private DepartmentRepository departmentRepository;
-
+	
+	@Autowired
+	private LecturesRepository lecturesRepository;
+	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
@@ -98,6 +103,11 @@ public class TeacherService {
 	public void delete(Long id) {
 		try {
 			TeacherEntity entity = teacherRepository.getById(id);
+			List<LecturesEntity> list = lecturesRepository.getByTeacher(id);
+			for (LecturesEntity lecture: list) {
+				lecture.setTeacher(null);
+				lecturesRepository.edit(lecture);
+			}
 			entity.setActive(false);
 			teacherRepository.edit(entity);
 		} catch (NoResultException e) {

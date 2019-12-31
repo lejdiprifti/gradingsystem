@@ -52,6 +52,14 @@ public class LecturesRepository {
 		query.setParameter(3, true);
 		return query.getSingleResult();
 	}
+	
+	public List<LecturesEntity> getByCourse(Long courseId) {
+		TypedQuery<LecturesEntity> query = em.createQuery("Select l from LecturesEntity l JOIN CourseEntity c on c.id = l.course "
+				+ "where c.id = ?1 and c.active = ?2 and l.active = ?2",LecturesEntity.class);
+		query.setParameter(1, courseId);
+		query.setParameter(2, true);
+		return query.getResultList();
+	}
 	@Transactional
 	public void save(LecturesEntity entity) {
 		em.persist(entity);

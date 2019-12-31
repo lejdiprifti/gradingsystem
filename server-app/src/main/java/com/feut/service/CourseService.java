@@ -126,6 +126,16 @@ public class CourseService {
 	
 	public void delete(Long id) {
 		CourseEntity entity = courseRepository.getById(id);
+		List<GradeEntity> gradeList = gradeRepository.getGradesByCourse(id);
+		for (GradeEntity grade : gradeList) {
+			grade.setActive(false);
+			gradeRepository.edit(grade);
+		}
+		List<LecturesEntity> lecturesList = lecturesRepository.getByCourse(id);
+		for (LecturesEntity lecture: lecturesList) {
+			lecture.setActive(false);
+			lecturesRepository.edit(lecture);
+		}
 		entity.setActive(false);
 		courseRepository.edit(entity);
 	}

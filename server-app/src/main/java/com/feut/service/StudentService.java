@@ -42,6 +42,9 @@ public class StudentService {
 	private GradeRepository gradeRepository;
 	
 	@Autowired
+	private GradeService gradeService;
+	
+	@Autowired
 	private CourseRepository courseRepository;
 
 	public StudentService() {
@@ -135,6 +138,7 @@ public class StudentService {
 		try {
 			StudentEntity entity = studentRepository.getById(id);
 			studentRepository.edit(entity);
+			gradeService.deleteGradesByStudent(id);
 		} catch (NoResultException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Student not found.");
 		}

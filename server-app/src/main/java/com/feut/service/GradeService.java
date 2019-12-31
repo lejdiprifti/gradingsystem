@@ -78,5 +78,13 @@ public class GradeService {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Grades not found.");
 		}
 	}
+	
+	public void deleteGradesByStudent(Long studentId) {
+		List<GradeEntity> list = gradeRepository.getGradesByStudent(studentId);
+		for (GradeEntity grade : list) {
+			grade.setActive(false);
+			gradeRepository.edit(grade);
+		}
+	}
 }
 

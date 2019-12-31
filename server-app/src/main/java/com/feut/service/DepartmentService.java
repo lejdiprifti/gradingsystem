@@ -10,9 +10,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.feut.converter.DepartmentConverter;
+import com.feut.entity.CourseEntity;
 import com.feut.entity.DepartmentEntity;
+import com.feut.entity.TeacherEntity;
 import com.feut.model.DepartmentModel;
+import com.feut.repository.CourseRepository;
 import com.feut.repository.DepartmentRepository;
+import com.feut.repository.TeacherRepository;
 
 @Service
 public class DepartmentService {
@@ -25,6 +29,12 @@ public class DepartmentService {
 	
 	@Autowired
 	private CourseService courseService;
+	
+	@Autowired
+	private TeacherRepository teacherRepository;
+	
+	@Autowired
+	private CourseRepository courseRepository;
 	
 	@Autowired
 	private TeacherService teacherService;
@@ -71,6 +81,16 @@ public class DepartmentService {
 	public void delete(Long id) {
 		try {
 			DepartmentEntity entity = depRepository.getById(id);
+			List<CourseEntity> courseList = courseRepository.getByDepartment(entity);
+			for (CourseEntity course: courseList) {
+				course.setDepartment(null);
+				courseRepository.edit(course);
+			}
+			List<TeacherEntity> teacherList = teacherRepository.getByDepartment(id);
+			for (TeacherEntity teacher : teacherList) {
+				teacher.setDepartment(null);
+				teacherRepository.edit(teacher);
+			}
 			entity.setActive(false);
 		} catch (NoResultException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Department not found.");

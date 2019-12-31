@@ -54,6 +54,13 @@ public class GradeRepository {
 		return query.getSingleResult();
 	}
 	
+	public List<GradeEntity> getGradesByCourse(Long courseId){
+		TypedQuery<GradeEntity> query = em.createQuery("Select gd from GradeEntity gd JOIN CourseEntity c on c.id = gd.course "
+				+ "where c.id = ?1 and gd.active = ?2 and c.active = ?2", GradeEntity.class);
+		query.setParameter(1, courseId);
+		query.setParameter(2, true);
+		return query.getResultList();
+	}
 	@Transactional
 	public void save(GradeEntity entity) {
 		em.persist(entity);

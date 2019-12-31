@@ -10,9 +10,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.feut.converter.DegreeConverter;
+import com.feut.entity.CourseEntity;
 import com.feut.entity.DegreeEntity;
+import com.feut.entity.GroupEntity;
 import com.feut.model.DegreeModel;
+import com.feut.repository.CourseRepository;
 import com.feut.repository.DegreeRepository;
+import com.feut.repository.GroupRepository;
 
 @Service
 public class DegreeService {
@@ -25,6 +29,12 @@ public class DegreeService {
 	
 	@Autowired
 	private GroupService groupService;
+	
+	@Autowired
+	private GroupRepository groupRepository;
+	
+	@Autowired
+	private CourseRepository courseRepository;
 	
 	@Autowired
 	private CourseService courseService;
@@ -89,6 +99,16 @@ public class DegreeService {
 	public void delete(Long id) {
 		try {
 			DegreeEntity entity = degreeRepository.getById(id);
+			List<GroupEntity> groupList = groupRepository.getByDegree(id);
+			for (GroupEntity group: groupList) {
+				group.setActive(false);
+				groupRepository.edit(group);
+			}
+			List<CourseEntity> courseList = courseRepository.getByDegree(id);
+			for (CourseEntity course: courseList) {
+				course.setActive(false);
+				courseRepository.edit(course);
+			}
 			entity.setActive(false);
 			degreeRepository.edit(entity);
 		} catch (NoResultException e) {

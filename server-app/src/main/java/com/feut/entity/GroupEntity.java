@@ -34,10 +34,10 @@ public class GroupEntity implements Serializable {
 	@Column(name="id")
 	private Long id;
 	
-	@Column(name="group_number")
+	@Column(name="group_number", nullable = false)
 	private Long number;
 	
-	@Column(name="group_email")
+	@Column(name="group_email", nullable = false)
 	private String email;
 	
 	@ManyToOne

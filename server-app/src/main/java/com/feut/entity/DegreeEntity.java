@@ -32,10 +32,10 @@ public class DegreeEntity implements Serializable{
 	@Column(name="id")
 	private Long id;
 	
-	@Column(name="title")
+	@Column(name="title", nullable = false)
 	private String title;
 	
-	@Column(name="syllabus", length = 5000)
+	@Column(name="syllabus", length = 5000, nullable = false)
 	private String syllabus;
 	
 	

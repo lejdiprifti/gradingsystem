@@ -32,10 +32,10 @@ public class DepartmentEntity implements Serializable {
 	@Column(name="department_id")
 	private Long id;
 	
-	@Column(name="department_name")
+	@Column(name="department_name", nullable = false)
 	private String name;
 	
-	@Column(name="department_description", length = 2000)
+	@Column(name="department_description", length = 2000, nullable = false)
 	private String description;
 
 	

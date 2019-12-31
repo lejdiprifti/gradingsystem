@@ -2,20 +2,16 @@ package com.feut.entity;
 
 
 import java.io.Serializable;
-import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="student", schema="feut")
@@ -36,6 +32,8 @@ public class StudentEntity extends UserEntity implements Serializable {
 	@JoinColumn(name="group_id")
 	private GroupEntity group;
 	
+	@Column(name="access_token")
+	private String accessToken;
 	
 	
 	public StudentEntity() {
@@ -51,10 +49,20 @@ public class StudentEntity extends UserEntity implements Serializable {
 		this.group = group;
 	}
 
+	public String getAccessToken() {
+		return accessToken;
+	}
+
+	public void setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
+	}
+
 	@Override
 	public String toString() {
-		return "StudentEntity [group=" + group + "]";
+		return "StudentEntity [group=" + group + ", accessToken=" + accessToken + "]";
 	}
+
+	
 
 
 	
