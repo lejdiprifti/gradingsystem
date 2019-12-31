@@ -7,6 +7,7 @@ import { AuthService } from '@ikubinfo/core/services/auth.service';
 import { RoleEnum } from '@ikubinfo/core/models/role.enum';
 import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
 import { SlackService } from '@ikubinfo/core/services/slack.service';
+import { Slack } from '@ikubinfo/core/models/slack';
 
 @Component({
   selector: 'ikubinfo-login',
@@ -15,6 +16,7 @@ import { SlackService } from '@ikubinfo/core/services/slack.service';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  slack: Slack;
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -24,6 +26,7 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.slack = {};
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
@@ -51,8 +54,18 @@ export class LoginComponent implements OnInit {
 
    checkCode(): void {
      if (this.router.url.includes('code')){
-       console.log(this.router.url.slice(12,102));
-       this.slackService.getAccessToken(this.router.url.slice(12,102));
+       this.slackService.getSlackUrl(this.router.url.slice(12,102)).then(res => {
+          this.slack.channelName = res.incoming_webhook.channel;
+          this.slack.channelId = res.incoming_webhook.channel_id;
+          this.slack.url = res.incoming_webhook.url;
+          this.slack.studentId = this.authService.user.id;
+          this.slack.botToken = res.bot.bot_access_token;
+          this.slackService.saveUrl(this.slack).subscribe(res => {
+            this.logger.success('Success', 'Slack configured in channel '+this.slack.channelName);
+          }, err=>{
+            this.logger.error('Error', 'Something bad happened.');
+          })
+       });
      }
    }
 }

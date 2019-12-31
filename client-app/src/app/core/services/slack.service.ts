@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '../utilities/api.service';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Slack } from '../models/slack';
 
 @Injectable({
   providedIn: 'root'
@@ -9,9 +10,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class SlackService {
   private client_secret = 'ab5b0b541d54860c1d757cc6489858bd';
   private client_id = '837287798948.876662464226'
-constructor() { }
+  private url = 'slack'
+constructor(private apiService: ApiService) { }
 
-public async getAccessToken(code: string) {
+public async getSlackUrl(code: string): Promise<any> {
   let body = new URLSearchParams();
   body.set('client_secret', this.client_secret);
   body.set('client_id', this.client_id);
@@ -23,9 +25,18 @@ let response = await fetch('https://slack.com/api/oauth.access', {
   },
   body: body.toString()
 })
-response.json().then(res => {
-  console.log(res.incoming_webhook.url);
-});
+return response.json();
+}
+
+public getByStudent(studentId: number): Observable<Array<Slack>>{
+  return this.apiService.get(this.url + '/' +studentId);
+}
+public saveUrl(slack: Slack): Observable<void>{
+  return this.apiService.post(this.url, slack);
+}
+
+public deleteUrl(id: number): Observable<void>{
+  return this.apiService.delete(this.url+'/'+id);
 }
 }
 
