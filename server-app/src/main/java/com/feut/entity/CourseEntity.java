@@ -18,8 +18,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="course", schema="feut", uniqueConstraints = {
-		@UniqueConstraint(columnNames = {"name", "degree_id"}),
-		@UniqueConstraint(columnNames = {"name", "department_id"})
+		@UniqueConstraint(columnNames = {"name", "degree_id", "active"}),
+		@UniqueConstraint(columnNames = {"name", "department_id", "active"})
 })
 @NamedQueries({
 	@NamedQuery(name="Course.getAll", query="Select c From CourseEntity c where c.active = ?1"),

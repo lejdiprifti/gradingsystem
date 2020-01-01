@@ -14,7 +14,7 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name="department", schema="feut", uniqueConstraints = {
-		@UniqueConstraint(columnNames="department_name")
+		@UniqueConstraint(columnNames= {"department_name", "active"})
 })
 @NamedQueries({
 	@NamedQuery(name="Department.getById", query = "Select d from DepartmentEntity d where d.id = ?1 and d.active = ?2"),

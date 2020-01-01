@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="degree", schema="feut", uniqueConstraints = {
-		@UniqueConstraint(columnNames = "title")
+		@UniqueConstraint(columnNames = {"title","active"})
 })
 public class DegreeEntity implements Serializable{
 

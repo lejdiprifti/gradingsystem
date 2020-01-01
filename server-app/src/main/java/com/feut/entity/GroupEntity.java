@@ -19,8 +19,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="group", schema="feut", uniqueConstraints = {
-	@UniqueConstraint(columnNames= {"group_number", "degree_id"}),
-	@UniqueConstraint(columnNames="group_email")
+	@UniqueConstraint(columnNames= {"group_number", "degree_id", "active"}),
+	@UniqueConstraint(columnNames= {"group_email", "active"})
 })
 public class GroupEntity implements Serializable {
 	

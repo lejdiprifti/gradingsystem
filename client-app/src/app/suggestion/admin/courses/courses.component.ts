@@ -32,7 +32,7 @@ export class CoursesComponent implements OnInit {
 
   loadCourses(): void {
     this.role = this.authService.user.role.id
-    if (this.authService.user.role == RoleEnum.ADMIN){
+    if (this.authService.user.role.id === RoleEnum.ADMIN){
     const degreeId = this.active.snapshot.paramMap.get('degreeId');
     const departmentId = this.active.snapshot.paramMap.get('departmentId');
     this.check = (departmentId==null);

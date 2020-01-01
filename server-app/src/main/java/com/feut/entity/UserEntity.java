@@ -18,9 +18,9 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name="user", schema="feut", uniqueConstraints  = {
-		@UniqueConstraint(columnNames= "username"),
-		@UniqueConstraint(columnNames= "personal_number"),
-		@UniqueConstraint(columnNames= "email")
+		@UniqueConstraint(columnNames= {"username", "active"}),
+		@UniqueConstraint(columnNames= {"personal_number", "active"}),
+		@UniqueConstraint(columnNames= {"email", "active"})
 })
 @Inheritance(strategy = InheritanceType.JOINED)
 @NamedQueries({

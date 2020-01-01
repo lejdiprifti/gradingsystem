@@ -39,7 +39,6 @@ export class LecturesComponent implements OnInit {
     this.lectures=[];
     this.lecture = {};
     this.loadGroup();
-    this.loadCourses();
     this.loadTeacher();
     this.items = [
       { label: 'Edit', icon: 'pi pi-pencil', command: (event) => this.editLecture(this.selectedLecture)}
@@ -54,7 +53,9 @@ export class LecturesComponent implements OnInit {
   loadData(course: Course): void {
       this.lecturesService.getByGroupAndCourse(this.group.id, course.id).subscribe(res => {
         this.lecture = res;
+        if (this.lecture){
         this.lectures.push(this.lecture);
+        }
       }, err=> {
         this.logger.error('Error', 'Something bad happened.');
             })
@@ -64,6 +65,7 @@ export class LecturesComponent implements OnInit {
     const groupId = this.active.snapshot.paramMap.get('groupId');
     this.groupService.getById(Number(groupId)).subscribe(res => {
       this.group = res;
+      this.loadCourses();
     }, err => {
       this.logger.error('Error', 'Something bad happened.');
     })

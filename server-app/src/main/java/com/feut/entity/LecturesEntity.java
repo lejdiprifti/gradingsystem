@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="lectures",schema="feut", uniqueConstraints = {
-		@UniqueConstraint(columnNames = {"group_id", "course_id"})
+		@UniqueConstraint(columnNames = {"group_id", "course_id", "active"})
 })
 @NamedQueries({
 	@NamedQuery(name="Lectures.getByGroup", query = "Select l from LecturesEntity l Join GroupEntity g on l.group = g.id "
