@@ -58,8 +58,18 @@ public class SlackService {
 	
 	public void delete(Long id) {
 		try {
-			SlackEntity entity = slackRepository.getById(id);
+			SlackEntity entity = slackRepository.getAllById(id);
 			entity.setActive(false);
+			slackRepository.edit(entity);
+		} catch (NoResultException e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Slack record not found.");
+		}
+	}
+	
+	public void activate(Long id) {
+		try {
+			SlackEntity entity = slackRepository.getAllById(id);
+			entity.setActive(true);
 			slackRepository.edit(entity);
 		} catch (NoResultException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Slack record not found.");

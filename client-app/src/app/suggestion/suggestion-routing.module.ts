@@ -28,6 +28,7 @@ import { TeacherGradesComponent } from './teacher/dashboard/teacherGrades/teache
 import { TeacherGradeComponent } from './teacher/dashboard/teacherGrade/teacherGrade.component';
 import { StudentGuard } from '@ikubinfo/core/guards/student-guard';
 import { StudentGradesComponent } from './student/dashboard/studentGrades/studentGrades.component';
+import { SlackComponent } from './student/dashboard/slack/slack.component';
 
 const suggestionRoutes: Routes = [
     {
@@ -37,6 +38,7 @@ const suggestionRoutes: Routes = [
             { path: 'dashboard', component: AdminDashboardComponent, canActivate: [AdminGuard] },
             {path: 'student/dashboard', component: StudentDashboardComponent, canActivate: [StudentGuard]},
             {path: 'student/grades', component: StudentGradesComponent, canActivate: [StudentGuard]},
+            {path: 'student/slacks', component: SlackComponent, canActivate: [StudentGuard]},
             {path: 'student/courses', component: CoursesComponent, canActivate: [StudentGuard]},
             {path: 'teacher/dashboard', component: DashboardComponent, canActivate: [TeacherGuard]},
             {path: 'teacher/degrees', component: TeacherDegreesComponent, canActivate: [TeacherGuard]},

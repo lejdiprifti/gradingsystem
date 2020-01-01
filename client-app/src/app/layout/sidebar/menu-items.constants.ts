@@ -57,4 +57,9 @@ allowedRoles: [RoleEnum.ADMIN]
     icon: 'fa-table',
     label: 'Departments',
     allowedRoles: [RoleEnum.ADMIN]
+},{
+    url: '/feut/student/slacks',
+    icon: 'fa-dashboard',
+    label: 'Slack',
+    allowedRoles: [RoleEnum.STUDENT]
 }]

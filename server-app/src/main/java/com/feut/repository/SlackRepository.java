@@ -22,6 +22,12 @@ public class SlackRepository {
 		
 	}
 	
+	public SlackEntity getAllById(Long id) {
+		TypedQuery<SlackEntity> query= em.createQuery("Select s from SlackEntity s where s.id = ?1", SlackEntity.class);
+		query.setParameter(1, id);
+		return query.getSingleResult();
+	}
+	
 	public SlackEntity getById(Long id) {
 		TypedQuery<SlackEntity> query= em.createQuery("Select s from SlackEntity s where s.id = ?1 and s.active =?2", SlackEntity.class);
 		query.setParameter(1, id);
@@ -31,7 +37,7 @@ public class SlackRepository {
 	
 	public List<SlackEntity> getByStudent(Long studentId){
 		TypedQuery<SlackEntity> query = em.createQuery("Select sl from SlackEntity sl JOIN StudentEntity s on sl.student = s.id "
-				+ "where s.id = ?1 and s.active = ?2 and sl.active = ?2", SlackEntity.class);
+				+ "where s.id = ?1 and s.active = ?2", SlackEntity.class);
 		query.setParameter(1, studentId);
 		query.setParameter(2, true);
 		return query.getResultList();

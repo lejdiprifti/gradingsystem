@@ -35,8 +35,12 @@ public saveUrl(slack: Slack): Observable<void>{
   return this.apiService.post(this.url, slack);
 }
 
-public deleteUrl(id: number): Observable<void>{
+public delete(id: number): Observable<void>{
   return this.apiService.delete(this.url+'/'+id);
+}
+
+public activate(id: number): Observable<void>{
+  return this.apiService.put(this.url+'/'+id);
 }
 }
 
