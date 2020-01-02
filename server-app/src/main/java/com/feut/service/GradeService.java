@@ -131,7 +131,7 @@ public class GradeService {
 		}
 	}
 
-	public Double getAverageByGroupCourseAndTeacher(Long teacherId, Long groupId, Long courseId) {
+	public Object getAverageByGroupCourseAndTeacher(Long teacherId, Long groupId, Long courseId) {
 		try {
 			if (studentRepository.getByGroup(groupId).size() > 0) {
 			return gradeRepository.getAverageByGroupCourseAndTeacher(groupId, courseId, teacherId);

@@ -43,19 +43,18 @@ export class DashboardComponent implements OnInit {
     this.teacherService.getLectures(this.authService.user.id).subscribe(res =>{
       this.lectures = res;
       this.lectures.forEach(el => {
-        let label = el.group.degree.title + ' ' + el.group.number + '\n' + el.course.name;
-        this.labels.push(label);
-        console.log(label);
-        this.loadAverage(el.course.id, el.group.id);
+        this.loadAverage(el.course.id, el.group.id, el);
       })
     }, err=> {
       this.logger.error('Error', 'Lectures could not be found.');
     })
   }
 
-  loadAverage(courseId: number, groupId: number): void {
+  loadAverage(courseId: number, groupId: number, lecture: Lectures): void {
     this.teacherService.getAverageByCourseGroupAndTeacher(courseId, groupId, this.authService.user.id).subscribe(res =>{
-      this.averages.push(res);
+      this.averages.push(res[0] || 0);
+      let label = lecture.group.degree.title + ' ' + lecture.group.number + '\n' + lecture.course.name;
+      this.labels.push(label);
     }, err=>{
       this.logger.error('Error', 'Average could not be calculated.');
     })

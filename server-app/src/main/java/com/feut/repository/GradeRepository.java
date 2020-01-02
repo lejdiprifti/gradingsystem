@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.springframework.http.HttpStatus;
@@ -75,14 +76,14 @@ public class GradeRepository {
 		em.merge(entity);
 	}
 	
-	public Double getAverageByGroupCourseAndTeacher(Long groupId, Long courseId, Long teacherId) {
+	public Object getAverageByGroupCourseAndTeacher(Long groupId, Long courseId, Long teacherId) {
 		try {
-		TypedQuery<Double> query = em.createQuery("Select AVG(gd.grade) from GradeEntity gd "
+		Query query = em.createQuery("Select AVG(gd.grade),c.id,g.id  from GradeEntity gd "
 				+ "JOIN StudentEntity s on s.id = gd.student "
 				+ "JOIN GroupEntity g on g.id = s.group "
 				+ "JOIN CourseEntity c on c.id = gd.course "
 				+ "JOIN TeacherEntity t on t.id = gd.teacher "
-				+ "GROUP BY (c.id, g.id, t.id, gd.active) HAVING t.id = ?1 and g.id=?2 and c.id = ?3 and gd.active = ?4", Double.class);
+				+ "GROUP BY (c.id, g.id, t.id, gd.active) HAVING t.id = ?1 and g.id=?2 and c.id = ?3 and gd.active = ?4 ORDER BY AVG(gd.grade)");
 		query.setParameter(1, teacherId);
 		query.setParameter(2, groupId);
 		query.setParameter(3, courseId);
