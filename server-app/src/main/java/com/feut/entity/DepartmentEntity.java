@@ -13,10 +13,10 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name="department", schema="feut", uniqueConstraints = {
-		@UniqueConstraint(columnNames= {"department_name", "active"})
-})
+@Table(name="department", schema="feut")
 @NamedQueries({
+	@NamedQuery(name="Department.checkIfNameExists", query="Select d from DepartmentEntity d where d.name= ?1 and d.id != ?2 and d.active =?3"),
+	@NamedQuery(name="Department.checkIfExists", query = "Select d from DepartmentEntity d where d.name =?1 and d.active =?2"),
 	@NamedQuery(name="Department.getById", query = "Select d from DepartmentEntity d where d.id = ?1 and d.active = ?2"),
 	@NamedQuery(name="Department.getAll", query = "Select d from DepartmentEntity d where d.active = ?1")
 })

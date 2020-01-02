@@ -66,6 +66,7 @@ public class TeacherService {
 	}
 
 	public void save(TeacherModel model) {
+		if (teacherRepository.checkIfExists(model.getPersonalNumber(), model.getUsername()) == false) {
 		TeacherEntity entity = new TeacherEntity();
 		entity.setFirstName(model.getFirstName());
 		entity.setLastName(model.getLastName());
@@ -81,6 +82,9 @@ public class TeacherService {
 		entity.setRole(role);
 		entity.setActive(true);
 		teacherRepository.save(entity);
+		} else {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad Request.");
+		}
 	}
 
 	public void edit(TeacherModel model, Long id) {
@@ -93,8 +97,12 @@ public class TeacherService {
 			entity.setEmail(model.getEmail());
 			entity.setDepartment(departmentRepository.getById(model.getDepartmentId()));
 			entity.setPassword(passwordEncoder.encode(model.getPassword()));
+			if (teacherRepository.checkIfExists(model.getPersonalNumber(), id) == false) {
 			entity.setPersonalNumber(model.getPersonalNumber());
 			teacherRepository.edit(entity);
+			} else {
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad Request.");
+			}
 		} catch (NoResultException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Teacher not found.");
 		}
@@ -114,4 +122,7 @@ public class TeacherService {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Teacher not found.");
 		}
 	}
+	
+	//how are different groups performing in teacher's subjects.
+	
 }

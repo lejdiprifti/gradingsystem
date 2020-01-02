@@ -82,6 +82,7 @@ public class StudentService {
 	}
 	
 	public void register(StudentModel model) {
+		if (studentRepository.checkIfExists(model.getPersonalNumber(), model.getUsername()) == false) {
 		StudentEntity entity = new StudentEntity();
 		entity.setFirstName(model.getFirstName());
 		entity.setFatherName(model.getFatherName());
@@ -107,6 +108,9 @@ public class StudentService {
 			grade.setActive(true);
 			grade.setCreatedTime(new GregorianCalendar().getTime());
 			gradeRepository.save(grade);
+		}
+		} else {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Bad Request.");
 		}
 	}
 	

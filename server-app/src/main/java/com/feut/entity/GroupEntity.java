@@ -1,26 +1,25 @@
 package com.feut.entity;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name="group", schema="feut", uniqueConstraints = {
-	@UniqueConstraint(columnNames= {"group_number", "degree_id", "active"}),
-	@UniqueConstraint(columnNames= {"group_email", "active"})
+@Table(name="group", schema="feut")
+@NamedQueries({
+	@NamedQuery(query = "Select g from GroupEntity g JOIN DegreeEntity d on d.id = g.degree"
+			+ " where g.number = ?1 and d.id=?2 and g.active =?3", name = "Group.CheckIfExists")
 })
 public class GroupEntity implements Serializable {
 	

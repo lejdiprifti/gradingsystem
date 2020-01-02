@@ -14,14 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name="user", schema="feut", uniqueConstraints  = {
-		@UniqueConstraint(columnNames= {"username", "active"}),
-		@UniqueConstraint(columnNames= {"personal_number", "active"}),
-		@UniqueConstraint(columnNames= {"email", "active"})
-})
+@Table(name="user", schema="feut")
 @Inheritance(strategy = InheritanceType.JOINED)
 @NamedQueries({
 	@NamedQuery(name="User.getByUsername", query="Select s from UserEntity s where s.username = ?1 and s.active=?2")

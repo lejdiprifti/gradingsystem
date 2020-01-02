@@ -3,6 +3,7 @@ package com.feut.repository;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
@@ -43,5 +44,30 @@ public class DepartmentRepository {
 	@Transactional
 	public void edit(DepartmentEntity department) {
 		em.merge(department);
+	}
+	
+	public boolean checkIfExists(String name) {
+		try {
+			TypedQuery<DepartmentEntity> query = em.createNamedQuery("Department.checkIfExists", DepartmentEntity.class);
+			query.setParameter(2, true);
+			query.setParameter(1, name);
+			query.getFirstResult();
+			return true;
+		} catch (NoResultException e) {
+			return false;
+		}
+	}
+	
+	public boolean checkIfNameExists(String name, Long id) {
+		try {
+			TypedQuery<DepartmentEntity> query = em.createNamedQuery("Department.checkIfNameExists", DepartmentEntity.class);
+			query.setParameter(1, name);
+			query.setParameter(2, id);
+			query.setParameter(3, true);
+			query.getResultList();
+			return true;
+		} catch (NoResultException e) {
+			return false;
+		}
 	}
 }

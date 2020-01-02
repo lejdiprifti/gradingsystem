@@ -5,6 +5,7 @@ import { Teacher } from '../models/teacher';
 import { Degree } from '../models/degree';
 import { Course } from '../models/course';
 import { Group } from '../models/group';
+import { Lectures } from '../models/lectures';
 
 @Injectable({
   providedIn: 'root'
@@ -43,5 +44,13 @@ constructor(private apiService: ApiService) { }
 
   public delete(id: number): Observable<void>{
     return this.apiService.delete(this.url+'/'+id);
+  }
+
+  public getAverageByCourseGroupAndTeacher(courseId:number, groupId: number, teacherId: number): Observable<number>{
+    return this.apiService.get(this.url+'/'+teacherId+'/courses/'+courseId+'/groups/'+groupId);
+  }
+
+  public getLectures(teacherId: number): Observable<Array<Lectures>>{
+    return this.apiService.get(this.url+'/'+teacherId+'/lectures');
   }
 }

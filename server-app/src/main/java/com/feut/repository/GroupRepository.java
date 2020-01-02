@@ -3,13 +3,13 @@ package com.feut.repository;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.feut.entity.DegreeEntity;
 import com.feut.entity.GroupEntity;
 
 @Repository
@@ -61,5 +61,33 @@ public class GroupRepository {
 	@Transactional
 	public void edit(GroupEntity entity) {
 		em.merge(entity);
+	}
+	
+	public boolean checkIfExists(Long number, Long degreeId) {
+		try {
+			TypedQuery<GroupEntity> query = em.createNamedQuery("Group.CheckIfExists", GroupEntity.class);
+			query.setParameter(1, number);
+			query.setParameter(2, degreeId);
+			query.setParameter(3, true);
+			query.getSingleResult();
+			return true;
+		} catch (NoResultException e) {
+			return false;
+		}
+	}
+	
+	public boolean checkIfNumberExists(Long number, Long degreeId, Long groupId) {
+		try {
+			TypedQuery<GroupEntity> query = em.createNamedQuery("Select g from GroupEntity g JOIN DegreeEntity d on d.id = g.degree"
+					+ " where g.number = ?1 and d.id=?2 and g.active =?3 and g.id != ?4", GroupEntity.class);
+			query.setParameter(1, number);
+			query.setParameter(2, degreeId);
+			query.setParameter(3, true);
+			query.setParameter(4, groupId);
+			query.getSingleResult();
+			return true;
+		} catch (NoResultException e) {
+			return false;
+		}
 	}
 }

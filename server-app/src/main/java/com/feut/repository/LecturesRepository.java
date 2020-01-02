@@ -60,6 +60,7 @@ public class LecturesRepository {
 		query.setParameter(2, true);
 		return query.getResultList();
 	}
+	
 	@Transactional
 	public void save(LecturesEntity entity) {
 		em.persist(entity);

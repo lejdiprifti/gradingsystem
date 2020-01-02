@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Group } from '../models/group';
 import { ApiService } from '../utilities/api.service';
 import { Observable } from 'rxjs';
 import { Grade } from '../models/grade';

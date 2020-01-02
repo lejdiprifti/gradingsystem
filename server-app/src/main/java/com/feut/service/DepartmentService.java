@@ -61,21 +61,29 @@ public class DepartmentService {
 	}
 	
 	public void save(DepartmentModel model) {
+		if (depRepository.checkIfExists(model.getName())==false) {
 		DepartmentEntity entity = new DepartmentEntity();
 		entity.setName(model.getName());
 		entity.setDescription(model.getDescription());
 		entity.setActive(true);
 		depRepository.save(entity);
+		} else {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad Request.");
+		}
 	}
 	
 	public void edit(DepartmentModel model, Long id) {
 		try {
 			DepartmentEntity entity = depRepository.getById(id);
+			if (depRepository.checkIfNameExists(model.getName(), id) == false) {
 			entity.setDescription(model.getDescription());
 			entity.setName(model.getName());
+			} else {
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad Request.");
+			}
 		} catch (NoResultException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Department not found.");
-		}
+		} 
 	}
 	
 	public void delete(Long id) {

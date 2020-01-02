@@ -19,10 +19,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.feut.model.CourseModel;
 import com.feut.model.DegreeModel;
 import com.feut.model.GroupModel;
+import com.feut.model.LecturesModel;
 import com.feut.model.TeacherModel;
 import com.feut.service.CourseService;
 import com.feut.service.DegreeService;
+import com.feut.service.GradeService;
 import com.feut.service.GroupService;
+import com.feut.service.LecturesService;
 import com.feut.service.TeacherService;
 
 @RestController
@@ -41,6 +44,12 @@ public class TeacherResource {
 	
 	@Autowired
 	private GroupService groupService;
+	
+	@Autowired
+	private GradeService gradeService;
+	
+	@Autowired
+	private LecturesService lecturesService;
 	
 	public TeacherResource() {
 		
@@ -69,6 +78,17 @@ public class TeacherResource {
 	@GetMapping("/{id}/degrees/{degreeId}/groups")
 	public ResponseEntity<List<GroupModel>> getGroupsByTeacherAndDegree(@PathVariable("id") Long teacherId, @PathVariable("degreeId") Long degreeId){
 		return new ResponseEntity<List<GroupModel>>(groupService.getByTeacherAndDegree(teacherId, degreeId), HttpStatus.OK);
+	}
+	
+	@GetMapping("/{teacherId}/courses/{courseId}/groups/{groupId}")
+	public ResponseEntity<Double> getAverageByCourseGroupAndTeacher(@PathVariable("teacherId") Long teacherId, @PathVariable("courseId") Long courseId
+			, @PathVariable("groupId") Long groupId){
+		return new ResponseEntity<Double>(gradeService.getAverageByGroupCourseAndTeacher(teacherId, groupId, courseId), HttpStatus.OK);
+	}
+	
+	@GetMapping("/{id}/lectures")
+	public ResponseEntity<List<LecturesModel>> getLecturesByTeacher(@PathVariable("id") Long teacherId){
+		return new ResponseEntity<List<LecturesModel>>(lecturesService.getByTeacher(teacherId), HttpStatus.OK);
 	}
 	
 	@PostMapping(consumes="application/json")

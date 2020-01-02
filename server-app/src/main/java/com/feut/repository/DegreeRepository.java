@@ -3,6 +3,7 @@ package com.feut.repository;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.feut.entity.DegreeEntity;
-import com.feut.entity.GroupEntity;
 
 @Repository
 public class DegreeRepository {
@@ -61,5 +61,30 @@ public class DegreeRepository {
 	@Transactional
 	public void edit(DegreeEntity entity) {
 		em.merge(entity);
+	}
+	
+	public boolean checkIfExists(String title) {
+		try {
+			TypedQuery<DegreeEntity> query = em.createNamedQuery("Degree.checkIfExists", DegreeEntity.class);
+			query.setParameter(1, title);
+			query.setParameter(2, true);
+			query.getSingleResult();
+			return true;
+		} catch (NoResultException e) {
+			return false;
+		}
+	}
+	
+	public boolean checkIfTitleExists(String title, Long id) {
+		try {
+			TypedQuery<DegreeEntity> query = em.createQuery("Select d from DegreeEntity d where d.title = ?1 and d.id != ?2 and d.active =?3", DegreeEntity.class);
+			query.setParameter(1, title);
+			query.setParameter(2, id);
+			query.setParameter(3, true);
+			query.getSingleResult();
+			return true;
+		} catch (NoResultException e) {
+			return false;
+		}
 	}
 }

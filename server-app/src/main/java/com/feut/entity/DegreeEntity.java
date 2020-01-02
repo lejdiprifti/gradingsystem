@@ -1,25 +1,18 @@
 package com.feut.entity;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@Table(name="degree", schema="feut", uniqueConstraints = {
-		@UniqueConstraint(columnNames = {"title","active"})
-})
+@Table(name="degree", schema="feut")
+@NamedQuery(query = "Select d from DegreeEntity d where d.title = ?1 and d.active =?2", name="Degree.checkIfExists")
 public class DegreeEntity implements Serializable{
 
 	/**

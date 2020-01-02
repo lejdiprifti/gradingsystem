@@ -78,18 +78,24 @@ public class DegreeService {
 	}
 	
 	public void save(DegreeModel model) {
+		if (degreeRepository.checkIfExists(model.getTitle()) == false) {
 		DegreeEntity entity =new DegreeEntity();
 		entity.setSyllabus(model.getSyllabus());
 		entity.setTitle(model.getTitle());
 		entity.setActive(true);
 		degreeRepository.save(entity);
+		} else {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Degree already exists.");
+		}
 	}
 	
 	public void edit(DegreeModel model, Long id) {
 		try {
 			DegreeEntity entity = degreeRepository.getById(id);
+			if (degreeRepository.checkIfTitleExists(model.getTitle(), id)==false) {
+				entity.setTitle(model.getTitle());
+			}
 			entity.setSyllabus(model.getSyllabus());
-			entity.setTitle(model.getTitle());
 			degreeRepository.edit(entity);
 		} catch (NoResultException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Degree not found.");

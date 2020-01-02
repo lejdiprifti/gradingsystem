@@ -89,7 +89,9 @@ public class CourseService {
 	}
 	
 	public void save(CourseModel model) {
+		try {
 		CourseEntity entity = new CourseEntity();
+		if (courseRepository.checkIfExistsByDegree(model.getName(), model.getDegreeId(), model.getDepartmentId())==false) {
 		entity.setName(model.getName());
 		entity.setSyllabus(model.getSyllabus());
 		DegreeEntity degree = degreeRepository.getById(model.getDegreeId());
@@ -112,14 +114,28 @@ public class CourseService {
 			grade.setCreatedTime(new GregorianCalendar().getTime());
 			gradeRepository.save(grade);
 		}
+		}else {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Course already exists");
+		}
+		} catch (NoResultException e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad Request.");
+		}
 		}
 	
 	public void edit(CourseModel model, Long id) {
 		CourseEntity entity = courseRepository.getById(id);
-		entity.setName(model.getName());
-		entity.setSyllabus(model.getSyllabus());
+		if (model.getName() != null) {
+			entity.setName(model.getName());
+		}
+		if (model.getSyllabus() != null) {
+			entity.setSyllabus(model.getSyllabus());
+		}
+		if (model.getDepartmentId() != null) {
 		entity.setDepartment(departmentRepository.getById(model.getDepartmentId()));
+		}
+		if (model.getDegreeId() != null) {
 		entity.setDegree(degreeRepository.getById(model.getDegreeId()));
+		}
 		entity.setActive(true);
 		courseRepository.edit(entity);
 	}

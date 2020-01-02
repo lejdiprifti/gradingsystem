@@ -17,17 +17,18 @@ import javax.persistence.UniqueConstraint;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name="course", schema="feut", uniqueConstraints = {
-		@UniqueConstraint(columnNames = {"name", "degree_id", "active"}),
-		@UniqueConstraint(columnNames = {"name", "department_id", "active"})
-})
+@Table(name="course", schema="feut")
 @NamedQueries({
 	@NamedQuery(name="Course.getAll", query="Select c From CourseEntity c where c.active = ?1"),
 	@NamedQuery(name="Course.getById", query="Select c From CourseEntity c where c.id = ?1 and c.active =?2"),
 	@NamedQuery(name="Course.getByDegree", query = "Select c From CourseEntity c  JOIN DegreeEntity d ON c.degree = d.id "
 			+ "WHERE d.id = ?1 and c.active = ?2"),
-	@NamedQuery(name="Course.getByDepartment", query = "Select c from CourseEntity c where c.department = ?1 and c.active =?2")
-	})
+	@NamedQuery(name="Course.getByDepartment", query = "Select c from CourseEntity c where c.department = ?1 and c.active =?2"),
+	@NamedQuery(name="Course.CheckIfExistsByDegree", query = "Select c from CourseEntity c JOIN DegreeEntity d ON c.degree = d.id "
+			+ " JOIN DepartmentEntity dep ON dep.id = c.department "
+			+ "where c.name=?1"
+			+ " and c.active = ?3 and (d.id = ?2 OR dep.id =?4)")
+})
 public class CourseEntity implements Serializable{
 	
 	/**

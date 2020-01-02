@@ -15,12 +15,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.feut.converter.GradeConverter;
@@ -44,16 +42,13 @@ public class GradeService {
 	private GradeConverter gradeConverter;
 
 	@Autowired
-	private StudentRepository studentRepository;
-
-	@Autowired
 	private SlackService slackService;
 	@Autowired
 	private CourseRepository courseRepository;
 
 	@Autowired
-	private RestTemplate restTemplate;
-
+	private StudentRepository studentRepository;
+	
 	@Autowired
 	private TeacherRepository teacherRepository;
 
@@ -133,6 +128,18 @@ public class GradeService {
 		for (GradeEntity grade : list) {
 			grade.setActive(false);
 			gradeRepository.edit(grade);
+		}
+	}
+
+	public Double getAverageByGroupCourseAndTeacher(Long teacherId, Long groupId, Long courseId) {
+		try {
+			if (studentRepository.getByGroup(groupId).size() > 0) {
+			return gradeRepository.getAverageByGroupCourseAndTeacher(groupId, courseId, teacherId);
+			} else {
+				return 0.0;
+			}
+		} catch (NoResultException e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Grades not found.");
 		}
 	}
 }

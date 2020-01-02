@@ -3,6 +3,7 @@ package com.feut.repository;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
@@ -10,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.feut.entity.CourseEntity;
-import com.feut.entity.DegreeEntity;
 import com.feut.entity.DepartmentEntity;
 
 @Repository
@@ -81,5 +81,20 @@ public class CourseRepository {
 	public void edit(CourseEntity entity) {
 		em.merge(entity);
 	}
+	
+	public boolean checkIfExistsByDegree(String name, Long degreeId, Long depId) {
+		try {
+			TypedQuery<CourseEntity> query = em.createNamedQuery("Course.CheckIfExistsByDegree", CourseEntity.class);
+			query.setParameter(1, name);
+			query.setParameter(2, degreeId);
+			query.setParameter(3, true);
+			query.setParameter(4, depId);
+			query.getSingleResult();
+			return true;
+		} catch (NoResultException e) {
+			return false;
+		}
+	}
+	
 
 }
