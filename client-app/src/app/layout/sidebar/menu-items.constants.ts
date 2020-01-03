@@ -13,42 +13,42 @@ export const menuItems: Array<MenuItem> = [{
     allowedRoles: [RoleEnum.TEACHER]
 },{
     url: '/feut/teacher/degrees',
-    icon: 'fa-dashboard',
+    icon: 'fa fa-th-list',
     label: 'My degrees',
     allowedRoles: [RoleEnum.TEACHER]
 },
 {
     url: '/feut/student/dashboard',
-    icon: 'fa-dashboard',
+    icon: 'fa fa-dashboard',
     label: 'Dashboard',
     allowedRoles: [RoleEnum.STUDENT]
 },
 {
     url: '/feut/student/grades',
-    icon: 'fa-dashboard',
+    icon: 'fa fa-fw fa-edit',
     label: 'My Grades',
     allowedRoles: [RoleEnum.STUDENT]
 },
 {
     url: '/feut/students',
-    icon: 'fa-dashboard',
+    icon: 'fa fa-user',
     label: 'Students',
     allowedRoles: [RoleEnum.ADMIN]
 },
 {
     url: '/feut/student/courses',
-    icon: 'fa-table',
+    icon: 'fa fa-th-list',
     label: 'My Courses',
     allowedRoles: [RoleEnum.STUDENT]
 },
 {
     url: '/feut/degrees',
-    icon: 'fa-table',
+    icon: 'fas fa-book',
     label: 'Degrees',
     allowedRoles: [RoleEnum.ADMIN]
 },
 { url: '/feut/teachers',
-icon: 'fa-table',
+icon: 'fa fa-th-list',
 label: 'Teachers',
 allowedRoles: [RoleEnum.ADMIN]
 },
@@ -59,7 +59,7 @@ allowedRoles: [RoleEnum.ADMIN]
     allowedRoles: [RoleEnum.ADMIN]
 },{
     url: '/feut/student/slacks',
-    icon: 'fa-dashboard',
+    icon: 'fas fa-paper-plane',
     label: 'Slack',
     allowedRoles: [RoleEnum.STUDENT]
 }]

@@ -122,7 +122,4 @@ public class TeacherService {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Teacher not found.");
 		}
 	}
-	
-	//how are different groups performing in teacher's subjects.
-	
 }
