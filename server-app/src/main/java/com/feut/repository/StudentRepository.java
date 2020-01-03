@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
@@ -79,14 +80,24 @@ public class StudentRepository {
 	
 	public boolean checkIfExists(String personalNumber, String username) {
 		try {
-			TypedQuery<StudentEntity> query = em.createNamedQuery("Student.checkIfExists", StudentEntity.class);
-			query.setParameter(1, personalNumber);
-			query.setParameter(3, username);
-			query.setParameter(2, true);
-			query.getSingleResult();
+			Query query = em.createNativeQuery("Select s.personal_number, s.username from feut.studentsView s where s.personal_number = :pn or s.username = :username");
+			query.setParameter("pn", personalNumber);
+			query.setParameter("username", username);
+			query.getResultList();
 			return true;
 		} catch (NoResultException e) {
 			return false;
 		}
 	}
+	
+	@Transactional
+	public void createView() {
+		Query query1 = em.createNativeQuery("DROP VIEW IF EXISTS feut.studentsView ");
+		Query query = em.createNativeQuery("CREATE VIEW feut.studentsView AS "
+				+ "SELECT u.personal_number as personal_number, u.username as username From feut.student s "
+				+ "JOIN feut.user u on s.id = u.id "
+				+ "WHERE u.active=true");
+		query1.executeUpdate();
+		query.executeUpdate();
+}
 }

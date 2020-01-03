@@ -82,6 +82,7 @@ public class StudentService {
 	}
 	
 	public void register(StudentModel model) {
+		studentRepository.createView();
 		if (studentRepository.checkIfExists(model.getPersonalNumber(), model.getUsername()) == false) {
 		StudentEntity entity = new StudentEntity();
 		entity.setFirstName(model.getFirstName());

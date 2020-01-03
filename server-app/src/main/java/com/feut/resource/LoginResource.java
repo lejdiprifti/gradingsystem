@@ -31,6 +31,7 @@ public class LoginResource {
 	
 	@PostMapping
 	public ResponseEntity<LoginResponse> createAuthenticationToken(@RequestBody LoginRequest loginRequest) throws Exception {
+		logger.info("Logging in user");
 		return new ResponseEntity<LoginResponse>(loginService.authenticate(loginRequest), HttpStatus.OK);
 	}
 

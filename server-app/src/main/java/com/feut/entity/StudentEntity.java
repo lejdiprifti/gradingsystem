@@ -18,8 +18,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @NamedQueries({
 	@NamedQuery(name="Student.getByGroup", query="Select s from StudentEntity s Join GroupEntity g on g.id = s.group where g.id =?1 and s.active =?2"),
 	@NamedQuery(name="Student.getByUsername", query="Select s from StudentEntity s where s.username = ?1 and s.active=?2"),
-	@NamedQuery(name="Student.getById", query="Select s from StudentEntity s where s.id = ?1 and s.active=?2"),
-	@NamedQuery(name="Student.checkIfExists", query="Select s from StudentEntity s where (s.personalNumber =?1 or s.username=?3) and s.active= ?2")
+	@NamedQuery(name="Student.getById", query="Select s from StudentEntity s where s.id = ?1 and s.active=?2")
 })
 public class StudentEntity extends UserEntity implements Serializable {
 	

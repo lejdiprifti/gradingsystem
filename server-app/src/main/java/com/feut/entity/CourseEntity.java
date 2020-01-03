@@ -12,9 +12,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="course", schema="feut")
@@ -87,7 +84,6 @@ public class CourseEntity implements Serializable{
 		this.department = department;
 	}
 
-	@JsonIgnore
 	public DegreeEntity getDegree() {
 		return degree;
 	}

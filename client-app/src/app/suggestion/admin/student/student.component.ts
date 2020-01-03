@@ -25,10 +25,10 @@ export class StudentComponent implements OnInit {
     this.initializeForm();
     this.loadData();
     this.groups=[];
+    this.getGroups();
   }
 
   loadData(): void {
-    this.getGroups();
     const id = this.active.snapshot.paramMap.get('id');
     if (id) {
       this.studentService.getById(Number(id)).subscribe(data => {
