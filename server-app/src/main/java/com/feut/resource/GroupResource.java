@@ -2,6 +2,8 @@ package com.feut.resource;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +24,10 @@ import com.feut.service.GroupService;
 
 @RestController
 @RequestMapping(path="/group", produces="application/json")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {"https://myfeut.firebaseapp.com", "http://localhost:4200"})
 public class GroupResource {
+	
+	private Logger logger = LogManager.getLogger(GroupResource.class);
 	
 	@Autowired
 	private GroupService groupService;
@@ -37,16 +41,19 @@ public class GroupResource {
 	
 	@GetMapping
 	public ResponseEntity<List<GroupModel>> getAll(){
+		logger.info("GETTING ALL GROUPS");
 		return new ResponseEntity<List<GroupModel>>(groupService.getAll(), HttpStatus.OK);
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<GroupModel> getById(@PathVariable("id") Long id){
+		logger.info("GETTING GROUP BY ID");
 		return new ResponseEntity<GroupModel>(groupService.getById(id), HttpStatus.OK);
 	}
 	
 	@GetMapping("/{id}/courses/{courseId}/grades")
 	public ResponseEntity<List<GradeModel>> getGradesByGroupAndCourse(@PathVariable("id") Long groupId, @PathVariable("courseId") Long courseId){
+		logger.info("GETTING GRADE BY GROUP AND COURSE");
 		return new ResponseEntity<List<GradeModel>>(gradeService.getByGroupAndCourse(groupId, courseId), HttpStatus.OK);
 	}
 	
@@ -54,12 +61,14 @@ public class GroupResource {
 	@PutMapping(path = "/{id}", consumes = "application/json")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void edit(@RequestBody GroupModel model, @PathVariable("id") Long id) {
+		logger.info("ADDING NEW GROUP");
 		groupService.edit(model,id);
 	}
 	
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable Long id) {
+		logger.info("DELETING GROUP");
 		groupService.delete(id);
 	}
 }

@@ -51,7 +51,7 @@ public class DepartmentRepository {
 			TypedQuery<DepartmentEntity> query = em.createNamedQuery("Department.checkIfExists", DepartmentEntity.class);
 			query.setParameter(2, true);
 			query.setParameter(1, name);
-			query.getFirstResult();
+			query.getSingleResult();
 			return true;
 		} catch (NoResultException e) {
 			return false;

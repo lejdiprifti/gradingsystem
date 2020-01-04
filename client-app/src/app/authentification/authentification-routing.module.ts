@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { RegisterComponent } from '@ikubinfo/authentification/register/register.component';
 import { LoginComponent } from '@ikubinfo/authentification/login/login.component';
 import { SimpleComponent } from '@ikubinfo/layout/simple/simple.component';
 
@@ -13,10 +12,6 @@ const authentificationRoutes: Routes = [
             {
                 path: 'login',
                 component: LoginComponent
-            },
-            {
-                path: 'register',
-                component: RegisterComponent
             },
             { path: '', redirectTo: '/login', pathMatch: 'full' },
         ]

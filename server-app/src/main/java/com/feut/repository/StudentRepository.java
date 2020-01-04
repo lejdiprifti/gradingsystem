@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -83,9 +84,11 @@ public class StudentRepository {
 			Query query = em.createNativeQuery("Select s.personal_number, s.username from feut.studentsView s where s.personal_number = :pn or s.username = :username");
 			query.setParameter("pn", personalNumber);
 			query.setParameter("username", username);
-			query.getResultList();
+			query.getSingleResult();
 			return true;
 		} catch (NoResultException e) {
+			return false;
+		} catch (NonUniqueResultException e) {
 			return false;
 		}
 	}

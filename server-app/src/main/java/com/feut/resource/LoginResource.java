@@ -17,7 +17,7 @@ import com.feut.service.LoginService;
 
 @RestController
 @RequestMapping(path="/login", consumes="application/json", produces="application/json")
-@CrossOrigin("https://myfeut.firebaseapp.com")
+@CrossOrigin(origins = {"https://myfeut.firebaseapp.com", "http://localhost:4200"})
 public class LoginResource {
 	
 	private static Logger logger = LogManager.getLogger(LoginResource.class);
