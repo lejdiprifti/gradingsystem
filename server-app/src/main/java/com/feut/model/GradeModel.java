@@ -6,10 +6,14 @@ public class GradeModel {
 	
 	private Long id;
 	private StudentModel student;
+	private Long studentId;
 	private TeacherModel teacher;
+	private Long teacherId;
 	private CourseModel course;
+	private Long courseId;
 	private String comment;
 	private String code;
+	private Long grade;
 	private Date createdTime;
 	
 	public GradeModel() {
@@ -72,11 +76,42 @@ public class GradeModel {
 		this.createdTime = createdTime;
 	}
 
+	public Long getStudentId() {
+		return studentId;
+	}
+
+	public void setStudentId(Long studentId) {
+		this.studentId = studentId;
+	}
+
+	public Long getTeacherId() {
+		return teacherId;
+	}
+
+	public void setTeacherId(Long teacherId) {
+		this.teacherId = teacherId;
+	}
+
+	public Long getCourseId() {
+		return courseId;
+	}
+
+	public void setCourseId(Long courseId) {
+		this.courseId = courseId;
+	}
+
+	public Long getGrade() {
+		return grade;
+	}
+
+	public void setGrade(Long grade) {
+		this.grade = grade;
+	}
+
 	@Override
 	public String toString() {
-		return "GradeModel [id=" + id + ", student=" + student + ", teacher=" + teacher + ", course=" + course
-				+ ", comment=" + comment + ", code=" + code + ", createdTime=" + createdTime + "]";
-	}
-	
-	
+		return "GradeModel [id=" + id + ", student=" + student + ", studentId=" + studentId + ", teacher=" + teacher
+				+ ", teacherId=" + teacherId + ", course=" + course + ", courseId=" + courseId + ", comment=" + comment
+				+ ", code=" + code + ", grade=" + grade + ", createdTime=" + createdTime + "]";
+	}	
 }

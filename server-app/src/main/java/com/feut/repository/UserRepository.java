@@ -24,5 +24,4 @@ public class UserRepository {
 		query.setParameter(2, true);
 		return query.getSingleResult();
 	}
-	
 }

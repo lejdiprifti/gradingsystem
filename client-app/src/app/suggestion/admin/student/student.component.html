@@ -1,0 +1,38 @@
+<ikubinfo-panel header="Student">
+  <div panel-content>
+    <form role="form" [formGroup]="studentForm">
+      <ikubinfo-input label="First name">
+        <input formControlName="firstName" type="text" class="form-control" />
+      </ikubinfo-input>
+      <ikubinfo-input label="Father name">
+        <input formControlName="fatherName" type="text" class="form-control" />
+      </ikubinfo-input>
+      <ikubinfo-input label="Last name">
+        <input formControlName="lastName" type="text" class="form-control" />
+      </ikubinfo-input>
+      <ikubinfo-input label="Personal no.">
+        <input formControlName="personalNumber" type="text" class="form-control" />
+      </ikubinfo-input>
+      <ikubinfo-input label="E-mail">
+        <input formControlName="email" type="text" class="form-control" />
+      </ikubinfo-input>
+      <ikubinfo-input label = "Birthdate">
+        <input formControlName="birthdate" type="date" class="form-control"/>
+      </ikubinfo-input>
+      <ikubinfo-input label="Username">
+        <input formControlName="username" type="text" class="form-control" />
+      </ikubinfo-input>
+      <ikubinfo-input label="Password">
+        <input formControlName="password" type="text" class="form-control" />
+      </ikubinfo-input>
+      <ikubinfo-input label="Group">
+        <select class="custom-select"  formControlName="group">
+          <option value="" disabled>Choose the group</option>
+          <option *ngFor="let group of groups" [ngValue]="group.id">{{group.degree.title}} {{group.number}}</option>
+        </select>
+      </ikubinfo-input>
+    </form>
+    <button pButton type="submit" (click)="submit()" [disabled]="studentForm.invalid" class="ui-button-success" label="Submit" icon="pi pi-file"></button>
+    <button pButton type="button" (click)="reset()" class="ui-button-secondary reset" label="Reset" icon="pi pi-times"></button>
+  </div>
+</ikubinfo-panel>

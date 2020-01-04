@@ -1,32 +1,43 @@
 package com.feut.entity;
 
-import java.util.List;
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name="department", schema="feut")
-public class DepartmentEntity {
+@NamedQueries({
+	@NamedQuery(name="Department.checkIfNameExists", query="Select d from DepartmentEntity d where d.name= ?1 and d.id != ?2 and d.active =?3"),
+	@NamedQuery(name="Department.checkIfExists", query = "Select d from DepartmentEntity d where d.name =?1 and d.active =?2"),
+	@NamedQuery(name="Department.getById", query = "Select d from DepartmentEntity d where d.id = ?1 and d.active = ?2"),
+	@NamedQuery(name="Department.getAll", query = "Select d from DepartmentEntity d where d.active = ?1")
+})
+public class DepartmentEntity implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8986422020350397439L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name="department_id")
 	private Long id;
 	
-	@Column(name="department_name")
+	@Column(name="department_name", nullable = false)
 	private String name;
 	
-	@OneToMany(mappedBy="department")
-	private List<CourseEntity> courseList;
-	
-	@OneToMany(mappedBy="department")
-	private List<TeacherEntity> teachers;
+	@Column(name="department_description", length = 2000, nullable = false)
+	private String description;
+
 	
 	@Column(name="active")
 	private boolean active;
@@ -51,20 +62,12 @@ public class DepartmentEntity {
 		this.name = name;
 	}
 
-	public List<CourseEntity> getCourseList() {
-		return courseList;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setCourseList(List<CourseEntity> courseList) {
-		this.courseList = courseList;
-	}
-
-	public List<TeacherEntity> getTeachers() {
-		return teachers;
-	}
-
-	public void setTeachers(List<TeacherEntity> teachers) {
-		this.teachers = teachers;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public boolean isActive() {
@@ -77,8 +80,10 @@ public class DepartmentEntity {
 
 	@Override
 	public String toString() {
-		return "DepartmentEntity [id=" + id + ", name=" + name + ", courseList=" + courseList + "]";
+		return "DepartmentEntity [id=" + id + ", name=" + name + ", description=" + description + ", active=" + active
+				+ "]";
 	}
-	
+
+
 	
 }

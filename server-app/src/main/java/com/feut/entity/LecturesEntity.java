@@ -1,5 +1,7 @@
 package com.feut.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,24 +9,46 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name="lectures",schema="feut")
-public class LecturesEntity {
+@Table(name="lectures",schema="feut", uniqueConstraints = {
+		@UniqueConstraint(columnNames = {"group_id", "course_id", "active"})
+})
+@NamedQueries({
+	@NamedQuery(name="Lectures.getByGroup", query = "Select l from LecturesEntity l Join GroupEntity g on l.group = g.id "
+			+ "where g.id = ?1 and l.active = ?2"),
+	@NamedQuery(name="Lectures.getById", query = "Select l from LecturesEntity l where l.id = ?1 and l.active =?2"),
+	@NamedQuery(name="Lectures.getByTeacher", query = "Select l from LecturesEntity l Join TeacherEntity t on t.id = l.teacher"
+			+ " where t.id = ?1 and l.active = ?2")
+})
+public class LecturesEntity implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1093784310153204027L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	
+
 	@ManyToOne
 	@JoinColumn(name="group_id")
 	private GroupEntity group;
 	
+
 	@ManyToOne
 	@JoinColumn(name="teacher_id")
 	private TeacherEntity teacher;
 	
+
 	@ManyToOne
 	@JoinColumn(name="course_id")
 	private CourseEntity course;
@@ -44,6 +68,7 @@ public class LecturesEntity {
 		this.id = id;
 	}
 
+	@JsonIgnore
 	public GroupEntity getGroup() {
 		return group;
 	}
@@ -52,6 +77,7 @@ public class LecturesEntity {
 		this.group = group;
 	}
 
+	@JsonIgnore
 	public TeacherEntity getTeacher() {
 		return teacher;
 	}
@@ -60,6 +86,7 @@ public class LecturesEntity {
 		this.teacher = teacher;
 	}
 
+	@JsonIgnore
 	public CourseEntity getCourse() {
 		return course;
 	}

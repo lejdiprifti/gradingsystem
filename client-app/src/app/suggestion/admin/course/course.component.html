@@ -1,0 +1,25 @@
+<ikubinfo-panel header="Course">
+  <div panel-content>
+    <form role="form" [formGroup]="courseForm">
+      <ikubinfo-input label="Name">
+        <input formControlName="name" type="text" class="form-control" />
+      </ikubinfo-input>
+      <ikubinfo-input label="Syllabus">
+        <input formControlName="syllabus" type="text" class="form-control" />
+      </ikubinfo-input>
+      <ikubinfo-input label="Degree">
+        <select class="custom-select"  formControlName="degree">
+          <option [ngValue]="degree.id" disabled>{{degree.title}}</option>
+          </select>
+      </ikubinfo-input>
+      <ikubinfo-input label="Department">
+        <select class="custom-select"  formControlName="department">
+          <option value="" disabled>Choose department</option>
+          <option *ngFor="let department of departments" [ngValue]="department.id">{{department.name}}</option>
+        </select>
+      </ikubinfo-input>
+    </form>
+    <button pButton type="submit" (click)="submit()" [disabled]="courseForm.invalid" class="ui-button-success" label="Submit" icon="pi pi-file"></button>
+    <button pButton type="button" (click)="reset()" class="ui-button-secondary reset" label="Reset" icon="pi pi-times"></button>
+  </div>
+</ikubinfo-panel>

@@ -1,0 +1,14 @@
+<ikubinfo-panel header="Department">
+  <div panel-content>
+    <form role="form" [formGroup]="departmentForm">
+      <ikubinfo-input label = "Name">
+        <input formControlName="name" type="text" class="form-control"/>
+      </ikubinfo-input>
+      <ikubinfo-input label="Description">
+        <input formControlName="description" type="text" class="form-control"/>
+      </ikubinfo-input>
+    </form>
+    <button pButton type="submit" (click)="submit()" [disabled]="departmentForm.invalid" class="ui-button-success" label="Submit" icon="pi pi-file"></button>
+    <button pButton type="button" (click)="reset()" class="ui-button-secondary reset" label="Reset" icon="pi pi-times"></button>
+  </div>
+</ikubinfo-panel>

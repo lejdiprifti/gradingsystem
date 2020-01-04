@@ -5,8 +5,11 @@ import java.util.List;
 public class CourseModel {
 	
 	private Long id;
+	private String name;
 	private DepartmentModel department;
 	private DegreeModel degree;
+	private Long degreeId;
+	private Long departmentId;
 	private String syllabus;
 	private List<LecturesModel> lecturesList;
 	private List<GradeModel> gradeList;
@@ -23,6 +26,14 @@ public class CourseModel {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public DepartmentModel getDepartment() {
@@ -69,8 +80,24 @@ public class CourseModel {
 		return active;
 	}
 
+	public Long getDegreeId() {
+		return degreeId;
+	}
+
+	public void setDegreeId(Long degreeId) {
+		this.degreeId = degreeId;
+	}
+
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+
+	public Long getDepartmentId() {
+		return departmentId;
+	}
+
+	public void setDepartmentId(Long departmentId) {
+		this.departmentId = departmentId;
 	}
 
 	@Override

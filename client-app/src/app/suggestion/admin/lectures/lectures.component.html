@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col col-xl-12 col-lg-12">
+    <ikubinfo-panel header="{{group.degree.title}} {{group.number}}">
+      <div panel-content>
+
+        <p-table [columns]="cols" [value]="lectures" [paginator]="true" [rows]="10" [(contextMenuSelection)]="selectedLecture"
+          [contextMenu]="cm">
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th *ngFor="let col of columns">
+                {{ col.header }}
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr [pContextMenuRow]="rowData">
+              <td *ngFor="let col of columns">
+               <p *ngIf="col.field != 'teacher'"> {{ rowData[col.field].name }}</p>
+               <p *ngIf="rowData[col.field] != null">{{ rowData[col.field].firstName }}</p>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+        <p-contextMenu #cm [model]="items"></p-contextMenu>
+      </div>
+    </ikubinfo-panel>
+  </div>
+</div>

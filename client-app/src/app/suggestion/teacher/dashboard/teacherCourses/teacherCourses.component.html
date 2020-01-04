@@ -1,0 +1,15 @@
+<div class="row">           
+  <div class="col col-xl-6 col-lg-12" *ngFor="let course of courses">
+    <div class="panel">
+    <ikubinfo-panel header="{{ course.name }}">
+      <div panel-content>
+        <h1>{{ course.name }}</h1>
+        <p> {{course.syllabus}}</p>
+        <p>Department: {{course.department.name}}</p>
+        <p> Degree: {{course.degree.title}}</p>
+        <button pButton (click)="openGroups(course.id)" class="ui-button-info" label="Open Groups" icon="pi pi-plus"></button>
+      </div>
+    </ikubinfo-panel>
+    </div>
+  </div>
+</div>

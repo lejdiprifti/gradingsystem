@@ -8,6 +8,10 @@ export interface Grade {
     teacher?: Teacher,
     course?: Course,
     comment?: string,
+    courseId?: number,
+    teacherId?: number,
+    studentId?: number,
     code?: string,
+    grade?: number,
     createdTime?: Date
 }

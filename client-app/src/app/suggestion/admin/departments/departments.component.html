@@ -1,0 +1,28 @@
+<button pButton (click)="addDepartment()" class="ui-button-info" label="Add Department" icon="pi pi-plus"></button>
+<div class="row">           
+  <div class="col col-xl-6 col-lg-12" *ngFor="let dep of departments">
+    <div class="panel">
+    <ikubinfo-panel header="{{ dep.name }}">
+      <div panel-content>
+        <h1>{{ dep.name }}</h1>
+        <p> {{dep.description}}</p>
+        <div>
+          <h4>Staff</h4>
+        <ul *ngFor = "let teacher of dep.teacherList">
+          <li>{{teacher.firstName}} {{teacher.lastName}}</li>
+        </ul>
+        </div>
+        <div>
+          <h4>Courses</h4>
+          <ul *ngFor = "let course of dep.courseList">
+            <li>{{course.name}}</li>
+          </ul>
+        </div>
+        
+        <button pButton icon="pi pi-check" class="ui-button-success button" (click)="openTeachers(dep.id)" label="Open Teachers"></button>
+        <button pButton icon="pi pi-check" class="ui-button-info button" (click)="openCourses(dep.id)" label="Open Courses"></button>
+      </div>
+    </ikubinfo-panel>
+    </div>
+  </div>
+</div>

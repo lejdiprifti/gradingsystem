@@ -17,7 +17,7 @@ import com.feut.service.LoginService;
 
 @RestController
 @RequestMapping(path="/login", consumes="application/json", produces="application/json")
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin("https://myfeut.firebaseapp.com")
 public class LoginResource {
 	
 	private static Logger logger = LogManager.getLogger(LoginResource.class);
@@ -31,6 +31,7 @@ public class LoginResource {
 	
 	@PostMapping
 	public ResponseEntity<LoginResponse> createAuthenticationToken(@RequestBody LoginRequest loginRequest) throws Exception {
+		logger.info("Logging in user");
 		return new ResponseEntity<LoginResponse>(loginService.authenticate(loginRequest), HttpStatus.OK);
 	}
 

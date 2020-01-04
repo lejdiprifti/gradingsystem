@@ -21,6 +21,7 @@ import javax.persistence.Table;
 @NamedQueries({
 	@NamedQuery(name="User.getByUsername", query="Select s from UserEntity s where s.username = ?1 and s.active=?2")
 })
+
 public class UserEntity {
 	
 	@Id
@@ -29,27 +30,27 @@ public class UserEntity {
 	private Long id;
 	
 	
-	@Column(name = "first_name", length = 20)
+	@Column(name = "first_name", length = 20, nullable = false)
 	private String firstName;
 	
 
-	@Column(name = "father_name", length = 20)
+	@Column(name = "father_name", length = 20, nullable = false)
 	private String fatherName;
 	
 	
-	@Column(name= "last_name", length = 20)
+	@Column(name= "last_name", length = 20, nullable = false)
 	private String lastName;
 	
 	
-	@Column(name = "personal_number", length = 10)
+	@Column(name = "personal_number", length = 10, nullable = false)
 	private String personalNumber;
 	
 	 
-	@Column(name = "username", length = 7)
+	@Column(name = "username", length = 10, nullable = false)
 	private String username;
 	
 	 
-	@Column(name= "password")
+	@Column(name= "password", nullable = false)
 	private String password;
 	
 	@ManyToOne
@@ -61,7 +62,7 @@ public class UserEntity {
 	private Date birthdate;
 	
 	 
-	@Column(name="email")
+	@Column(name="email", nullable = false)
 	private String email;
 	
 	@Column(name="active")

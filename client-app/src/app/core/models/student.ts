@@ -4,5 +4,7 @@ import { Grade } from './grade';
 
 export interface Student extends User {
     group?: Group;
-    gradeList?: Array<Grade>
+    gradeList?: Array<Grade>;
+    groupId?: number;
+    gpa?: number;
 }

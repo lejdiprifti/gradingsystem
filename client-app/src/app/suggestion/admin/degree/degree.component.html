@@ -1,0 +1,14 @@
+<ikubinfo-panel header="Degree">
+  <div panel-content>
+    <form role="form" [formGroup]="degreeForm">
+      <ikubinfo-input label = "Title">
+        <input formControlName="title" type="text" class="form-control"/>
+      </ikubinfo-input>
+      <ikubinfo-input label="Syllabus">
+        <input formControlName="syllabus" type="text" class="form-control"/>
+      </ikubinfo-input>
+    </form>
+    <button pButton type="submit" (click)="submit()" [disabled]="degreeForm.invalid" class="ui-button-success" label="Submit" icon="pi pi-file"></button>
+    <button pButton type="button" (click)="reset()" class="ui-button-secondary reset" label="Reset" icon="pi pi-times"></button>
+  </div>
+</ikubinfo-panel>

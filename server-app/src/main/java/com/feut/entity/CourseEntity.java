@@ -1,41 +1,57 @@
 package com.feut.entity;
 
-import java.util.List;
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="course", schema="feut")
-public class CourseEntity {
+@NamedQueries({
+	@NamedQuery(name="Course.getAll", query="Select c From CourseEntity c where c.active = ?1"),
+	@NamedQuery(name="Course.getById", query="Select c From CourseEntity c where c.id = ?1 and c.active =?2"),
+	@NamedQuery(name="Course.getByDegree", query = "Select c From CourseEntity c  JOIN DegreeEntity d ON c.degree = d.id "
+			+ "WHERE d.id = ?1 and c.active = ?2"),
+	@NamedQuery(name="Course.getByDepartment", query = "Select c from CourseEntity c where c.department = ?1 and c.active =?2"),
+	@NamedQuery(name="Course.CheckIfExistsByDegree", query = "Select c from CourseEntity c JOIN DegreeEntity d ON c.degree = d.id "
+			+ " JOIN DepartmentEntity dep ON dep.id = c.department "
+			+ "where c.name=?1"
+			+ " and c.active = ?3 and (d.id = ?2 OR dep.id =?4)")
+})
+public class CourseEntity implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -272395124946946499L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name="id")
 	private Long id;
 	
+	@Column(name="name", nullable = false)
+	private String name;
+
 	@ManyToOne
 	@JoinColumn(name="department_id")
 	private DepartmentEntity department;
-	
+
 	@ManyToOne
 	@JoinColumn(name="degree_id")
 	private DegreeEntity degree;
 	
-	@Column(name="syllabus", length=2000)
+	@Column(name="syllabus", length=2000, nullable = false)
 	private String syllabus;
-	
-	@OneToMany(mappedBy="course", fetch=FetchType.LAZY)
-	private List<LecturesEntity> lectureList;
-	
+
 	@Column(name="active")
 	private boolean active;
 
@@ -51,6 +67,15 @@ public class CourseEntity {
 		this.id = id;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	
 	public DepartmentEntity getDepartment() {
 		return department;
 	}

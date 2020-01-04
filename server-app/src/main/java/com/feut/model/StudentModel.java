@@ -5,19 +5,29 @@ import java.util.List;
 public class StudentModel extends UserModel {
 	
 	
-	private GroupModel gorup;
+	private GroupModel group;
+	private Long groupId;
 	private List<GradeModel> gradeList;
+	private Double gpa;
 	
+	public Double getGpa() {
+		return gpa;
+	}
+
+	public void setGpa(Double gpa) {
+		this.gpa = gpa;
+	}
+
 	public StudentModel() {
 		
 	}
 
-	public GroupModel getGorup() {
-		return gorup;
+	public GroupModel getGroup() {
+		return group;
 	}
 
-	public void setGorup(GroupModel gorup) {
-		this.gorup = gorup;
+	public void setGroup(GroupModel gorup) {
+		this.group = gorup;
 	}
 
 	public List<GradeModel> getGradeList() {
@@ -28,13 +38,19 @@ public class StudentModel extends UserModel {
 		this.gradeList = gradeList;
 	}
 
+	public Long getGroupId() {
+		return groupId;
+	}
 
+	public void setGroupId(Long groupId) {
+		this.groupId = groupId;
+	}
 
 	@Override
 	public String toString() {
-		return "StudentModel [gorup=" + gorup + ", gradeList=" + gradeList + "]";
+		return "StudentModel [group=" + group + ", groupId=" + groupId + ", gradeList=" + gradeList + ", gpa=" + gpa
+				+ "]";
 	}
 
-	
-	
+
 }

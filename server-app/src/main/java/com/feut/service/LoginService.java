@@ -1,6 +1,7 @@
 package com.feut.service;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,9 +15,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.feut.converter.RoleConverter;
+import com.feut.entity.AdministratorEntity;
 import com.feut.model.LoginRequest;
 import com.feut.model.LoginResponse;
 import com.feut.model.UserModel;
+import com.feut.repository.AdminRepository;
 import com.feut.security.JwtTokenUtil;
 
 @Service
@@ -34,6 +37,9 @@ public class LoginService implements UserDetailsService{
 	@Autowired
 	private RoleConverter roleConverter;
 	
+	@Autowired
+	private AdminRepository adminRepository;
+	
 	@Autowired 
 	private AuthenticationManager authenticationManager;
 	
@@ -50,6 +56,11 @@ public class LoginService implements UserDetailsService{
 		LoginResponse loginResponse = new LoginResponse();
 		loginResponse.setJwt(token);
 		loginResponse.setUser(model);
+		if (model.getRole().getId() == 1) {
+			AdministratorEntity admin = adminRepository.getById(model.getId());
+			admin.setLastLogin(new GregorianCalendar().getTime());
+			adminRepository.edit(admin);
+		}
 		return loginResponse;
 	}
 

@@ -4,11 +4,22 @@ import java.util.List;
 
 public class TeacherModel extends UserModel {
 	
+	private Long departmentId;
 	private DepartmentModel department;
 	private List<LecturesModel> lecturesList;
 	
 	public TeacherModel() {
 		
+	}
+
+
+	public Long getDepartmentId() {
+		return departmentId;
+	}
+
+
+	public void setDepartmentId(Long departmentId) {
+		this.departmentId = departmentId;
 	}
 
 
@@ -31,8 +42,8 @@ public class TeacherModel extends UserModel {
 
 	@Override
 	public String toString() {
-		return "TeacherModel [department=" + department + ", lecturesList=" + lecturesList + "]";
+		return "TeacherModel [departmentId=" + departmentId + ", department=" + department + ", lecturesList="
+				+ lecturesList + "]";
 	}
-	
 	
 }

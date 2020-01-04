@@ -1,32 +1,36 @@
 package com.feut.entity;
 
-import java.util.List;
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="degree", schema="feut")
-public class DegreeEntity {
+@NamedQuery(query = "Select d from DegreeEntity d where d.title = ?1 and d.active =?2", name="Degree.checkIfExists")
+public class DegreeEntity implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3029776994623514319L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name="id")
 	private Long id;
 	
-	@Column(name="syllabus", length = 5000)
+	@Column(name="title", nullable = false)
+	private String title;
+	
+	@Column(name="syllabus", length = 5000, nullable = false)
 	private String syllabus;
 	
-	@OneToMany(mappedBy="degree")
-	private List<GroupEntity> groupList;
-	
-	@OneToMany(mappedBy="degree")
-	private List<CourseEntity> courseList;
 	
 	@Column(name="active")
 	private boolean active;
@@ -43,28 +47,20 @@ public class DegreeEntity {
 		this.id = id;
 	}
 
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	public String getSyllabus() {
 		return syllabus;
 	}
 
 	public void setSyllabus(String syllabus) {
 		this.syllabus = syllabus;
-	}
-
-	public List<GroupEntity> getGroupList() {
-		return groupList;
-	}
-
-	public void setGroupList(List<GroupEntity> groupList) {
-		this.groupList = groupList;
-	}
-
-	public List<CourseEntity> getCourseList() {
-		return courseList;
-	}
-
-	public void setCourseList(List<CourseEntity> courseList) {
-		this.courseList = courseList;
 	}
 
 	public boolean isActive() {
@@ -77,8 +73,8 @@ public class DegreeEntity {
 
 	@Override
 	public String toString() {
-		return "DegreeEntity [id=" + id + ", syllabus=" + syllabus + ", groupList=" + groupList + ", courseList="
-				+ courseList + ", active=" + active + "]";
+		return "DegreeEntity [id=" + id + ", title=" + title + ", syllabus=" + syllabus + ", active=" + active + "]";
 	}
+	
 
 }

@@ -10,19 +10,16 @@ import {
 } from "@angular/common/http";
 import { Observable } from 'rxjs';
 
-import { AuthService } from '@ikubinfo/core/services/auth.service';
-
-
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-    constructor(private authService: AuthService) { }
+    constructor() { }
     intercept(
         request: HttpRequest<any>,
         next: HttpHandler
     ): Observable<HttpEvent<any>> {
-        if (!(request.url.endsWith('login') || request.url.endsWith('register'))) {
+        if (!(request.url.endsWith('login'))) {
             request = request.clone({
-                headers: request.headers.set("Authorization", this.authService.user.username)
+                headers: request.headers.set('Authorization', 'Bearer ' + `${sessionStorage.getItem('token')}`)
             });
         }
 

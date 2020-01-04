@@ -12,10 +12,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="grade", schema="feut")
+@Table(name="grade", schema="feut", uniqueConstraints = {
+		@UniqueConstraint(columnNames = {"student_id", "course_id", "code"})
+})
 public class GradeEntity {
 
 	@Id
@@ -41,6 +44,9 @@ public class GradeEntity {
 	@NotNull
 	@Column(name="code")
 	private String code;
+	
+	@Column(name="grade")
+	private Long grade;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="created_time")
@@ -117,13 +123,19 @@ public class GradeEntity {
 		this.active = active;
 	}
 
+	public Long getGrade() {
+		return grade;
+	}
+
+	public void setGrade(Long grade) {
+		this.grade = grade;
+	}
+
 	@Override
 	public String toString() {
 		return "GradeEntity [id=" + id + ", student=" + student + ", teacher=" + teacher + ", course=" + course
-				+ ", comment=" + comment + ", code=" + code + ", createdTime=" + createdTime + ", active=" + active
-				+ "]";
+				+ ", comment=" + comment + ", code=" + code + ", grade=" + grade + ", createdTime=" + createdTime
+				+ ", active=" + active + "]";
 	}
 
-		
-	
 }
