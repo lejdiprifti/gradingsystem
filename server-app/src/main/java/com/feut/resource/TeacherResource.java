@@ -89,10 +89,10 @@ public class TeacherResource {
 	}
 	
 	@GetMapping("/{teacherId}/courses/{courseId}/groups/{groupId}")
-	public ResponseEntity<Object> getAverageByCourseGroupAndTeacher(@PathVariable("teacherId") Long teacherId, @PathVariable("courseId") Long courseId
+	public ResponseEntity<Double> getAverageByCourseGroupAndTeacher(@PathVariable("teacherId") Long teacherId, @PathVariable("courseId") Long courseId
 			, @PathVariable("groupId") Long groupId){
 		logger.info("GETTING AVERAGE BY COURSE, GROUP AND TEACHER.");
-		return new ResponseEntity<Object>(gradeService.getAverageByGroupCourseAndTeacher(teacherId, groupId, courseId), HttpStatus.OK);
+		return new ResponseEntity<Double>(gradeService.getAverageByGroupCourseAndTeacher(teacherId, groupId, courseId), HttpStatus.OK);
 	}
 	
 	@GetMapping("/{id}/lectures")

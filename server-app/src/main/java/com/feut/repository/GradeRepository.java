@@ -54,10 +54,14 @@ public class GradeRepository {
 	}
 	
 	public Double getAverageByStudent(Long studentId) {
+		try {
 		TypedQuery<Double> query = em.createQuery("Select AVG(gd.grade) from GradeEntity gd GROUP BY (gd.student) HAVING gd.student.id = ?1",Double.class); 
 		query.setParameter(1, studentId);
 		return query.getSingleResult();
-	}
+		} catch (NoResultException e) {
+			return 0.0;
+		}
+		}
 	
 	public List<GradeEntity> getGradesByCourse(Long courseId){
 		TypedQuery<GradeEntity> query = em.createQuery("Select gd from GradeEntity gd JOIN CourseEntity c on c.id = gd.course "
@@ -76,21 +80,21 @@ public class GradeRepository {
 		em.merge(entity);
 	}
 	
-	public Object getAverageByGroupCourseAndTeacher(Long groupId, Long courseId, Long teacherId) {
+	public Double getAverageByGroupCourseAndTeacher(Long groupId, Long courseId, Long teacherId) {
 		try {
-		Query query = em.createQuery("Select AVG(gd.grade),c.id,g.id  from GradeEntity gd "
+		TypedQuery<Double> query = em.createQuery("Select AVG(gd.grade),c.id,g.id  from GradeEntity gd "
 				+ "JOIN StudentEntity s on s.id = gd.student "
 				+ "JOIN GroupEntity g on g.id = s.group "
 				+ "JOIN CourseEntity c on c.id = gd.course "
 				+ "JOIN TeacherEntity t on t.id = gd.teacher "
-				+ "GROUP BY (c.id, g.id, t.id, gd.active) HAVING t.id = ?1 and g.id=?2 and c.id = ?3 and gd.active = ?4 ORDER BY AVG(gd.grade)");
+				+ "GROUP BY (c.id, g.id, t.id, gd.active) HAVING t.id = ?1 and g.id=?2 and c.id = ?3 and gd.active = ?4 ORDER BY AVG(gd.grade)", Double.class);
 		query.setParameter(1, teacherId);
 		query.setParameter(2, groupId);
 		query.setParameter(3, courseId);
 		query.setParameter(4, true);
 		return query.getSingleResult();
 		} catch (NoResultException e) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Grades not found.");
+			return 0.0;
 		}
 	}
 	

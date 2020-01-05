@@ -57,7 +57,7 @@ public class StudentRepository {
 	
 	public List<StudentEntity> getByDegree(DegreeEntity degree){
 		TypedQuery<StudentEntity> query = em.createQuery("Select s from StudentEntity s JOIN GroupEntity g on g.id = s.group "
-				+ "JOIN DegreeEntity d on d.id = g.id where d.id = ?1 and s.active =?2", StudentEntity.class);
+				+ "JOIN DegreeEntity d on d.id = g.degree where d.id = ?1 and s.active =?2", StudentEntity.class);
 		query.setParameter(1, degree.getId());
 		query.setParameter(2, true);
 		return query.getResultList();

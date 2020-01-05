@@ -107,10 +107,13 @@ public class CourseService {
 			lecture.setGroup(group);
 			lecturesRepository.save(lecture);
 		}
+		GradeEntity grade = new GradeEntity();
+		grade.setCourse(entity);
 		for (StudentEntity student : studentRepository.getByDegree(degree)) {
-			GradeEntity grade = new GradeEntity();
-			grade.setCourse(entity);
 			grade.setStudent(student);
+			grade.setActive(true);
+			grade.setCode("");
+			grade.setComment("");
 			grade.setCreatedTime(new GregorianCalendar().getTime());
 			gradeRepository.save(grade);
 		}
