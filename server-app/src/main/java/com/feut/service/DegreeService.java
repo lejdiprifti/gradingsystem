@@ -17,6 +17,7 @@ import com.feut.model.DegreeModel;
 import com.feut.repository.CourseRepository;
 import com.feut.repository.DegreeRepository;
 import com.feut.repository.GroupRepository;
+import com.feut.security.JwtTokenUtil;
 
 @Service
 public class DegreeService {
@@ -39,11 +40,15 @@ public class DegreeService {
 	@Autowired
 	private CourseService courseService;
 	
+	@Autowired
+	private JwtTokenUtil jwtTokenUtil;
+	
 	public DegreeService() {
 		
 	}
 	
 	public List<DegreeModel> getAll() {
+		if (jwtTokenUtil.getRole().getId() == 1) {
 		List<DegreeModel> list =degreeConverter.toModel(degreeRepository.getAll());
 		for (DegreeModel model : list) {
 			model.setGroupList(groupService.getByDegree(model.getId()));
@@ -51,33 +56,49 @@ public class DegreeService {
 			model.setNumberOfGroups(countGroupsOfDegree(model.getId()));
 		}
 		return list;
+		} else {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This action is unauthorized.");
+		}
 	}
 	
 	public DegreeModel getById(Long id) {
+		if (jwtTokenUtil.getRole().getId() == 1) {
 		try {
 			return degreeConverter.toModel(degreeRepository.getById(id));
 		} catch (NoResultException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Degree not found.");
 		}
+		} else {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This action is unauthorized.");
+		}
 	}
 	
 	public Long countGroupsOfDegree(Long id) {
+		if (jwtTokenUtil.getRole().getId() == 1) {
 		try {
 			return degreeRepository.countGroupsOfDegree(id);
 		} catch (NoResultException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Degree not found.");
 		}
+		} else {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This action is unauthorized.");
+		}
 	}
 	
 	public List<DegreeModel> getDegreesByTeacher(Long id){
+		if (jwtTokenUtil.getRole().getId() == 3) {
 		try {
 			return degreeConverter.toModel(degreeRepository.getByTeacher(id));
 		} catch (NoResultException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Degrees not found.");
 		}
+		} else {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This action is unauthorized.");
+		}
 	}
 	
 	public void save(DegreeModel model) {
+		if (jwtTokenUtil.getRole().getId() == 1) {
 		if (degreeRepository.checkIfExists(model.getTitle()) == false) {
 		DegreeEntity entity =new DegreeEntity();
 		entity.setSyllabus(model.getSyllabus());
@@ -87,9 +108,13 @@ public class DegreeService {
 		} else {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Degree already exists.");
 		}
+		} else {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This action is unauthorized.");
+		}
 	}
 	
 	public void edit(DegreeModel model, Long id) {
+		if (jwtTokenUtil.getRole().getId() == 1) {
 		try {
 			DegreeEntity entity = degreeRepository.getById(id);
 			if (degreeRepository.checkIfTitleExists(model.getTitle(), id)==false) {
@@ -100,9 +125,13 @@ public class DegreeService {
 		} catch (NoResultException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Degree not found.");
 		}
+		} else {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This action is unauthorized.");
+		}
 	}
 	
 	public void delete(Long id) {
+		if (jwtTokenUtil.getRole().getId() == 1) {
 		try {
 			DegreeEntity entity = degreeRepository.getById(id);
 			List<GroupEntity> groupList = groupRepository.getByDegree(id);
@@ -119,6 +148,9 @@ public class DegreeService {
 			degreeRepository.edit(entity);
 		} catch (NoResultException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Degree not found.");
+		} 
+		} else {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This action is unauthorized.");
 		}
 	}
 }

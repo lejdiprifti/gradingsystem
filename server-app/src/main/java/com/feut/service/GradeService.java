@@ -30,6 +30,7 @@ import com.feut.repository.CourseRepository;
 import com.feut.repository.GradeRepository;
 import com.feut.repository.StudentRepository;
 import com.feut.repository.TeacherRepository;
+import com.feut.security.JwtTokenUtil;
 
 @Service
 public class GradeService {
@@ -53,7 +54,8 @@ public class GradeService {
 	private TeacherRepository teacherRepository;
 
 	@Autowired
-
+	private JwtTokenUtil jwtTokenUtil; 
+	
 	public GradeService() {
 
 	}
@@ -67,10 +69,14 @@ public class GradeService {
 	}
 
 	public List<GradeModel> getByGroupAndCourse(Long groupId, Long courseId) {
+		if (jwtTokenUtil.getRole().getId() == 3) {
 		try {
 			return gradeConverter.toModel(gradeRepository.getGradesByGroupAndCourse(groupId, courseId));
 		} catch (NoResultException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Grades not found.");
+		}
+		} else {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This action is unauthorized.");
 		}
 	}
 
@@ -105,11 +111,9 @@ public class GradeService {
 				try {
 					logger.info(httpclient.execute(post).toString());
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -132,6 +136,7 @@ public class GradeService {
 	}
 
 	public Object getAverageByGroupCourseAndTeacher(Long teacherId, Long groupId, Long courseId) {
+		if (jwtTokenUtil.getRole().getId() == 3) {
 		try {
 			if (studentRepository.getByGroup(groupId).size() > 0) {
 			return gradeRepository.getAverageByGroupCourseAndTeacher(groupId, courseId, teacherId);
@@ -141,5 +146,8 @@ public class GradeService {
 		} catch (NoResultException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Grades not found.");
 		}
+	} else {
+		throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This action is unauthorized.");
 	}
+}
 }

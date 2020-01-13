@@ -46,7 +46,7 @@ public class LecturesRepository {
 	public LecturesEntity getByGroupAndCourse(Long groupId, Long courseId) throws NoResultException{
 		TypedQuery<LecturesEntity> query = em.createQuery("Select l from LecturesEntity l Join GroupEntity g on g.id = l.group"
 				+ " Join CourseEntity c on c.id = l.course "
-				+ " where g.id = ?1 and c.id = ?2 and l.active = ?3", LecturesEntity.class);
+				+ " where g.id = ?1 and c.id = ?2 and c.active =?3 and l.active = ?3", LecturesEntity.class);
 		query.setParameter(1, groupId);
 		query.setParameter(2, courseId);
 		query.setParameter(3, true);

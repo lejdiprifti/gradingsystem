@@ -89,7 +89,6 @@ public class CourseRepository {
 			query.setParameter(1, name);
 			query.setParameter(2, degreeId);
 			query.setParameter(3, true);
-			query.setParameter(4, depId);
 			query.getSingleResult();
 			return true;
 		} catch (NoResultException e) {

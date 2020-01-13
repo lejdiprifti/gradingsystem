@@ -2,6 +2,7 @@ package com.feut.security;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -23,14 +24,16 @@ public class JwtTokenUtil implements Serializable {
 	
 	@Value("${jwt.secret}")
 	private String secret;
+	
+	private LinkedHashMap role; 
 
 	// retrieve username from jwt token
 	public String getUsernameFromToken(String token) {
 		return getClaimFromToken(token, Claims::getSubject);
 	}
 	
-	public Role getRoleFromToken(String token) {
-		return (Role) Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody().get("role");
+	public LinkedHashMap getRoleFromToken(String token) {
+		return (LinkedHashMap) Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody().get("role");
 	}
 	// retrieve expiration date from jwt token
 	public Date getExpirationDateFromToken(String token) {
@@ -77,6 +80,15 @@ public class JwtTokenUtil implements Serializable {
 	// validate token
 	public Boolean validateToken(String token, UserDetails userDetails) {
 		final String username = getUsernameFromToken(token);
+		this.role = getRoleFromToken(token);
 		return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+	}
+	
+	public Role getRole() {
+		Role role2 = new Role();
+		role2.setId((int) this.role.get("id"));
+		role2.setName((String) this.role.get("name"));
+		role2.setDescription((String) this.role.get("description"));
+		return role2;
 	}
 }

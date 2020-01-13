@@ -17,6 +17,7 @@ import com.feut.model.DepartmentModel;
 import com.feut.repository.CourseRepository;
 import com.feut.repository.DepartmentRepository;
 import com.feut.repository.TeacherRepository;
+import com.feut.security.JwtTokenUtil;
 
 @Service
 public class DepartmentService {
@@ -39,28 +40,40 @@ public class DepartmentService {
 	@Autowired
 	private TeacherService teacherService;
 	
+	@Autowired
+	private JwtTokenUtil jwtTokenUtil;
+	
 	public DepartmentService() {
 		
 	}
 	
 	public List<DepartmentModel> getAll()	{
+		if (jwtTokenUtil.getRole().getId() == 1) {
 		List<DepartmentModel> list = depConverter.toModel(depRepository.getAll());
 		for (DepartmentModel model : list) {
 			model.setCourseList(courseService.getByDepartment(model.getId()));
 			model.setTeacherList(teacherService.getByDepartment(model.getId()));
 		}
 		return list;
+		} else {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This action is unauthorized.");
+		}
 	}
 	
 	public DepartmentModel getById(Long id) {
+		if (jwtTokenUtil.getRole().getId() == 1) {
 		try {
 			return depConverter.toModel(depRepository.getById(id));
 		} catch (NoResultException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Department not found.");
 		}
+		} else {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This action is unauthorized.");
+		}
 	}
 	
 	public void save(DepartmentModel model) {
+		if (jwtTokenUtil.getRole().getId() == 1) {
 		if (depRepository.checkIfExists(model.getName())==false) {
 		DepartmentEntity entity = new DepartmentEntity();
 		entity.setName(model.getName());
@@ -70,9 +83,13 @@ public class DepartmentService {
 		} else {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad Request.");
 		}
+		} else {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This action is unauthorized.");
+		}
 	}
 	
 	public void edit(DepartmentModel model, Long id) {
+		if (jwtTokenUtil.getRole().getId() == 1) {
 		try {
 			DepartmentEntity entity = depRepository.getById(id);
 			if (depRepository.checkIfNameExists(model.getName(), id) == false) {
@@ -84,9 +101,13 @@ public class DepartmentService {
 		} catch (NoResultException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Department not found.");
 		} 
+		} else {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This action is unauthorized.");
+		}
 	}
 	
 	public void delete(Long id) {
+		if (jwtTokenUtil.getRole().getId() == 1) {
 		try {
 			DepartmentEntity entity = depRepository.getById(id);
 			List<CourseEntity> courseList = courseRepository.getByDepartment(entity);
@@ -100,8 +121,12 @@ public class DepartmentService {
 				teacherRepository.edit(teacher);
 			}
 			entity.setActive(false);
+			depRepository.edit(entity);
 		} catch (NoResultException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Department not found.");
 		}
+	} else {
+		throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This action is unauthorized.");
+	}
 	}
 }

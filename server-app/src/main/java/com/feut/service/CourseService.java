@@ -25,6 +25,7 @@ import com.feut.repository.GradeRepository;
 import com.feut.repository.GroupRepository;
 import com.feut.repository.LecturesRepository;
 import com.feut.repository.StudentRepository;
+import com.feut.security.JwtTokenUtil;
 
 @Service
 public class CourseService {
@@ -52,6 +53,10 @@ public class CourseService {
 	
 	@Autowired
 	private StudentRepository studentRepository;
+	
+	@Autowired
+	private JwtTokenUtil jwtTokenUtil;
+	
 	public CourseService() {
 		
 	}
@@ -73,10 +78,14 @@ public class CourseService {
 	}
 	
 	public List<CourseModel> getByTeacherAndDegree(Long teacherId, Long degreeId){
+		if (jwtTokenUtil.getRole().getId() == 3) {
 		try {
 			return courseConverter.toModel(courseRepository.getByTeacherAndDegree(teacherId, degreeId));
 		} catch (NoResultException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Courses not found.");
+		}
+		} else {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This action is unauthorized.");
 		}
 	}
 	
@@ -89,6 +98,7 @@ public class CourseService {
 	}
 	
 	public void save(CourseModel model) {
+		if (jwtTokenUtil.getRole().getId() == 1) {
 		try {
 		CourseEntity entity = new CourseEntity();
 		if (courseRepository.checkIfExistsByDegree(model.getName(), model.getDegreeId(), model.getDepartmentId())==false) {
@@ -123,9 +133,13 @@ public class CourseService {
 		} catch (NoResultException e) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad Request.");
 		}
+		} else {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This action is unauthorized.");
+		}
 		}
 	
 	public void edit(CourseModel model, Long id) {
+		if (jwtTokenUtil.getRole().getId() == 1) {
 		CourseEntity entity = courseRepository.getById(id);
 		if (model.getName() != null) {
 			entity.setName(model.getName());
@@ -141,9 +155,13 @@ public class CourseService {
 		}
 		entity.setActive(true);
 		courseRepository.edit(entity);
+		} else {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This action is unauthorized.");
+		}
 	}
 	
 	public void delete(Long id) {
+		if (jwtTokenUtil.getRole().getId() == 1) {
 		CourseEntity entity = courseRepository.getById(id);
 		List<GradeEntity> gradeList = gradeRepository.getGradesByCourse(id);
 		for (GradeEntity grade : gradeList) {
@@ -157,5 +175,8 @@ public class CourseService {
 		}
 		entity.setActive(false);
 		courseRepository.edit(entity);
+		} else {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This action is unauthorized.");
+		}
 	}
 }

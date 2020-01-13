@@ -22,6 +22,8 @@ import com.feut.repository.CourseRepository;
 import com.feut.repository.GradeRepository;
 import com.feut.repository.GroupRepository;
 import com.feut.repository.StudentRepository;
+import com.feut.repository.UserRepository;
+import com.feut.security.JwtTokenUtil;
 
 @Service
 public class StudentService {
@@ -46,26 +48,40 @@ public class StudentService {
 	
 	@Autowired
 	private CourseRepository courseRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
 
+	@Autowired
+	private JwtTokenUtil jwtTokenUtil; 
+	
 	public StudentService() {
 		
 	}
 	
 	public List<StudentModel> getAll(){
+		if (jwtTokenUtil.getRole().getId() == 1) {
 		List<StudentModel> list =studentConverter.toModel(studentRepository.getAll());
 		for (StudentModel model : list) {
 			model.setGpa(gradeRepository.getAverageByStudent(model.getId()));
 		}
 		return list;
+		} else {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This action is unauthorized.");
+		}
 	}
 	
 	public StudentModel getById(Long id) {
+		if (jwtTokenUtil.getRole().getId() == 1 || jwtTokenUtil.getRole().getId() == 2) {
 		try {
 			StudentModel model = studentConverter.toModel(studentRepository.getById(id));
 			model.setGpa(gradeRepository.getAverageByStudent(model.getId()));
 			return model;
 		} catch (NoResultException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Student not found.");
+		}
+		} else {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This action is unauthorized.");
 		}
 	}
 	
@@ -82,8 +98,9 @@ public class StudentService {
 	}
 	
 	public void register(StudentModel model) {
-		studentRepository.createView();
-		if (studentRepository.checkIfExists(model.getPersonalNumber(), model.getUsername()) == false) {
+		if (jwtTokenUtil.getRole().getId() == 1) {
+		userRepository.createView();
+		if (userRepository.checkIfExists(model.getPersonalNumber(), model.getUsername()) == false) {
 		StudentEntity entity = new StudentEntity();
 		entity.setFirstName(model.getFirstName());
 		entity.setFatherName(model.getFatherName());
@@ -113,21 +130,42 @@ public class StudentService {
 		} else {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Bad Request.");
 		}
+		} else {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This action is unauthorized.");
+		}
 	}
 	
 	public void edit(StudentModel model, Long id) {
+		if (jwtTokenUtil.getRole().getId() == 1) {
 		try {
 		StudentEntity entity = studentRepository.getById(id);
-		entity.setFirstName(model.getFirstName());
-		entity.setFatherName(model.getFatherName());
+		if (model.getFirstName() != null) {
+			entity.setFirstName(model.getFirstName());
+		}
+		if (model.getFatherName() != null) {
+			entity.setFatherName(model.getFatherName());
+		}
+		if (model.getLastName() != null) {
 		entity.setLastName(model.getLastName());
+		}
+		if (model.getGroupId() != null) {
 		entity.setGroup(groupRepository.getById(model.getGroupId()));
+		}
+		if (model.getPersonalNumber() != null) {
 		entity.setPersonalNumber(model.getPersonalNumber());
+		}
+		if (model.getBirthdate() != null) {
 		entity.setBirthdate(model.getBirthdate());
+		}
+		if (model.getPassword() != null) {
 		entity.setPassword(passwordEncoder.encode(model.getPassword()));
+		}
 		studentRepository.edit(entity);
 		} catch (NoResultException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Student not found.");
+		}
+		} else {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This action is unauthorized.");
 		}
 	}
 	
@@ -137,15 +175,19 @@ public class StudentService {
 		} catch(NoResultException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Group not found.");
 		}
-	}
-	
+}
 	public void delete(Long id) {
+		if (jwtTokenUtil.getRole().getId() == 1) {
 		try {
 			StudentEntity entity = studentRepository.getById(id);
+			entity.setActive(false);
 			studentRepository.edit(entity);
 			gradeService.deleteGradesByStudent(id);
 		} catch (NoResultException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Student not found.");
+		}
+		} else {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This action is unauthorized.");
 		}
 	}
 }

@@ -47,7 +47,7 @@ public class GradeRepository {
 	
 	public List<GradeEntity> getGradesByStudent(Long studentId){
 		TypedQuery<GradeEntity> query = em.createQuery("Select gd from GradeEntity gd JOIN StudentEntity s on gd.student = s.id"
-				+ " where s.id = ?1 and gd.active = ?2", GradeEntity.class);
+				+ " where s.id = ?1 and gd.active = ?2 and s.active = ?2", GradeEntity.class);
 		query.setParameter(1, studentId);
 		query.setParameter(2, true);
 		return query.getResultList();
@@ -55,8 +55,11 @@ public class GradeRepository {
 	
 	public Double getAverageByStudent(Long studentId) {
 		try {
-		TypedQuery<Double> query = em.createQuery("Select AVG(gd.grade) from GradeEntity gd GROUP BY (gd.student) HAVING gd.student.id = ?1",Double.class); 
+		TypedQuery<Double> query = em.createQuery("Select AVG(gd.grade) from GradeEntity gd "
+				+ "JOIN StudentEntity s on s.id = gd.student "
+				+ "GROUP BY (s.id, gd.active, s.active) HAVING s.id = ?1 and gd.active = ?2 and s.active = ?2",Double.class); 
 		query.setParameter(1, studentId);
+		query.setParameter(2,  true);
 		return query.getSingleResult();
 		} catch (NoResultException e) {
 			return 0.0;

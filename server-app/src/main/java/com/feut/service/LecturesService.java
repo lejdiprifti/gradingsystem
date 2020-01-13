@@ -16,6 +16,7 @@ import com.feut.repository.CourseRepository;
 import com.feut.repository.GroupRepository;
 import com.feut.repository.LecturesRepository;
 import com.feut.repository.TeacherRepository;
+import com.feut.security.JwtTokenUtil;
 
 @Service
 public class LecturesService {
@@ -34,6 +35,9 @@ public class LecturesService {
 	
 	@Autowired
 	private CourseRepository courseRepository;
+	
+	@Autowired
+	private JwtTokenUtil jwtTokenUtil;
 	
 	public LecturesService() {
 		
@@ -90,6 +94,7 @@ public class LecturesService {
 	}
 	
 	public void edit(LecturesModel model, Long id) {
+		if (jwtTokenUtil.getRole().getId() == 3) {
 		try {
 			LecturesEntity entity = lecturesRepository.getById(id);
 			entity.setGroup(groupRepository.getById(model.getGroupId()));
@@ -98,6 +103,9 @@ public class LecturesService {
 			lecturesRepository.edit(entity);
 		} catch (NoResultException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Group/Teacher/Course not found.");
+		}
+		} else {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This action is unauthorized.");
 		}
 	}
 	

@@ -48,7 +48,7 @@ export class StudentDashboardComponent implements OnInit {
       this.grades = res;
       this.grades.forEach(el => {
         this.labels.push(el.course.name);
-        this.finals.push(el.grade * 10);
+        this.finals.push(el.grade);
       })
     }, err=>{
       this.logger.error('Error','Something bad happened.');

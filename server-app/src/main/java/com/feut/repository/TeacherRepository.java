@@ -60,19 +60,6 @@ public class TeacherRepository {
 	}
 	
 
-	public boolean checkIfExists(String personalNumber, String username) {
-		try {
-			TypedQuery<TeacherEntity> query = em.createNamedQuery("Teacher.checkIfExists", TeacherEntity.class);
-			query.setParameter(1, personalNumber);
-			query.setParameter(2, username);
-			query.setParameter(3, true);
-			query.getSingleResult();
-			return true;
-		} catch (NoResultException e) {
-			return false;
-		}
-	}
-
 	public boolean checkIfExists(String personalNumber, Long id) {
 		try {
 			TypedQuery<TeacherEntity> query = em.createNamedQuery("Teacher.checkIfExistsByPN", TeacherEntity.class);

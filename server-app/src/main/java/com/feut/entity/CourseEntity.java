@@ -24,7 +24,7 @@ import javax.persistence.Table;
 	@NamedQuery(name="Course.CheckIfExistsByDegree", query = "Select c from CourseEntity c JOIN DegreeEntity d ON c.degree = d.id "
 			+ " JOIN DepartmentEntity dep ON dep.id = c.department "
 			+ "where c.name=?1"
-			+ " and c.active = ?3 and (d.id = ?2 OR dep.id =?4)")
+			+ " and c.active = ?3 and d.id = ?2 and d.active =?3")
 })
 public class CourseEntity implements Serializable{
 	

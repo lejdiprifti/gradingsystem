@@ -78,29 +78,5 @@ public class StudentRepository {
 	public void edit(StudentEntity student) {
 		em.merge(student);
 	}
-	
-	public boolean checkIfExists(String personalNumber, String username) {
-		try {
-			Query query = em.createNativeQuery("Select s.personal_number, s.username from feut.studentsView s where s.personal_number = :pn or s.username = :username");
-			query.setParameter("pn", personalNumber);
-			query.setParameter("username", username);
-			query.getSingleResult();
-			return true;
-		} catch (NoResultException e) {
-			return false;
-		} catch (NonUniqueResultException e) {
-			return false;
-		}
-	}
-	
-	@Transactional
-	public void createView() {
-		Query query1 = em.createNativeQuery("DROP VIEW IF EXISTS feut.studentsView ");
-		Query query = em.createNativeQuery("CREATE VIEW feut.studentsView AS "
-				+ "SELECT u.personal_number as personal_number, u.username as username From feut.student s "
-				+ "JOIN feut.user u on s.id = u.id "
-				+ "WHERE u.active=true");
-		query1.executeUpdate();
-		query.executeUpdate();
-}
+
 }

@@ -13,7 +13,7 @@ import { LoggerService } from '@ikubinfo/core/utilities/logger.service';
 export class TeacherGroupsComponent implements OnInit {
 
   groups: Array<Group>;
-  constructor(private teacherSerivce: TeacherService, private authService: AuthService,
+  constructor(private teacherService: TeacherService, private authService: AuthService,
     private router: Router,private active: ActivatedRoute,
     private logger: LoggerService) { }
 
@@ -22,9 +22,8 @@ export class TeacherGroupsComponent implements OnInit {
   }
 
   getGroups(): void {
-    console.log('Executing');
     const degreeId = this.active.snapshot.paramMap.get('degreeId');
-    this.teacherSerivce.getGroupsByTeacherAndDegree(this.authService.user.id,Number(degreeId)).subscribe(res => {
+    this.teacherService.getGroupsByTeacherAndDegree(this.authService.user.id,Number(degreeId)).subscribe(res => {
       this.groups = res;
     },
     err =>{

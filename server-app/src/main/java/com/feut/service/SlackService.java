@@ -14,6 +14,7 @@ import com.feut.entity.SlackEntity;
 import com.feut.model.SlackModel;
 import com.feut.repository.SlackRepository;
 import com.feut.repository.StudentRepository;
+import com.feut.security.JwtTokenUtil;
 
 @Service
 public class SlackService {
@@ -26,6 +27,9 @@ public class SlackService {
 	
 	@Autowired
 	private StudentRepository studentRepository;
+	
+	@Autowired
+	private JwtTokenUtil jwtTokenUtil;
 	
 	public SlackService() {
 		
@@ -40,6 +44,7 @@ public class SlackService {
 	}
 	
 	public void save(SlackModel model) {
+		if (jwtTokenUtil.getRole().getId() == 2) {
 		try {
 			SlackEntity entity = slackRepository.getByChannelName(model.getChannelName());
 			entity.setUrl(model.getUrl());
@@ -54,6 +59,9 @@ public class SlackService {
 		entity.setActive(true);
 		slackRepository.save(entity);
 	}
+		} else {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This action is unauthorized.");
+		}
 	}
 	
 	public void delete(Long id) {

@@ -20,6 +20,7 @@ import com.feut.repository.DegreeRepository;
 import com.feut.repository.GroupRepository;
 import com.feut.repository.LecturesRepository;
 import com.feut.repository.StudentRepository;
+import com.feut.security.JwtTokenUtil;
 
 @Service
 public class GroupService {
@@ -44,6 +45,9 @@ public class GroupService {
 	
 	@Autowired
 	private CourseRepository courseRepository;
+	
+	@Autowired
+	private JwtTokenUtil jwtTokenUtil;
 
 	public GroupService() {
 
@@ -86,6 +90,7 @@ public class GroupService {
 	}
 
 	public void save(GroupModel model, Long id) {
+		if (jwtTokenUtil.getRole().getId() == 1) {
 		try {
 			GroupEntity entity = new GroupEntity();
 			if (groupRepository.checkIfExists(model.getNumber(), model.getDegreeId()) == false) {
@@ -107,10 +112,14 @@ public class GroupService {
 			}
 		} catch (NoResultException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Degree not found.");
+		} 
+		} else {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This action is unauthorized.");
 		}
 	}
 
 	public void edit(GroupModel model, Long id) {
+		if (jwtTokenUtil.getRole().getId() == 1) {
 		try {
 			GroupEntity entity = groupRepository.getById(id);
 			if (groupRepository.checkIfNumberExists(model.getNumber(), model.getDegreeId(), id) == false) {
@@ -121,9 +130,13 @@ public class GroupService {
 		} catch (NoResultException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Group not found.");
 		}
+		} else {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This action is unauthorized.");
+		}
 	}
 
 	public void delete(Long id) {
+		if (jwtTokenUtil.getRole().getId() == 1) {
 		try {
 			GroupEntity entity = groupRepository.getById(id);
 			entity.setActive(false);
@@ -135,6 +148,9 @@ public class GroupService {
 			groupRepository.edit(entity);
 		} catch (NoResultException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Group not found.");
+		}
+		} else {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This action is unauthorized.");
 		}
 	}
 }

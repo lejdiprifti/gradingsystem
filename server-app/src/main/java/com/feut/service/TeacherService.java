@@ -18,6 +18,8 @@ import com.feut.model.TeacherModel;
 import com.feut.repository.DepartmentRepository;
 import com.feut.repository.LecturesRepository;
 import com.feut.repository.TeacherRepository;
+import com.feut.repository.UserRepository;
+import com.feut.security.JwtTokenUtil;
 
 @Service
 public class TeacherService {
@@ -36,13 +38,23 @@ public class TeacherService {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private UserRepository userRepository;
+	
+	@Autowired
+	private JwtTokenUtil jwtTokenUtil;
 
 	public TeacherService() {
 
 	}
 
 	public List<TeacherModel> getAll(){
+		if (jwtTokenUtil.getRole().getId() == 1) {
 		return teacherConverter.toModel(teacherRepository.getAll());
+		} else {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This action is unauthorized.");
+		}
 	}
 
 	public TeacherModel getByUsername(String username) {
@@ -54,19 +66,28 @@ public class TeacherService {
 	}
 
 	public TeacherModel getById(Long id) {
+		if (jwtTokenUtil.getRole().getId() == 1) {
 		try {
 			return teacherConverter.toModel(teacherRepository.getById(id));
 		} catch (NoResultException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Teacher not found.");
 		}
+		} else {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This action is unauthorized.");
+		}
 	}
 
 	public List<TeacherModel> getByDepartment(Long id) {
+		if (jwtTokenUtil.getRole().getId() == 1) {
 		return teacherConverter.toModel(teacherRepository.getByDepartment(id));
+		} else {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This action is unauthorized.");
+		}
 	}
 
 	public void save(TeacherModel model) {
-		if (teacherRepository.checkIfExists(model.getPersonalNumber(), model.getUsername()) == false) {
+		if (jwtTokenUtil.getRole().getId() == 1) {
+		if (userRepository.checkIfExists(model.getPersonalNumber(), model.getUsername()) == false) {
 		TeacherEntity entity = new TeacherEntity();
 		entity.setFirstName(model.getFirstName());
 		entity.setLastName(model.getLastName());
@@ -85,9 +106,13 @@ public class TeacherService {
 		} else {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad Request.");
 		}
+		} else {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This action is unauthorized.");
+		}
 	}
 
 	public void edit(TeacherModel model, Long id) {
+		if (jwtTokenUtil.getRole().getId() == 1) {
 		try {
 			TeacherEntity entity = teacherRepository.getById(id);
 			entity.setFirstName(model.getFirstName());
@@ -106,9 +131,13 @@ public class TeacherService {
 		} catch (NoResultException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Teacher not found.");
 		}
+		} else {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This action is unauthorized.");
+		}
 	}
 
 	public void delete(Long id) {
+		if (jwtTokenUtil.getRole().getId() == 1) {
 		try {
 			TeacherEntity entity = teacherRepository.getById(id);
 			List<LecturesEntity> list = lecturesRepository.getByTeacher(id);
@@ -120,6 +149,9 @@ public class TeacherService {
 			teacherRepository.edit(entity);
 		} catch (NoResultException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Teacher not found.");
+		}
+		} else {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This action is unauthorized.");
 		}
 	}
 }
