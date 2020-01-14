@@ -52,7 +52,7 @@ public class GradeRepository {
 		query.setParameter(2, true);
 		return query.getResultList();
 	}
-	
+	// GET AVERAGE BY STUDENT
 	public Double getAverageByStudent(Long studentId) {
 		try {
 		TypedQuery<Double> query = em.createQuery("Select AVG(gd.grade) from GradeEntity gd "

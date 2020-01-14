@@ -35,7 +35,7 @@ public class DegreeRepository {
 		query.setParameter(2, true);
 		return query.getSingleResult();
 	}
-	
+	//COUNT GROUPS OF DEGREE
 	public Long countGroupsOfDegree(Long id) {
 		Query query = em.createQuery("Select Count(g.id) from GroupEntity g Join DegreeEntity d on d.id = g.degree where "
 				+ "d.id = ?1 and d.active = ?2 and g.active = ?2", Long.class);
@@ -43,7 +43,7 @@ public class DegreeRepository {
 		query.setParameter(2, true);
 		return (Long) query.getSingleResult();
 	}
-	
+	// GET THE DEGREES BY TEACHER
 	public List<DegreeEntity> getByTeacher(Long id){
 		TypedQuery<DegreeEntity> query = em.createQuery("Select Distinct d from DegreeEntity d Join GroupEntity g on g.degree = d.id "
 				+ "Join LecturesEntity l on g.id = l.group"

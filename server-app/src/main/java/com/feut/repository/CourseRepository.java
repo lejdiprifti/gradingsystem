@@ -45,8 +45,10 @@ public class CourseRepository {
 		return query.getResultList();
 	}
 	
+	// GET COURSES BY STUDENT
 	public List<CourseEntity> getByStudent(Long studentId){
-		TypedQuery<CourseEntity> query = em.createQuery("Select c from CourseEntity c JOIN DegreeEntity d on c.degree = d.id"
+		TypedQuery<CourseEntity> query = em.createQuery("Select c from CourseEntity c "
+				+ " JOIN DegreeEntity d on c.degree = d.id"
 				+ " JOIN GroupEntity g on g.degree = d.id "
 				+ "	JOIN StudentEntity s on s.group  = g.id"
 				+ " where s.id = ?1 and s.active = ?2 and c.active =?2", CourseEntity.class);
@@ -59,7 +61,8 @@ public class CourseRepository {
 		TypedQuery<CourseEntity> query = em.createQuery("Select Distinct c from CourseEntity c "
 				+ "Join DegreeEntity d on c.degree = d.id "
 				+ "Join LecturesEntity l on l.course = c.id "
-				+ "where l.teacher.id = ?1 and d.id = ?2 and c.active =?3 and l.active = ?3 and d.active = ?3", CourseEntity.class);
+				+ "Join TeacherEntity t on t.id = l.teacher "
+				+ "where t.id = ?1 and d.id = ?2 and c.active =?3 and l.active = ?3 and d.active = ?3", CourseEntity.class);
 		query.setParameter(1, teacherId);
 		query.setParameter(2, degreeId);
 		query.setParameter(3, true);

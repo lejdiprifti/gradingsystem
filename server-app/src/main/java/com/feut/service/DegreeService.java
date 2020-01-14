@@ -22,6 +22,7 @@ import com.feut.security.JwtTokenUtil;
 @Service
 public class DegreeService {
 	
+	
 	@Autowired
 	private DegreeRepository degreeRepository;
 	

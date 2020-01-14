@@ -181,8 +181,8 @@ public class StudentService {
 		try {
 			StudentEntity entity = studentRepository.getById(id);
 			entity.setActive(false);
-			studentRepository.edit(entity);
 			gradeService.deleteGradesByStudent(id);
+			studentRepository.edit(entity);
 		} catch (NoResultException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Student not found.");
 		}

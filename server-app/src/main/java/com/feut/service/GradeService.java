@@ -97,7 +97,7 @@ public class GradeService {
 		httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		for (SlackModel slack : slackList) {
 			httpHeaders.setBearerAuth(slack.getBotToken());
-			String text = "Teacher " + teacher.getFirstName() + " " + teacher.getLastName() + " graded "
+			String text = "Teacher " + teacher.getFirstName() + " " + teacher.getLastName() + " graded you "
 					+ entity.getGrade() + " on subject " + entity.getCourse().getName();
 			JSONObject object = new JSONObject();
 			object.put("text", text);
