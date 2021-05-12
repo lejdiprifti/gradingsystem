@@ -21,7 +21,7 @@
     "@angular/platform-browser-dynamic": "^8.2.14",
     "@angular/router": "^8.2.14",
     "bootstrap": "^4.4.1",
-    "chart.js": "^2.9.3",
+    "chart.js": "^2.9.4",
     "font-awesome": "^4.7.0",
     "pace-js": "^1.0.2",
     "primeicons": "^1.0.0",
